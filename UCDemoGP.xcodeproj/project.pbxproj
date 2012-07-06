@@ -1,0 +1,343 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		88D0766B15A72CF5007808FE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D0766A15A72CF5007808FE /* UIKit.framework */; };
+		88D0766D15A72CF5007808FE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D0766C15A72CF5007808FE /* Foundation.framework */; };
+		88D0766F15A72CF5007808FE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D0766E15A72CF5007808FE /* CoreGraphics.framework */; };
+		88D0767515A72CF5007808FE /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 88D0767315A72CF5007808FE /* InfoPlist.strings */; };
+		88D0767715A72CF5007808FE /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D0767615A72CF5007808FE /* main.m */; };
+		88D0767B15A72CF6007808FE /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D0767A15A72CF6007808FE /* AppDelegate.m */; };
+		88D0767E15A72CF6007808FE /* MapViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D0767D15A72CF6007808FE /* MapViewController.m */; };
+		88D0768115A72CF6007808FE /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88D0767F15A72CF6007808FE /* MapViewController.xib */; };
+		88D0768815A72DC2007808FE /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D0768715A72DC2007808FE /* CoreLocation.framework */; };
+		88D0768A15A72DCB007808FE /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D0768915A72DCB007808FE /* QuartzCore.framework */; };
+		88D0768C15A72DD2007808FE /* CoreText.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D0768B15A72DD2007808FE /* CoreText.framework */; };
+		88D0768E15A72DDB007808FE /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D0768D15A72DDB007808FE /* libstdc++.dylib */; };
+		88D0769015A72DE1007808FE /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D0768F15A72DE1007808FE /* MediaPlayer.framework */; };
+		88D0769215A72DE9007808FE /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D0769115A72DE9007808FE /* MobileCoreServices.framework */; };
+		88D0769415A72DF0007808FE /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D0769315A72DF0007808FE /* libz.dylib */; };
+		88D0769615A72DF6007808FE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D0769515A72DF6007808FE /* Security.framework */; };
+		88D0769815A72E71007808FE /* ArcGIS.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 88D0769715A72E71007808FE /* ArcGIS.bundle */; };
+		88D0769C15A78375007808FE /* EditGraphicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D0769A15A78375007808FE /* EditGraphicViewController.m */; };
+		88D0769D15A78375007808FE /* EditGraphicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88D0769B15A78375007808FE /* EditGraphicViewController.xib */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		88D0766615A72CF5007808FE /* UCDemoGP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UCDemoGP.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		88D0766A15A72CF5007808FE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		88D0766C15A72CF5007808FE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		88D0766E15A72CF5007808FE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		88D0767215A72CF5007808FE /* UCDemoGP-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UCDemoGP-Info.plist"; sourceTree = "<group>"; };
+		88D0767415A72CF5007808FE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		88D0767615A72CF5007808FE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		88D0767815A72CF6007808FE /* UCDemoGP-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UCDemoGP-Prefix.pch"; sourceTree = "<group>"; };
+		88D0767915A72CF6007808FE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		88D0767A15A72CF6007808FE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		88D0767C15A72CF6007808FE /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
+		88D0767D15A72CF6007808FE /* MapViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = MapViewController.m; sourceTree = "<group>"; };
+		88D0768015A72CF6007808FE /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MapViewController.xib; sourceTree = "<group>"; };
+		88D0768715A72DC2007808FE /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		88D0768915A72DCB007808FE /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		88D0768B15A72DD2007808FE /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		88D0768D15A72DDB007808FE /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
+		88D0768F15A72DE1007808FE /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		88D0769115A72DE9007808FE /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		88D0769315A72DF0007808FE /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		88D0769515A72DF6007808FE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		88D0769715A72E71007808FE /* ArcGIS.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ArcGIS.bundle; path = ../../Library/SDKs/ArcGIS/ArcGIS.framework/Versions/Current/Resources/ArcGIS.bundle; sourceTree = "<group>"; };
+		88D0769915A78375007808FE /* EditGraphicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditGraphicViewController.h; sourceTree = "<group>"; };
+		88D0769A15A78375007808FE /* EditGraphicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditGraphicViewController.m; sourceTree = "<group>"; };
+		88D0769B15A78375007808FE /* EditGraphicViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditGraphicViewController.xib; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		88D0766315A72CF5007808FE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88D0769615A72DF6007808FE /* Security.framework in Frameworks */,
+				88D0769415A72DF0007808FE /* libz.dylib in Frameworks */,
+				88D0769215A72DE9007808FE /* MobileCoreServices.framework in Frameworks */,
+				88D0769015A72DE1007808FE /* MediaPlayer.framework in Frameworks */,
+				88D0768E15A72DDB007808FE /* libstdc++.dylib in Frameworks */,
+				88D0768C15A72DD2007808FE /* CoreText.framework in Frameworks */,
+				88D0768A15A72DCB007808FE /* QuartzCore.framework in Frameworks */,
+				88D0768815A72DC2007808FE /* CoreLocation.framework in Frameworks */,
+				88D0766B15A72CF5007808FE /* UIKit.framework in Frameworks */,
+				88D0766D15A72CF5007808FE /* Foundation.framework in Frameworks */,
+				88D0766F15A72CF5007808FE /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		88D0765B15A72CF5007808FE = {
+			isa = PBXGroup;
+			children = (
+				88D0769715A72E71007808FE /* ArcGIS.bundle */,
+				88D0769515A72DF6007808FE /* Security.framework */,
+				88D0769315A72DF0007808FE /* libz.dylib */,
+				88D0769115A72DE9007808FE /* MobileCoreServices.framework */,
+				88D0768F15A72DE1007808FE /* MediaPlayer.framework */,
+				88D0768D15A72DDB007808FE /* libstdc++.dylib */,
+				88D0768B15A72DD2007808FE /* CoreText.framework */,
+				88D0768915A72DCB007808FE /* QuartzCore.framework */,
+				88D0768715A72DC2007808FE /* CoreLocation.framework */,
+				88D0767015A72CF5007808FE /* UCDemoGP */,
+				88D0766915A72CF5007808FE /* Frameworks */,
+				88D0766715A72CF5007808FE /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		88D0766715A72CF5007808FE /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				88D0766615A72CF5007808FE /* UCDemoGP.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		88D0766915A72CF5007808FE /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				88D0766A15A72CF5007808FE /* UIKit.framework */,
+				88D0766C15A72CF5007808FE /* Foundation.framework */,
+				88D0766E15A72CF5007808FE /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		88D0767015A72CF5007808FE /* UCDemoGP */ = {
+			isa = PBXGroup;
+			children = (
+				88D0767915A72CF6007808FE /* AppDelegate.h */,
+				88D0767A15A72CF6007808FE /* AppDelegate.m */,
+				88D0767C15A72CF6007808FE /* MapViewController.h */,
+				88D0767D15A72CF6007808FE /* MapViewController.m */,
+				88D0767F15A72CF6007808FE /* MapViewController.xib */,
+				88D0767115A72CF5007808FE /* Supporting Files */,
+				88D0769915A78375007808FE /* EditGraphicViewController.h */,
+				88D0769A15A78375007808FE /* EditGraphicViewController.m */,
+				88D0769B15A78375007808FE /* EditGraphicViewController.xib */,
+			);
+			path = UCDemoGP;
+			sourceTree = "<group>";
+		};
+		88D0767115A72CF5007808FE /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				88D0767215A72CF5007808FE /* UCDemoGP-Info.plist */,
+				88D0767315A72CF5007808FE /* InfoPlist.strings */,
+				88D0767615A72CF5007808FE /* main.m */,
+				88D0767815A72CF6007808FE /* UCDemoGP-Prefix.pch */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		88D0766515A72CF5007808FE /* UCDemoGP */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 88D0768415A72CF6007808FE /* Build configuration list for PBXNativeTarget "UCDemoGP" */;
+			buildPhases = (
+				88D0766215A72CF5007808FE /* Sources */,
+				88D0766315A72CF5007808FE /* Frameworks */,
+				88D0766415A72CF5007808FE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = UCDemoGP;
+			productName = UCDemoGP;
+			productReference = 88D0766615A72CF5007808FE /* UCDemoGP.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		88D0765D15A72CF5007808FE /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0430;
+			};
+			buildConfigurationList = 88D0766015A72CF5007808FE /* Build configuration list for PBXProject "UCDemoGP" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 88D0765B15A72CF5007808FE;
+			productRefGroup = 88D0766715A72CF5007808FE /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				88D0766515A72CF5007808FE /* UCDemoGP */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		88D0766415A72CF5007808FE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88D0767515A72CF5007808FE /* InfoPlist.strings in Resources */,
+				88D0768115A72CF6007808FE /* MapViewController.xib in Resources */,
+				88D0769815A72E71007808FE /* ArcGIS.bundle in Resources */,
+				88D0769D15A78375007808FE /* EditGraphicViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		88D0766215A72CF5007808FE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				88D0767715A72CF5007808FE /* main.m in Sources */,
+				88D0767B15A72CF6007808FE /* AppDelegate.m in Sources */,
+				88D0767E15A72CF6007808FE /* MapViewController.m in Sources */,
+				88D0769C15A78375007808FE /* EditGraphicViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		88D0767315A72CF5007808FE /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				88D0767415A72CF5007808FE /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		88D0767F15A72CF6007808FE /* MapViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				88D0768015A72CF6007808FE /* en */,
+			);
+			name = MapViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		88D0768215A72CF6007808FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+			};
+			name = Debug;
+		};
+		88D0768315A72CF6007808FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = 2;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		88D0768515A72CF6007808FE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/SDKs/ArcGIS/**";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UCDemoGP/UCDemoGP-Prefix.pch";
+				INFOPLIST_FILE = "UCDemoGP/UCDemoGP-Info.plist";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+					"-framework",
+					ArcGIS,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		88D0768615A72CF6007808FE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/SDKs/ArcGIS/**";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "UCDemoGP/UCDemoGP-Prefix.pch";
+				INFOPLIST_FILE = "UCDemoGP/UCDemoGP-Info.plist";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+					"-framework",
+					ArcGIS,
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		88D0766015A72CF5007808FE /* Build configuration list for PBXProject "UCDemoGP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88D0768215A72CF6007808FE /* Debug */,
+				88D0768315A72CF6007808FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		88D0768415A72CF6007808FE /* Build configuration list for PBXNativeTarget "UCDemoGP" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				88D0768515A72CF6007808FE /* Debug */,
+				88D0768615A72CF6007808FE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 88D0765D15A72CF5007808FE /* Project object */;
+}
