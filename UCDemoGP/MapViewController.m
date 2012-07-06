@@ -34,12 +34,12 @@
     [super viewDidLoad];
     
     self.mainMapView.layerDelegate = self;
-    //xmin: -11657368.038774 ymin: 3258256.672536 xmax: -10793771.977364 ymax: 3841993.308967
+    //xmin: -10979558.400620 ymin: 3521601.137391 xmax: -10815627.093085 ymax: 3632408.393633
     
-    AGSEnvelope *env = [AGSEnvelope envelopeWithXmin:-11657368.038774
-                                                    ymin:3258256.672536
-                                                    xmax:-10793771.977364
-                                                    ymax:3841993.308967
+    AGSEnvelope *env = [AGSEnvelope envelopeWithXmin:-10979558.4006204
+                                                    ymin:3521601.137391
+                                                    xmax:-10815627.093085
+                                                    ymax:3632408.393633
                                         spatialReference:[AGSSpatialReference webMercatorSpatialReference]];
     
     [self.mainMapView zoomToEnvelope:env animated:YES];
@@ -51,6 +51,7 @@
     self.dynamicLayer = 
     [AGSDynamicMapServiceLayer  
     dynamicMapServiceLayerWithURL:[NSURL URLWithString:kBaseMapDynamicMapService]]; 
+    self.dynamicLayer.visibleLayers = [[NSArray alloc] initWithObjects:@"1", nil];
     self.topView = [self.mainMapView addMapLayer:self.dynamicLayer withName:@"dynamic"];
     
     // editable layer
@@ -103,7 +104,10 @@
         // @todo - save some state here in regards to dynamic layer's current width
         // requirement, reset the map
         [self.mainMapView removeMapLayerWithName:@"results"];
+        [self.mainMapView removeMapLayerWithName:@"Edit Layer"];
+        
         self.topView = [self.mainMapView addMapLayer:self.resultDynamicLayer withName:@"results"];
+        [self.mainMapView addMapLayer:self.editableFeatureLayer  withName:@"Edit Layer"];
         return;
     }
     
@@ -195,7 +199,22 @@
     NSURL* url = [NSURL URLWithString: kGPUrlForMapService];
     self.geoprocess = [AGSGeoprocessor geoprocessorWithURL:url];
     self.geoprocess.delegate = self;
+    // Input parameter
     
+    /*AGSPolygon *polygon = self.mainMapView.visibleArea ;
+    AGSGeometryEngine *engine = [AGSGeometryEngine defaultGeometryEngine];
+    AGSPolygon *projectedPolygon = (AGSPolygon*)[engine projectGeometry:polygon toSpatialReference:[AGSSpatialReference spatialReferenceWithWKID:4267]];
+    
+    NSArray *features = [NSArray arrayWithObjects:projectedPolygon, nil ];
+    
+    AGSFeatureSet *featureSet = [[AGSFeatureSet alloc] init];
+    featureSet.features = features;
+         
+    AGSGPParameterValue *extent = [AGSGPParameterValue parameterWithName:@"aoi" type:AGSGPParameterTypeString value:featureSet]; 
+    
+    NSArray *params = [NSArray arrayWithObjects:extent,nil];
+    
+    [self.geoprocess submitJobWithParameters:params];*/
     [self.geoprocess submitJobWithParameters:nil];
 }
 
@@ -214,9 +233,12 @@
     
     AGSGPRasterData *raster = result.value;
     [self.mainMapView removeMapLayerWithName:@"results"];
+    [self.mainMapView removeMapLayerWithName:@"Edit Layer"];
     self.resultDynamicLayer = [AGSDynamicMapServiceLayer dynamicMapServiceLayerWithURL:url]; 
     NSLog(@"URL %@",raster.URL);
     self.topView = [self.mainMapView addMapLayer:self.resultDynamicLayer withName:@"results"];
+    
+    [self.mainMapView addMapLayer:self.editableFeatureLayer  withName:@"Edit Layer"];
 }
 
 

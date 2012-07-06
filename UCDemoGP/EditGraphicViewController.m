@@ -32,7 +32,9 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    
+    // the cursor to the textbox 
+    [self.textField becomeFirstResponder];
 }
 
 - (void)viewDidUnload
