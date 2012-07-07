@@ -205,11 +205,11 @@
     // Input parameter
     
     AGSPolygon *polygon = self.mainMapView.visibleArea ;
-    AGSGeometryEngine *engine = [AGSGeometryEngine defaultGeometryEngine];
-    AGSPolygon *projectedPolygon = (AGSPolygon*)[engine projectGeometry:polygon toSpatialReference:[AGSSpatialReference spatialReferenceWithWKID:4267]];
+    /*AGSGeometryEngine *engine = [AGSGeometryEngine defaultGeometryEngine];
+    AGSPolygon *projectedPolygon = (AGSPolygon*)[engine projectGeometry:polygon toSpatialReference:[AGSSpatialReference spatialReferenceWithWKID:4267]];*/
     
     AGSGraphic *graphic = [[AGSGraphic alloc] init];
-    graphic.geometry = projectedPolygon;
+    graphic.geometry = polygon;
     
     NSArray *features = [NSArray arrayWithObjects:graphic, nil ];
     
@@ -277,7 +277,8 @@
 
 - (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation*)op didExecuteWithResults:(NSArray *)results messages:(NSArray *)messages
 {
-    
+    // @todo grab the polygon and use it for the 
+    //http://ne2k864:6080/arcgis/rest/services/SoilStats/GPServer/SoilStats
 
 }
 
