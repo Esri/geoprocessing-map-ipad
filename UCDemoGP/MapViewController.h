@@ -19,6 +19,7 @@
 @property (nonatomic,strong) AGSDynamicMapServiceLayer *dynamicLayer;
 @property (nonatomic,strong) AGSSketchGraphicsLayer * sketch;
 @property (nonatomic,strong) AGSGeoprocessor *geoprocess;
+@property (nonatomic,strong) AGSGeoprocessor *geoprocessWaterShed;
 @property (nonatomic,strong) AGSDynamicMapServiceLayer *resultDynamicLayer;
 
 - (void)toggleShowingBasemaps:(CGFloat)width;

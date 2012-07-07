@@ -19,6 +19,8 @@
 #define kSoilSampleFeatureService @"http://ne2k864:6080/arcgis/rest/services/SoilSamplePoints/FeatureServer/0"
 #define kGPUrlForMapService @"http://ne2k864:6080/arcgis/rest/services/InterpolateLead/GPServer/InterpolateLead"
 
+#define kWaterShedGP @"http://ne2k864:6080/arcgis/rest/services/Watershed/GPServer/Watershed"
+
 @implementation MapViewController
 
 @synthesize mainMapView = _mainMapView;
@@ -28,6 +30,7 @@
 @synthesize sketch = _sketch;
 @synthesize geoprocess = _geoprocess;
 @synthesize resultDynamicLayer = _resultDynamicLayer;
+@synthesize geoprocessWaterShed = _geoprocessWaterShed;
 
 - (void)viewDidLoad
 {
@@ -201,20 +204,23 @@
     self.geoprocess.delegate = self;
     // Input parameter
     
-    /*AGSPolygon *polygon = self.mainMapView.visibleArea ;
+    AGSPolygon *polygon = self.mainMapView.visibleArea ;
     AGSGeometryEngine *engine = [AGSGeometryEngine defaultGeometryEngine];
     AGSPolygon *projectedPolygon = (AGSPolygon*)[engine projectGeometry:polygon toSpatialReference:[AGSSpatialReference spatialReferenceWithWKID:4267]];
     
-    NSArray *features = [NSArray arrayWithObjects:projectedPolygon, nil ];
+    AGSGraphic *graphic = [[AGSGraphic alloc] init];
+    graphic.geometry = projectedPolygon;
+    
+    NSArray *features = [NSArray arrayWithObjects:graphic, nil ];
     
     AGSFeatureSet *featureSet = [[AGSFeatureSet alloc] init];
     featureSet.features = features;
          
-    AGSGPParameterValue *extent = [AGSGPParameterValue parameterWithName:@"aoi" type:AGSGPParameterTypeString value:featureSet]; 
+    AGSGPParameterValue *extent = [AGSGPParameterValue parameterWithName:@"aoi" type:AGSGPParameterTypeFeatureRecordSetLayer value:featureSet]; 
     
     NSArray *params = [NSArray arrayWithObjects:extent,nil];
     
-    [self.geoprocess submitJobWithParameters:params];*/
+    [self.geoprocess submitJobWithParameters:params];
     [self.geoprocess submitJobWithParameters:nil];
 }
 
@@ -244,6 +250,40 @@
 
 - (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation*)op jobDidFail:(AGSGPJobInfo*)jobInfo { 
     NSLog(@"Error: %@",jobInfo.messages);
+}
+
+#pragma Tap and Hold
+- (void)mapView:(AGSMapView *)mapView didTapAndHoldAtPoint:(CGPoint)screen mapPoint:(AGSPoint *)mappoint graphics:(NSDictionary *)graphics
+{
+    // @todo get the map point and call the other gp to do the watershed    
+    NSURL* url = [NSURL URLWithString: kWaterShedGP];
+    self.geoprocessWaterShed = [AGSGeoprocessor geoprocessorWithURL:url];
+    self.geoprocessWaterShed.delegate = self;
+    
+    AGSGraphic *graphic = [[AGSGraphic alloc] init];
+    graphic.geometry = mappoint;
+    
+    NSArray *features = [NSArray arrayWithObjects:graphic, nil ];
+    
+    AGSFeatureSet *featureSet = [[AGSFeatureSet alloc] init];
+    featureSet.features = features;
+    
+    AGSGPParameterValue *initPoint = [AGSGPParameterValue parameterWithName:@"Watersehd_Point" type:AGSGPParameterTypeFeatureRecordSetLayer value:featureSet]; 
+    
+    NSArray *params = [NSArray arrayWithObjects:initPoint,nil];
+    
+    [self.geoprocessWaterShed executeWithParameters:params];
+}
+
+- (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation*)op didExecuteWithResults:(NSArray *)results messages:(NSArray *)messages
+{
+    
+
+}
+
+- (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation*)op didFailExecuteWithError:(NSError*)error
+{
+    NSLog(@"Execute with Errors %@", error);
 }
 
 @end
