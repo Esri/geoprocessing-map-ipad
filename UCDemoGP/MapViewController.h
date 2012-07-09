@@ -10,8 +10,9 @@
 #import <ArcGIS/ArcGIS.h>
 
 #import "EditGraphicViewController.h"
+#import "GraphViewController.h"
 
-@interface MapViewController : UIViewController <AGSMapViewLayerDelegate,AGSMapViewTouchDelegate,EditGraphicDelegate,AGSGeoprocessorDelegate>
+@interface MapViewController : UIViewController <AGSMapViewLayerDelegate,AGSMapViewTouchDelegate,EditGraphicDelegate,AGSGeoprocessorDelegate,GraphDelegate>
 
 @property (nonatomic,strong) IBOutlet AGSMapView *mainMapView;
 @property (nonatomic,strong) UIView *topView;
@@ -20,7 +21,10 @@
 @property (nonatomic,strong) AGSSketchGraphicsLayer * sketch;
 @property (nonatomic,strong) AGSGeoprocessor *geoprocess;
 @property (nonatomic,strong) AGSGeoprocessor *geoprocessWaterShed;
+@property (nonatomic,strong) AGSGeoprocessor *geoprocessDetails;
 @property (nonatomic,strong) AGSDynamicMapServiceLayer *resultDynamicLayer;
+@property (nonatomic,strong) AGSPolygon *lastWaterShedPolygon;
+@property (nonatomic,strong) AGSGraphicsLayer *graphicsLayer;
 
 - (void)toggleShowingBasemaps:(CGFloat)width;
 

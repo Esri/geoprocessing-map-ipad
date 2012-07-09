@@ -20,6 +20,7 @@
 #define kGPUrlForMapService @"http://ne2k864:6080/arcgis/rest/services/InterpolateLead/GPServer/InterpolateLead"
 
 #define kWaterShedGP @"http://ne2k864:6080/arcgis/rest/services/Watershed/GPServer/Watershed"
+#define kSoilStatsGP @"http://ne2k864:6080/arcgis/rest/services/SoilStats/GPServer/SoilStats"
 
 @implementation MapViewController
 
@@ -31,6 +32,10 @@
 @synthesize geoprocess = _geoprocess;
 @synthesize resultDynamicLayer = _resultDynamicLayer;
 @synthesize geoprocessWaterShed = _geoprocessWaterShed;
+@synthesize lastWaterShedPolygon = _lastWaterShedPolygon;
+@synthesize graphicsLayer = _graphicsLayer;
+@synthesize geoprocessDetails = _geoprocessDetails;
+
 
 - (void)viewDidLoad
 {
@@ -271,20 +276,81 @@
     AGSGPParameterValue *initPoint = [AGSGPParameterValue parameterWithName:@"Watersehd_Point" type:AGSGPParameterTypeFeatureRecordSetLayer value:featureSet]; 
     
     NSArray *params = [NSArray arrayWithObjects:initPoint,nil];
+    self.geoprocessWaterShed.outputSpatialReference = self.mainMapView.spatialReference;
     
     [self.geoprocessWaterShed executeWithParameters:params];
 }
 
 - (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation*)op didExecuteWithResults:(NSArray *)results messages:(NSArray *)messages
 {
-    // @todo grab the polygon and use it for the 
-    //http://ne2k864:6080/arcgis/rest/services/SoilStats/GPServer/SoilStats
-
+    
+    for (AGSGPParameterValue* param in results) { 
+        // Use the Polygon for the next GP to get the graphic
+        if ( [param.name isEqualToString:@"Watershed_Output"] == YES )
+        {
+            AGSFeatureSet *featureSetResults = param.value;
+            if ( featureSetResults.features.count > 0 ) {
+                self.lastWaterShedPolygon = [featureSetResults.features objectAtIndex:0];
+                
+                NSURL* url = [NSURL URLWithString: kSoilStatsGP];           
+                self.geoprocessDetails = [AGSGeoprocessor geoprocessorWithURL:url];
+                self.geoprocessDetails.delegate = self;
+                               
+                AGSGPParameterValue *initPoly = [AGSGPParameterValue parameterWithName:@"Area_of_Interest" type:AGSGPParameterTypeFeatureRecordSetLayer value:featureSetResults]; 
+                
+                NSArray *params = [NSArray arrayWithObjects:initPoly,nil];
+                
+                self.geoprocessDetails.outputSpatialReference = self.mainMapView.spatialReference;
+                [self.geoprocessDetails executeWithParameters:params];
+                return;
+            }
+        }
+        
+        if ( [param.name isEqualToString:@"Lead_Stats"] == YES )
+        {
+            AGSFeatureSet *featureSetResults = param.value;
+            if ( featureSetResults.features.count > 0 )
+            {
+                AGSGraphic *polyGraphic = [featureSetResults.features objectAtIndex:0];
+                
+                NSString *mean = [polyGraphic.attributes objectForKey:@"MEAN"];
+                
+                [self.mainMapView removeMapLayerWithName:@"My Graphics Layer"];
+                self.graphicsLayer = [AGSGraphicsLayer graphicsLayer];
+                [self.mainMapView addMapLayer:self.graphicsLayer withName:@"My Graphics Layer"];
+                
+                // display the polygon     
+                AGSSimpleFillSymbol *fillSymbol =
+                [AGSSimpleFillSymbol simpleFillSymbol];
+                fillSymbol.color = [[UIColor purpleColor] colorWithAlphaComponent:0.25];
+                fillSymbol.outline.color = [UIColor darkGrayColor];
+                // Add symbology
+                polyGraphic.symbol = fillSymbol;
+                
+                [self.graphicsLayer addGraphic:polyGraphic];
+                [self.graphicsLayer dataChanged];
+                
+                // plot it in a graphic                
+                GraphViewController *graph = [[GraphViewController alloc] initWithNibName:@"GraphViewController" bundle:nil];
+                graph.delegate = self;
+                graph.valueForGraph = mean;
+                               
+                graph.modalPresentationStyle = UIModalPresentationFormSheet;
+                [self presentModalViewController:graph animated:YES]; 
+                
+            }            
+        }
+	}
 }
 
 - (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation*)op didFailExecuteWithError:(NSError*)error
 {
     NSLog(@"Execute with Errors %@", error);
+}
+
+- (void) finished
+{
+    [self dismissModalViewControllerAnimated:YES];
 }
 
 @end

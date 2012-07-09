@@ -26,6 +26,8 @@
 		88D0769815A72E71007808FE /* ArcGIS.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 88D0769715A72E71007808FE /* ArcGIS.bundle */; };
 		88D0769C15A78375007808FE /* EditGraphicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D0769A15A78375007808FE /* EditGraphicViewController.m */; };
 		88D0769D15A78375007808FE /* EditGraphicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88D0769B15A78375007808FE /* EditGraphicViewController.xib */; };
+		88EE1D7715AB7BA4003C286D /* GraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88EE1D7515AB7BA4003C286D /* GraphViewController.m */; };
+		88EE1D7815AB7BA4003C286D /* GraphViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88EE1D7615AB7BA4003C286D /* GraphViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -54,6 +56,9 @@
 		88D0769915A78375007808FE /* EditGraphicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditGraphicViewController.h; sourceTree = "<group>"; };
 		88D0769A15A78375007808FE /* EditGraphicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditGraphicViewController.m; sourceTree = "<group>"; };
 		88D0769B15A78375007808FE /* EditGraphicViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditGraphicViewController.xib; sourceTree = "<group>"; };
+		88EE1D7415AB7BA4003C286D /* GraphViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GraphViewController.h; sourceTree = "<group>"; };
+		88EE1D7515AB7BA4003C286D /* GraphViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GraphViewController.m; sourceTree = "<group>"; };
+		88EE1D7615AB7BA4003C286D /* GraphViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GraphViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -126,6 +131,9 @@
 				88D0769915A78375007808FE /* EditGraphicViewController.h */,
 				88D0769A15A78375007808FE /* EditGraphicViewController.m */,
 				88D0769B15A78375007808FE /* EditGraphicViewController.xib */,
+				88EE1D7415AB7BA4003C286D /* GraphViewController.h */,
+				88EE1D7515AB7BA4003C286D /* GraphViewController.m */,
+				88EE1D7615AB7BA4003C286D /* GraphViewController.xib */,
 			);
 			path = UCDemoGP;
 			sourceTree = "<group>";
@@ -195,6 +203,7 @@
 				88D0768115A72CF6007808FE /* MapViewController.xib in Resources */,
 				88D0769815A72E71007808FE /* ArcGIS.bundle in Resources */,
 				88D0769D15A78375007808FE /* EditGraphicViewController.xib in Resources */,
+				88EE1D7815AB7BA4003C286D /* GraphViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -209,6 +218,7 @@
 				88D0767B15A72CF6007808FE /* AppDelegate.m in Sources */,
 				88D0767E15A72CF6007808FE /* MapViewController.m in Sources */,
 				88D0769C15A78375007808FE /* EditGraphicViewController.m in Sources */,
+				88EE1D7715AB7BA4003C286D /* GraphViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -336,6 +346,7 @@
 				88D0768615A72CF6007808FE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
