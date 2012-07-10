@@ -29,7 +29,47 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+
+    // Replicate the starting chart from the "ElectionBars" example.
+    //self.barData = [[DemoData electionResults2009] indexedData];
+    WSChart *aChart = [WSChart barPlotWithFrame:[self.view bounds]
+                                           data:self.barData
+                                      barColors:[NSArray
+                                                 arrayWithObjects:[UIColor CSSColorBlack],
+                                                 [UIColor CSSColorYellow],
+                                                 [UIColor CSSColorRed],
+                                                 [UIColor CSSColorGreen],
+                                                 [UIColor CSSColorTeal],
+                                                 [UIColor CSSColorGray], nil]
+                                          style:kChartBarPlain
+                                    colorScheme:kColorWhite];
+    [self.electionChart addPlotsFromChart:aChart];
+    [self.electionChart scaleAllAxisYD:NARangeMake(-10, 45)];
+    [self.electionChart setAllAxisLocationXD:-0.5];
+    [self.electionChart setAllAxisLocationYD:0];
+    WSPlotBar *bar = (WSPlotBar *)[[self.electionChart plotAtIndex:0] view];
+    [bar setValue:[UIColor blackColor]
+       forKeyPath:@"dataDelegate.dataD.values.customDatum.outlineColor"];
+    WSPlotAxis *axis = [self.electionChart firstPlotAxis];
+    [[axis ticksX] setTicksStyle:kTicksLabels];
+    [[axis ticksY] setTicksStyle:kTicksLabels];
+    [[axis ticksY] ticksWithNumbers:[NSArray arrayWithObjects:
+                                     [NSNumber numberWithFloat:0],
+                                     [NSNumber numberWithFloat:10],
+                                     [NSNumber numberWithFloat:20],
+                                     [NSNumber numberWithFloat:30],
+                                     nil]
+                             labels:[NSArray arrayWithObjects:@"",
+                                     @"10%", @"20%", @"30%", nil]];
+    [self.electionChart setChartTitle:NSLocalizedString(@"Bundestagselection 2009", @"")];
+    
+    // Configure the single tap feature.
+    WSPlotController *aCtrl = [self.electionChart plotAtIndex:0];
+    aCtrl.tapEnabled = YES;
+    aCtrl.delegate = self;
+    aCtrl.hitTestMethod = kHitTestX;
+    aCtrl.hitResponseMethod = kHitResponseDatum;
+
 }
 
 - (void)viewDidUnload

@@ -8,15 +8,21 @@
 
 #import <UIKit/UIKit.h>
 
+#import "PowerPlot.h"
+
 @protocol GraphDelegate <NSObject>
 
 - (void) finished;
 
 @end
 
-@interface GraphViewController : UIViewController
+@interface GraphViewController : UIViewController <WSControllerGestureDelegate>
 
 @property (nonatomic,strong) NSString *valueForGraph;
 @property (nonatomic,strong) id <GraphDelegate> delegate;
+
+@property (nonatomic, retain) WSData *barData;
+@property (nonatomic, retain) IBOutlet WSChart *electionChart;
+@property (nonatomic, retain) IBOutlet UILabel *resultLabel;
 
 @end
