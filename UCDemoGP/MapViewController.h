@@ -25,6 +25,9 @@
 @property (nonatomic,strong) AGSDynamicMapServiceLayer *resultDynamicLayer;
 @property (nonatomic,strong) AGSPolygon *lastWaterShedPolygon;
 @property (nonatomic,strong) AGSGraphicsLayer *graphicsLayer;
+@property (nonatomic,strong) IBOutlet UIImageView *imageView;
+@property (nonatomic) CGRect originalImageFrame; 
+@property (nonatomic) CGRect imageFrame;  
 
 - (void)toggleShowingBasemaps:(CGFloat)width;
 

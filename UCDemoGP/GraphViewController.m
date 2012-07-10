@@ -18,7 +18,7 @@
 #define CATEGORY @"CATEGORY"
 
 #define AXIS_START 0
-#define AXIS_END 50
+#define AXIS_END 30
 
 @implementation GraphViewController
 
@@ -42,8 +42,7 @@
 {
     //Create graph and set it as host view's graph
     self.graph = [[CPTXYGraph alloc] initWithFrame:CGRectZero];
-	CPTTheme *theme = [CPTTheme themeNamed:kCPTPlainWhiteTheme];
-	[self.graph applyTheme:theme];
+	
 	self.graph.frame						  = self.view.bounds;
     
     self.graphHost.hostedGraph			= self.graph;
@@ -53,7 +52,7 @@
     self.graph.plotAreaFrame.paddingRight = 20.0f;
     self.graph.plotAreaFrame.paddingBottom = 70.0f;
     self.graph.plotAreaFrame.paddingLeft = 70.0f;
-    [self.graph applyTheme:[CPTTheme themeNamed:kCPTDarkGradientTheme]];
+    [self.graph applyTheme:[CPTTheme themeNamed:kCPTPlainWhiteTheme]];
     
     //set axes ranges
     CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)self.graph.defaultPlotSpace;
@@ -69,8 +68,8 @@
     CPTMutableTextStyle *textStyle = [CPTMutableTextStyle textStyle];
     textStyle.fontName = @"Helvetica";
     textStyle.fontSize = 14;
-    textStyle.color = [CPTColor whiteColor];
-    axisSet.xAxis.title = @"AVEREGES";
+    textStyle.color = [CPTColor blackColor];
+    axisSet.xAxis.title = @"AVERAGES";
     axisSet.yAxis.title = @"VALUES";
     axisSet.xAxis.titleTextStyle = textStyle;
     axisSet.yAxis.titleTextStyle = textStyle;
@@ -82,7 +81,7 @@
     axisSet.yAxis.labelOffset = 3.0f;
     //set axes' line styles and interval ticks
     CPTMutableLineStyle *lineStyle = [CPTMutableLineStyle lineStyle];
-    lineStyle.lineColor = [CPTColor whiteColor];
+    lineStyle.lineColor = [CPTColor blackColor];
     lineStyle.lineWidth = 3.0f;
     axisSet.xAxis.axisLineStyle = lineStyle;
     axisSet.yAxis.axisLineStyle = lineStyle;

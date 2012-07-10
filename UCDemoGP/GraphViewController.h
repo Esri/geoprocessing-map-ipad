@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-#import "PowerPlot.h"
+
 #import "CorePlot-CocoaTouch.h"
 #import "ColoredBarChart.h"
 

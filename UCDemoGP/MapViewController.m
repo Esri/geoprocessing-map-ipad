@@ -35,6 +35,9 @@
 @synthesize lastWaterShedPolygon = _lastWaterShedPolygon;
 @synthesize graphicsLayer = _graphicsLayer;
 @synthesize geoprocessDetails = _geoprocessDetails;
+@synthesize imageView = _imageView;
+@synthesize originalImageFrame = _originalImageFrame;
+@synthesize imageFrame = _imageFrame;
 
 
 - (void)viewDidLoad
@@ -118,6 +121,10 @@
         [self.mainMapView addMapLayer:self.editableFeatureLayer  withName:@"Edit Layer"];
         return;
     }
+    else if ( panGr.state == UIGestureRecognizerStateBegan) {
+        self.originalImageFrame = self.imageView.frame;
+    }
+    
     
     CGPoint newPoint = [panGr translationInView:self.view];
     
@@ -126,6 +133,7 @@
     if (dx < 0) {
         CGFloat newWidth = CGRectGetWidth(self.mainMapView.frame) + dx;
         width = newWidth < 0 ? 0 : newWidth;
+        self.imageView.transform = CGAffineTransformMakeTranslation(dx, 0);
     }
     else if (dx > 0) {
         CGFloat newWidth = CGRectGetWidth(self.mainMapView.frame) - dx;
@@ -133,6 +141,8 @@
     }
     NSLog(@"width: %f dx: %f", width, dx);
     [self toggleShowingBasemaps:width];
+    
+    
 }
 
 
@@ -157,6 +167,7 @@
     mapRect.size.width =  width;
     
     self.topView.frame = mapRect;
+    
     
 }
 
