@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 
 #import "PowerPlot.h"
+#import "CorePlot-CocoaTouch.h"
+#import "ColoredBarChart.h"
 
 @protocol GraphDelegate <NSObject>
 
@@ -16,13 +18,15 @@
 
 @end
 
-@interface GraphViewController : UIViewController <WSControllerGestureDelegate>
+@interface GraphViewController : UIViewController <CPTPlotDataSource>
 
 @property (nonatomic,strong) NSString *valueForGraph;
 @property (nonatomic,strong) id <GraphDelegate> delegate;
+@property (nonatomic,strong) CPTGraph *graph;
+@property (nonatomic, strong) IBOutlet CPTGraphHostingView *graphHost;
+@property (nonatomic,strong) NSMutableArray *chartValuesArray;
+@property (nonatomic,strong) NSMutableArray *chartLabelArray;
 
-@property (nonatomic, retain) WSData *barData;
-@property (nonatomic, retain) IBOutlet WSChart *electionChart;
-@property (nonatomic, retain) IBOutlet UILabel *resultLabel;
+- (void)generateBarPlot;
 
 @end
