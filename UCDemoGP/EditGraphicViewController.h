@@ -21,6 +21,7 @@
 @property (nonatomic,strong) AGSGraphic *graphic;
 @property (nonatomic,strong) NSString *attributeToEdit;
 @property (nonatomic,strong) IBOutlet UITextField *textField;
+@property (nonatomic, strong) NSMutableArray *addedFeaturesArray;
 
 @property (nonatomic,strong) id <EditGraphicDelegate> delegate;
 

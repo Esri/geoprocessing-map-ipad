@@ -19,6 +19,7 @@
 @synthesize attributeToEdit = _attributeToEdit;
 @synthesize textField = _textField;
 @synthesize delegate = _delegate;
+@synthesize addedFeaturesArray = _addedFeaturesArray;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -61,6 +62,9 @@
     NSArray *features = [[NSArray alloc] initWithObjects:self.graphic, nil];
     [self.editableFeatureLayer addFeatures:features];
     [self.editableFeatureLayer refresh];
+    
+    // Add the feature to keep track and delete when the app finish
+    [self.addedFeaturesArray addObject:self.graphic];
     
     [self.delegate finishedEditing:self.graphic];
     

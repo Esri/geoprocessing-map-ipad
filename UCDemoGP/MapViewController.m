@@ -15,6 +15,7 @@
 
 
 // Map Services used
+#define kBaseMapTiled @"http://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer"
 #define kBaseMapDynamicMapService @"http://ne2k864:6080/arcgis/rest/services/lead/MapServer"
 #define kSoilSampleFeatureService @"http://ne2k864:6080/arcgis/rest/services/SoilSamplePoints/FeatureServer/0"
 #define kGPUrlForMapService @"http://ne2k864:6080/arcgis/rest/services/InterpolateLead/GPServer/InterpolateLead"
@@ -23,6 +24,8 @@
 
 #define kWaterShedGP @"http://ne2k864:6080/arcgis/rest/services/Watershed/GPServer/Watershed"
 #define kSoilStatsGP @"http://ne2k864:6080/arcgis/rest/services/SoilStats/GPServer/SoilStats"
+
+#define kDynamicMapAlpha 0.7
 
 @implementation MapViewController
 
@@ -40,13 +43,19 @@
 @synthesize imageView = _imageView;
 @synthesize originalTransform = _originalTransform;
 @synthesize swirly = _swirly;
+@synthesize popup = _popup;
+@synthesize lastScreen = _lastScreen;
+@synthesize addedFeaturesArray = _addedFeaturesArray;
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    // init object states
     self.imageView.hidden = YES;
+    self.swirly.hidden = YES;
+    self.addedFeaturesArray = [[NSMutableArray alloc] init];
     
     self.mainMapView.layerDelegate = self;
     //xmin: -10979558.400620 ymin: 3521601.137391 xmax: -10815627.093085 ymax: 3632408.393633
@@ -59,8 +68,9 @@
     
     [self.mainMapView zoomToEnvelope:env animated:YES];
     
-    AGSOpenStreetMapLayer *osm = [[AGSOpenStreetMapLayer alloc] init];
-    [self.mainMapView addMapLayer:osm withName:@"basemap"];
+    NSURL *url = [NSURL URLWithString:kBaseMapTiled];
+    AGSTiledMapServiceLayer *tiled = [AGSTiledMapServiceLayer tiledMapServiceLayerWithURL:url];
+    [self.mainMapView addMapLayer:tiled withName:@"basemap"];
     
     // Real base map
     self.dynamicLayer = 
@@ -68,6 +78,7 @@
     dynamicMapServiceLayerWithURL:[NSURL URLWithString:kBaseMapDynamicMapService]]; 
     self.dynamicLayer.visibleLayers = [[NSArray alloc] initWithObjects:@"1", nil];
     self.topView = [self.mainMapView addMapLayer:self.dynamicLayer withName:@"dynamic"];
+    self.topView.alpha = kDynamicMapAlpha;
     
     // editable layer
     self.editableFeatureLayer = [AGSFeatureLayer featureServiceLayerWithURL:[NSURL URLWithString:kSoilSampleFeatureService] mode:AGSFeatureLayerModeOnDemand];
@@ -76,9 +87,9 @@
     
     self.mainMapView.touchDelegate = self;
     
-    
+    // Setting up the gesture
     UIPanGestureRecognizer *panGR = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panned:)];
-    panGR.minimumNumberOfTouches = 3;
+    panGR.minimumNumberOfTouches = 2;
     panGR.maximumNumberOfTouches = 3;
     panGR.delegate = self;
     [self.view addGestureRecognizer:panGR];
@@ -122,6 +133,7 @@
         [self.mainMapView removeMapLayerWithName:@"Edit Layer"];
         
         self.topView = [self.mainMapView addMapLayer:self.resultDynamicLayer withName:@"results"];
+        self.topView.alpha = kDynamicMapAlpha;
         [self.mainMapView addMapLayer:self.editableFeatureLayer  withName:@"Edit Layer"];
         self.imageView.transform = self.originalTransform;
         return;
@@ -182,6 +194,8 @@
 - (void)mapView:(AGSMapView *)mapView didClickAtPoint:(CGPoint)screen mapPoint:(AGSPoint *)mappoint graphics:(NSDictionary *)graphics
 {
     AGSGraphic* newGraphic = nil;
+    self.lastScreen = screen;
+    
     // TODO add feature and edit the properties
     if ( self.editableFeatureLayer.types.count > 0 ) {
         AGSFeatureType* featureType = [self.editableFeatureLayer.types objectAtIndex:0];  
@@ -204,9 +218,14 @@
         edit.graphic = copiedGraphic;
         edit.editableFeatureLayer = self.editableFeatureLayer;
         edit.attributeToEdit = @"PB_ICP40";
+        edit.addedFeaturesArray = self.addedFeaturesArray;
         
-        edit.modalPresentationStyle = UIModalPresentationFormSheet;
-        [self presentModalViewController:edit animated:YES];        
+        self.popup = [[UIPopoverController alloc] 
+                      initWithContentViewController:edit]; 
+        
+        self.popup.popoverContentSize = CGSizeMake(320, 140);
+        
+        [self.popup presentPopoverFromRect:CGRectMake(self.lastScreen.x, self.lastScreen.y, 100, 50) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
         
     }
     
@@ -269,6 +288,7 @@
     self.resultDynamicLayer = [AGSDynamicMapServiceLayer dynamicMapServiceLayerWithURL:url]; 
     NSLog(@"URL %@",raster.URL);
     self.topView = [self.mainMapView addMapLayer:self.resultDynamicLayer withName:@"results"];
+    self.topView.alpha = kDynamicMapAlpha;
     
     [self.mainMapView addMapLayer:self.editableFeatureLayer  withName:@"Edit Layer"];
     
@@ -279,11 +299,14 @@
 
 - (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation*)op jobDidFail:(AGSGPJobInfo*)jobInfo { 
     NSLog(@"Error: %@",jobInfo.messages);
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"GP Failed" message:@"The GP returned failed" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [alert show];
 }
 
 #pragma Tap and Hold
 - (void)mapView:(AGSMapView *)mapView didTapAndHoldAtPoint:(CGPoint)screen mapPoint:(AGSPoint *)mappoint graphics:(NSDictionary *)graphics
 {
+    self.lastScreen = screen;
     [self showSwirlyProcess];
     
     // @todo get the map point and call the other gp to do the watershed    
@@ -363,8 +386,15 @@
                                
                 [self hideSwirlyProcess];
                 
-                graph.modalPresentationStyle = UIModalPresentationFormSheet;
-                [self presentModalViewController:graph animated:YES]; 
+                //graph.modalPresentationStyle = UIModalPresentationFormSheet;
+                //[self presentModalViewController:graph animated:YES]; 
+                
+                self.popup = [[UIPopoverController alloc] 
+                                            initWithContentViewController:graph];     
+                
+                [self.popup presentPopoverFromRect:CGRectMake(self.lastScreen.x, self.lastScreen.y, 100, 100) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+                
+                
                 
             }            
         }
@@ -386,27 +416,20 @@
     self.swirly.hidden = NO;
     
     // Initialize the swirly
-    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        // Phone-specific sizes
-        self.swirly.font            = [UIFont fontWithName:@"Futura-Medium" size:30.0];
-        self.swirly.thickness       = 30.0f;
-        self.swirly.shadowOffset    = CGSizeMake(1,1);
-    } 
-    else {
-        // Tablet-specific sizes
-        self.swirly.font            = [UIFont fontWithName:@"Futura-Medium" size:44.0];
-        self.swirly.thickness       = 50.0f;
-        self.swirly.shadowOffset    = CGSizeMake(2,2);
-    }
+   
+    self.swirly.font            = [UIFont fontWithName:@"Futura-Medium" size:14.0];
+    self.swirly.thickness       = 10.0f;
+    self.swirly.shadowOffset    = CGSizeMake(1,1);
+    
     self.swirly.backgroundColor = [UIColor clearColor];
-    self.swirly.textColor       = [UIColor whiteColor];
+    self.swirly.textColor       = [UIColor lightGrayColor];
     self.swirly.shadowColor     = [UIColor blackColor];
     
     [self.swirly addThreshold:0.10 
-                    withColor:[UIColor greenColor] 
+                    withColor:[UIColor lightGrayColor] 
                           rpm:15
-                        label:@"Processing"
-                     segments:4];
+                        label:@"Analysing"
+                     segments:6];
     
     self.swirly.value = 15;
 }

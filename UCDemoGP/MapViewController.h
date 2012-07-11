@@ -29,6 +29,9 @@
 @property (nonatomic,strong) IBOutlet UIImageView *imageView;
 @property (nonatomic) CGAffineTransform originalTransform; 
 @property (nonatomic,strong) IBOutlet F3Swirly *swirly;
+@property (nonatomic,strong) UIPopoverController *popup;
+@property (nonatomic) CGPoint lastScreen;
+@property (nonatomic, strong) NSMutableArray *addedFeaturesArray;
 
 - (void)toggleShowingBasemaps:(CGFloat)width;
 - (void) showSwirlyProcess;
