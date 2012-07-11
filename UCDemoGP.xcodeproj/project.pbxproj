@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8814D76E15AE417100CCAEE4 /* dropDownBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8814D76B15AE417100CCAEE4 /* dropDownBtn.png */; };
+		8814D76F15AE417100CCAEE4 /* slider2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8814D76C15AE417100CCAEE4 /* slider2.png */; };
+		8814D77015AE417100CCAEE4 /* surfaceBtn3.png in Resources */ = {isa = PBXBuildFile; fileRef = 8814D76D15AE417100CCAEE4 /* surfaceBtn3.png */; };
 		88D0766B15A72CF5007808FE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D0766A15A72CF5007808FE /* UIKit.framework */; };
 		88D0766D15A72CF5007808FE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D0766C15A72CF5007808FE /* Foundation.framework */; };
 		88D0766F15A72CF5007808FE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D0766E15A72CF5007808FE /* CoreGraphics.framework */; };
@@ -58,6 +61,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8814D76B15AE417100CCAEE4 /* dropDownBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dropDownBtn.png; sourceTree = "<group>"; };
+		8814D76C15AE417100CCAEE4 /* slider2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider2.png; sourceTree = "<group>"; };
+		8814D76D15AE417100CCAEE4 /* surfaceBtn3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = surfaceBtn3.png; sourceTree = "<group>"; };
 		88D0766615A72CF5007808FE /* UCDemoGP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UCDemoGP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88D0766A15A72CF5007808FE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		88D0766C15A72CF5007808FE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -268,6 +274,7 @@
 				88EE1E7815AC9FD0003C286D /* CorePlot */,
 				88D0767915A72CF6007808FE /* AppDelegate.h */,
 				88D0767A15A72CF6007808FE /* AppDelegate.m */,
+				88EE1F3515AE11EC003C286D /* applicationDefines.h */,
 				88D0767C15A72CF6007808FE /* MapViewController.h */,
 				88D0767D15A72CF6007808FE /* MapViewController.m */,
 				88D0767F15A72CF6007808FE /* MapViewController.xib */,
@@ -275,7 +282,6 @@
 				88D0769915A78375007808FE /* EditGraphicViewController.h */,
 				88D0769A15A78375007808FE /* EditGraphicViewController.m */,
 				88D0769B15A78375007808FE /* EditGraphicViewController.xib */,
-				88EE1F3515AE11EC003C286D /* applicationDefines.h */,
 				88EE1F3B15AE1BEB003C286D /* CleanUpProcess.h */,
 				88EE1F3C15AE1BEC003C286D /* CleanUpProcess.m */,
 			);
@@ -407,6 +413,9 @@
 		88EE1F0115ACD8A9003C286D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8814D76B15AE417100CCAEE4 /* dropDownBtn.png */,
+				8814D76C15AE417100CCAEE4 /* slider2.png */,
+				8814D76D15AE417100CCAEE4 /* surfaceBtn3.png */,
 				88EE1F2415AE0880003C286D /* Animation */,
 				88EE1F2215ADD7E3003C286D /* icon144px.png */,
 				88EE1F1A15ADD78F003C286D /* Icon-72.png */,
@@ -525,6 +534,9 @@
 				88EE1F3215AE0880003C286D /* loading6.png in Resources */,
 				88EE1F3315AE0880003C286D /* loading7.png in Resources */,
 				88EE1F3415AE0880003C286D /* loading8.png in Resources */,
+				8814D76E15AE417100CCAEE4 /* dropDownBtn.png in Resources */,
+				8814D76F15AE417100CCAEE4 /* slider2.png in Resources */,
+				8814D77015AE417100CCAEE4 /* surfaceBtn3.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

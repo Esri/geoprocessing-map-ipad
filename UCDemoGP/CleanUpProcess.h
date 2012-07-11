@@ -14,7 +14,7 @@
 @property (nonatomic, strong) NSMutableArray *addedFeaturesArray;
 @property (nonatomic, strong) AGSFeatureLayer *editableFeatureLayer;
 @property (nonatomic) BOOL bFinished;
-@property (nonatomic, strong) AGSMapView *mapView;
+
 
 - (void) cleanUp:(NSMutableArray*)featuresArray;
 

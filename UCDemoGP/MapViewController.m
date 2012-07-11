@@ -87,6 +87,11 @@
     [self.view addGestureRecognizer:panGR];
 }
 
+- (void)mapView:(AGSMapView *)mapView failedLoadingLayerForLayerView:(UIView<AGSLayerView> *)layerView baseLayer:(BOOL)baseLayer withError:(NSError *)error
+{
+    NSLog(@"Layer %@ failed with error %@", layerView.name, error);
+}
+
 - (void)mapViewDidLoad:(AGSMapView *)mapView  {
        
     // register for "MapDidEndPanning" notifications

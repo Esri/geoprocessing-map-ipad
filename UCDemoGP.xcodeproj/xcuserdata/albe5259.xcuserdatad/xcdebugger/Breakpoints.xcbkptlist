@@ -21,11 +21,11 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UCDemoGP/MapViewController.m"
-         timestampString = "363740041.791054"
+         timestampString = "363743088.638467"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "402"
-         endingLineNumber = "402"
+         startingLineNumber = "407"
+         endingLineNumber = "407"
          landmarkName = "-geoprocessor:operation:didFailExecuteWithError:"
          landmarkType = "5">
       </FileBreakpoint>
@@ -79,6 +79,19 @@
          startingLineNumber = "55"
          endingLineNumber = "55"
          landmarkName = "-applicationWillResignActive:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "UCDemoGP/MapViewController.m"
+         timestampString = "363743073.806663"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "92"
+         endingLineNumber = "92"
+         landmarkName = "-mapView:failedLoadingLayerForLayerView:baseLayer:withError:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>
