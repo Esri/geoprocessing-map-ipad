@@ -42,10 +42,10 @@
 @synthesize geoprocessDetails = _geoprocessDetails;
 @synthesize imageView = _imageView;
 @synthesize originalTransform = _originalTransform;
-@synthesize swirly = _swirly;
 @synthesize popup = _popup;
 @synthesize lastScreen = _lastScreen;
 @synthesize addedFeaturesArray = _addedFeaturesArray;
+@synthesize activityImageView = _activityImageView;
 
 
 - (void)viewDidLoad
@@ -54,7 +54,7 @@
     
     // init object states
     self.imageView.hidden = YES;
-    self.swirly.hidden = YES;
+    
     self.addedFeaturesArray = [[NSMutableArray alloc] init];
     
     self.mainMapView.layerDelegate = self;
@@ -332,6 +332,7 @@
 
 - (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation*)op didExecuteWithResults:(NSArray *)results messages:(NSArray *)messages
 {
+    NSLog(@"How many results are coming back? %d", results.count);
     
     for (AGSGPParameterValue* param in results) { 
         // Use the Polygon for the next GP to get the graphic
@@ -385,12 +386,11 @@
                 graph.valueForGraph = mean;
                                
                 [self hideSwirlyProcess];
-                
-                //graph.modalPresentationStyle = UIModalPresentationFormSheet;
-                //[self presentModalViewController:graph animated:YES]; 
-                
+                                
                 self.popup = [[UIPopoverController alloc] 
                                             initWithContentViewController:graph];     
+                
+                self.popup.popoverContentSize = CGSizeMake(320, 340);
                 
                 [self.popup presentPopoverFromRect:CGRectMake(self.lastScreen.x, self.lastScreen.y, 100, 100) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
                 
@@ -404,6 +404,10 @@
 - (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation*)op didFailExecuteWithError:(NSError*)error
 {
     NSLog(@"Execute with Errors %@", error);
+    [self hideSwirlyProcess];
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"GP Failed" message:@"No data to process here" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    [alert show];
 }
 
 - (void) finished
@@ -413,29 +417,51 @@
 
 - (void) showSwirlyProcess
 {
-    self.swirly.hidden = NO;
     
-    // Initialize the swirly
-   
-    self.swirly.font            = [UIFont fontWithName:@"Futura-Medium" size:14.0];
-    self.swirly.thickness       = 10.0f;
-    self.swirly.shadowOffset    = CGSizeMake(1,1);
+    //Create the first status image and the indicator view
+    UIImage *statusImage = [UIImage imageNamed:@"loading1.png"];
+    self.activityImageView = [[UIImageView alloc] 
+                                      initWithImage:statusImage];
     
-    self.swirly.backgroundColor = [UIColor clearColor];
-    self.swirly.textColor       = [UIColor lightGrayColor];
-    self.swirly.shadowColor     = [UIColor blackColor];
     
-    [self.swirly addThreshold:0.10 
-                    withColor:[UIColor lightGrayColor] 
-                          rpm:15
-                        label:@"Analysing"
-                     segments:6];
+    //Add more images which will be used for the animation
+    self.activityImageView.animationImages = [NSArray arrayWithObjects:
+                                         [UIImage imageNamed:@"loading1.png"],
+                                         [UIImage imageNamed:@"loading2.png"],
+                                         [UIImage imageNamed:@"loading3.png"],
+                                         [UIImage imageNamed:@"loading4.png"],
+                                         [UIImage imageNamed:@"loading5.png"],
+                                         [UIImage imageNamed:@"loading6.png"],
+                                         [UIImage imageNamed:@"loading7.png"],
+                                         [UIImage imageNamed:@"loading8.png"],
+                                         nil];
     
-    self.swirly.value = 15;
+    
+    //Set the duration of the animation (play with it
+    //until it looks nice for you)
+    self.activityImageView.animationDuration = 0.8;
+    
+    
+    //Position the activity image view somewhere in 
+    //the middle of your current view
+    self.activityImageView.frame = CGRectMake(
+                                         (self.view.frame.size.width/2
+                                         -statusImage.size.width/2) + 110, 
+                                         (self.view.frame.size.height/2
+                                         -statusImage.size.height/2) + 120, 
+                                         statusImage.size.width, 
+                                         statusImage.size.height);
+    
+    //Start the animation
+    [self.activityImageView startAnimating];
+    
+    [self.view addSubview:self.activityImageView];    
+    
 }
 - (void) hideSwirlyProcess
 {
-    self.swirly.hidden = YES;
+    [self.activityImageView stopAnimating];
+    [self.activityImageView removeFromSuperview];
 }
 
 @end
