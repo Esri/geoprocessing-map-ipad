@@ -11,6 +11,7 @@
 
 #import "EditGraphicViewController.h"
 #import "GraphViewController.h"
+#import "F3Swirly.h"
 
 @interface MapViewController : UIViewController <AGSMapViewLayerDelegate,AGSMapViewTouchDelegate,EditGraphicDelegate,AGSGeoprocessorDelegate,GraphDelegate>
 
@@ -26,9 +27,11 @@
 @property (nonatomic,strong) AGSPolygon *lastWaterShedPolygon;
 @property (nonatomic,strong) AGSGraphicsLayer *graphicsLayer;
 @property (nonatomic,strong) IBOutlet UIImageView *imageView;
-@property (nonatomic) CGRect originalImageFrame; 
-@property (nonatomic) CGRect imageFrame;  
+@property (nonatomic) CGAffineTransform originalTransform; 
+@property (nonatomic,strong) IBOutlet F3Swirly *swirly;
 
 - (void)toggleShowingBasemaps:(CGFloat)width;
+- (void) showSwirlyProcess;
+- (void) hideSwirlyProcess;
 
 @end

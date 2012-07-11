@@ -18,6 +18,8 @@
 #define kBaseMapDynamicMapService @"http://ne2k864:6080/arcgis/rest/services/lead/MapServer"
 #define kSoilSampleFeatureService @"http://ne2k864:6080/arcgis/rest/services/SoilSamplePoints/FeatureServer/0"
 #define kGPUrlForMapService @"http://ne2k864:6080/arcgis/rest/services/InterpolateLead/GPServer/InterpolateLead"
+#define kGPUrlForMapServiceResults @"/results/Lead_Concentrations"
+#define kGPUrlForMapServiceJobs @"/jobs/"
 
 #define kWaterShedGP @"http://ne2k864:6080/arcgis/rest/services/Watershed/GPServer/Watershed"
 #define kSoilStatsGP @"http://ne2k864:6080/arcgis/rest/services/SoilStats/GPServer/SoilStats"
@@ -36,13 +38,15 @@
 @synthesize graphicsLayer = _graphicsLayer;
 @synthesize geoprocessDetails = _geoprocessDetails;
 @synthesize imageView = _imageView;
-@synthesize originalImageFrame = _originalImageFrame;
-@synthesize imageFrame = _imageFrame;
+@synthesize originalTransform = _originalTransform;
+@synthesize swirly = _swirly;
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    
+    self.imageView.hidden = YES;
     
     self.mainMapView.layerDelegate = self;
     //xmin: -10979558.400620 ymin: 3521601.137391 xmax: -10815627.093085 ymax: 3632408.393633
@@ -119,21 +123,24 @@
         
         self.topView = [self.mainMapView addMapLayer:self.resultDynamicLayer withName:@"results"];
         [self.mainMapView addMapLayer:self.editableFeatureLayer  withName:@"Edit Layer"];
+        self.imageView.transform = self.originalTransform;
         return;
     }
     else if ( panGr.state == UIGestureRecognizerStateBegan) {
-        self.originalImageFrame = self.imageView.frame;
-    }
-    
+        self.originalTransform = self.imageView.transform;
+    }    
     
     CGPoint newPoint = [panGr translationInView:self.view];
     
     CGFloat dx = newPoint.x ;
+    // Add x the movement on the image
+    self.imageView.transform = CGAffineTransformMakeTranslation(dx, 0);
+    
     CGFloat width = 0;
     if (dx < 0) {
         CGFloat newWidth = CGRectGetWidth(self.mainMapView.frame) + dx;
         width = newWidth < 0 ? 0 : newWidth;
-        self.imageView.transform = CGAffineTransformMakeTranslation(dx, 0);
+        
     }
     else if (dx > 0) {
         CGFloat newWidth = CGRectGetWidth(self.mainMapView.frame) - dx;
@@ -215,14 +222,15 @@
 
 - (IBAction)callGP:(id)sender
 {
+    // Start the UI for processing
+    [self showSwirlyProcess];
+    
     NSURL* url = [NSURL URLWithString: kGPUrlForMapService];
     self.geoprocess = [AGSGeoprocessor geoprocessorWithURL:url];
     self.geoprocess.delegate = self;
     // Input parameter
     
     AGSPolygon *polygon = self.mainMapView.visibleArea ;
-    /*AGSGeometryEngine *engine = [AGSGeometryEngine defaultGeometryEngine];
-    AGSPolygon *projectedPolygon = (AGSPolygon*)[engine projectGeometry:polygon toSpatialReference:[AGSSpatialReference spatialReferenceWithWKID:4267]];*/
     
     AGSGraphic *graphic = [[AGSGraphic alloc] init];
     graphic.geometry = polygon;
@@ -247,10 +255,12 @@
 - (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation*)op didQueryWithResult:(AGSGPParameterValue*)result forJob:(NSString*)jobId {
     NSLog(@"Parameter: %@, Value: %@",result.name, result.value);
     
+    NSString *urlForResults = [[NSString alloc] initWithFormat:@"%@%@", kGPUrlForMapService,kGPUrlForMapServiceJobs];
+    
     NSMutableString *createURL = [[NSMutableString alloc] init];
-    [createURL appendFormat:@"http://ne2k864:6080/arcgis/rest/services/InterpolateLead/GPServer/InterpolateLead/jobs/"];
+    [createURL appendFormat:urlForResults];
     [createURL appendFormat:jobId];
-    [createURL appendFormat:@"/results/Lead_Concentrations"];
+    [createURL appendFormat:kGPUrlForMapServiceResults];
     NSURL *url = [[NSURL alloc] initWithString:createURL];
     
     AGSGPRasterData *raster = result.value;
@@ -261,6 +271,9 @@
     self.topView = [self.mainMapView addMapLayer:self.resultDynamicLayer withName:@"results"];
     
     [self.mainMapView addMapLayer:self.editableFeatureLayer  withName:@"Edit Layer"];
+    
+    self.imageView.hidden = NO;
+    [self hideSwirlyProcess];
 }
 
 
@@ -271,6 +284,8 @@
 #pragma Tap and Hold
 - (void)mapView:(AGSMapView *)mapView didTapAndHoldAtPoint:(CGPoint)screen mapPoint:(AGSPoint *)mappoint graphics:(NSDictionary *)graphics
 {
+    [self showSwirlyProcess];
+    
     // @todo get the map point and call the other gp to do the watershed    
     NSURL* url = [NSURL URLWithString: kWaterShedGP];
     self.geoprocessWaterShed = [AGSGeoprocessor geoprocessorWithURL:url];
@@ -346,6 +361,8 @@
                 graph.delegate = self;
                 graph.valueForGraph = mean;
                                
+                [self hideSwirlyProcess];
+                
                 graph.modalPresentationStyle = UIModalPresentationFormSheet;
                 [self presentModalViewController:graph animated:YES]; 
                 
@@ -362,6 +379,40 @@
 - (void) finished
 {
     [self dismissModalViewControllerAnimated:YES];
+}
+
+- (void) showSwirlyProcess
+{
+    self.swirly.hidden = NO;
+    
+    // Initialize the swirly
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        // Phone-specific sizes
+        self.swirly.font            = [UIFont fontWithName:@"Futura-Medium" size:30.0];
+        self.swirly.thickness       = 30.0f;
+        self.swirly.shadowOffset    = CGSizeMake(1,1);
+    } 
+    else {
+        // Tablet-specific sizes
+        self.swirly.font            = [UIFont fontWithName:@"Futura-Medium" size:44.0];
+        self.swirly.thickness       = 50.0f;
+        self.swirly.shadowOffset    = CGSizeMake(2,2);
+    }
+    self.swirly.backgroundColor = [UIColor clearColor];
+    self.swirly.textColor       = [UIColor whiteColor];
+    self.swirly.shadowColor     = [UIColor blackColor];
+    
+    [self.swirly addThreshold:0.10 
+                    withColor:[UIColor greenColor] 
+                          rpm:15
+                        label:@"Processing"
+                     segments:4];
+    
+    self.swirly.value = 15;
+}
+- (void) hideSwirlyProcess
+{
+    self.swirly.hidden = YES;
 }
 
 @end
