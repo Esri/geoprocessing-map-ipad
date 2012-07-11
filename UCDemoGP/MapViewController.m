@@ -66,7 +66,11 @@
     dynamicMapServiceLayerWithURL:[NSURL URLWithString:kBaseMapDynamicMapService]]; 
     self.dynamicLayer.visibleLayers = [[NSArray alloc] initWithObjects:@"1", nil];
     self.topView = [self.mainMapView addMapLayer:self.dynamicLayer withName:@"dynamic"];
-    self.topView.alpha = kDynamicMapAlpha;
+    
+    //add the tile with transperancy on top
+    AGSTiledMapServiceLayer *tiled2 = [AGSTiledMapServiceLayer tiledMapServiceLayerWithURL:url];
+    UIView *transparentView = [self.mainMapView addMapLayer:tiled2 withName:@"basemap transparent"];
+    transparentView.alpha = kDynamicMapAlpha;
     
     // editable layer
     self.editableFeatureLayer = [AGSFeatureLayer featureServiceLayerWithURL:[NSURL URLWithString:kSoilSampleFeatureService] mode:AGSFeatureLayerModeOnDemand];
@@ -117,12 +121,7 @@
 
         // @todo - save some state here in regards to dynamic layer's current width
         // requirement, reset the map
-        [self.mainMapView removeMapLayerWithName:@"results"];
-        [self.mainMapView removeMapLayerWithName:@"Edit Layer"];
-        
-        self.topView = [self.mainMapView addMapLayer:self.resultDynamicLayer withName:@"results"];
-        self.topView.alpha = kDynamicMapAlpha;
-        [self.mainMapView addMapLayer:self.editableFeatureLayer  withName:@"Edit Layer"];
+        [self resetMaps];
         self.imageView.transform = self.originalTransform;
         return;
     }
@@ -150,6 +149,23 @@
     [self toggleShowingBasemaps:width];
     
     
+}
+
+- (void) resetMaps
+{
+    [self.mainMapView removeMapLayerWithName:@"results"];
+    [self.mainMapView removeMapLayerWithName:@"Edit Layer"];
+    [self.mainMapView removeMapLayerWithName:@"basemap transparent"];
+    
+    self.topView = [self.mainMapView addMapLayer:self.resultDynamicLayer withName:@"results"];
+    
+    [self.mainMapView addMapLayer:self.editableFeatureLayer  withName:@"Edit Layer"];
+    
+    //add the tile with transperancy on top
+    NSURL *urlTiled = [NSURL URLWithString:kBaseMapTiled];
+    AGSTiledMapServiceLayer *tiled2 = [AGSTiledMapServiceLayer tiledMapServiceLayerWithURL:urlTiled];
+    UIView *transparentView = [self.mainMapView addMapLayer:tiled2 withName:@"basemap transparent"];
+    transparentView.alpha = kDynamicMapAlpha;
 }
 
 
@@ -184,7 +200,7 @@
     AGSGraphic* newGraphic = nil;
     self.lastScreen = screen;
     
-    // TODO add feature and edit the properties
+    // add feature and edit the properties
     if ( self.editableFeatureLayer.types.count > 0 ) {
         AGSFeatureType* featureType = [self.editableFeatureLayer.types objectAtIndex:0];  
         newGraphic = [self.editableFeatureLayer featureWithType:featureType];
@@ -267,16 +283,9 @@
     [createURL appendFormat:jobId];
     [createURL appendFormat:kGPUrlForMapServiceResults];
     NSURL *url = [[NSURL alloc] initWithString:createURL];
-    
-    AGSGPRasterData *raster = result.value;
-    [self.mainMapView removeMapLayerWithName:@"results"];
-    [self.mainMapView removeMapLayerWithName:@"Edit Layer"];
+   
     self.resultDynamicLayer = [AGSDynamicMapServiceLayer dynamicMapServiceLayerWithURL:url]; 
-    NSLog(@"URL %@",raster.URL);
-    self.topView = [self.mainMapView addMapLayer:self.resultDynamicLayer withName:@"results"];
-    self.topView.alpha = kDynamicMapAlpha;
-    
-    [self.mainMapView addMapLayer:self.editableFeatureLayer  withName:@"Edit Layer"];
+    [self resetMaps];
     
     self.imageView.hidden = NO;
     [self hideSwirlyProcess];
@@ -284,9 +293,10 @@
 
 
 - (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation*)op jobDidFail:(AGSGPJobInfo*)jobInfo { 
+    [self hideSwirlyProcess];
     NSLog(@"Error: %@",jobInfo.messages);
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"GP Failed" message:@"The GP returned failed" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [alert show];
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"GP Failed" message:@"The GP returned failed" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+//    [alert show];
 }
 
 #pragma Tap and Hold
@@ -392,8 +402,8 @@
     NSLog(@"Execute with Errors %@", error);
     [self hideSwirlyProcess];
     
-    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"GP Failed" message:@"No data to process here" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-    [alert show];
+//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"GP Failed" message:@"No data to process here" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+//    [alert show];
 }
 
 - (void) finished

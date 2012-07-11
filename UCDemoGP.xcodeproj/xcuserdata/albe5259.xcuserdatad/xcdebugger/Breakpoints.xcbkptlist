@@ -21,12 +21,64 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UCDemoGP/MapViewController.m"
-         timestampString = "363730623.460646"
+         timestampString = "363740041.791054"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "392"
-         endingLineNumber = "392"
+         startingLineNumber = "402"
+         endingLineNumber = "402"
          landmarkName = "-geoprocessor:operation:didFailExecuteWithError:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "UCDemoGP/CleanUpProcess.m"
+         timestampString = "363734581.773525"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "38"
+         endingLineNumber = "38"
+         landmarkName = "-featureLayer:operation:didFeatureEditsWithResults:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "UCDemoGP/CleanUpProcess.m"
+         timestampString = "363734581.773525"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "43"
+         endingLineNumber = "43"
+         landmarkName = "-featureLayer:operation:didFailFeatureEditsWithError:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "UCDemoGP/AppDelegate.m"
+         timestampString = "363738070.79173"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "68"
+         endingLineNumber = "68"
+         landmarkName = "-motionBegan:withEvent:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "UCDemoGP/AppDelegate.m"
+         timestampString = "363738070.79173"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "55"
+         endingLineNumber = "55"
+         landmarkName = "-applicationWillResignActive:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

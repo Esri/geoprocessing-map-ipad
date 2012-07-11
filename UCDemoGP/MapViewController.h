@@ -37,5 +37,6 @@
 - (void)toggleShowingBasemaps:(CGFloat)width;
 - (void) showSwirlyProcess;
 - (void) hideSwirlyProcess;
+- (void) resetMaps;
 
 @end
