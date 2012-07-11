@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CleanUpProcess.h"
+
 
 @class MapViewController;
 
@@ -15,5 +17,7 @@
 @property (strong, nonatomic) UIWindow *window;
 
 @property (strong, nonatomic) MapViewController *viewController;
+@property (nonatomic, strong) NSMutableArray *addedFeaturesArray;
+@property (nonatomic, strong) CleanUpProcess *cleanUpProcess;
 
 @end

@@ -9,17 +9,28 @@
 #import "AppDelegate.h"
 
 #import "MapViewController.h"
+#import "applicationDefines.h"
 
 @implementation AppDelegate
 
 @synthesize window = _window;
 @synthesize viewController = _viewController;
+@synthesize addedFeaturesArray = _addedFeaturesArray;
+@synthesize cleanUpProcess = cleanUpProcess;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // To keep track of the features
+    self.addedFeaturesArray = [[NSMutableArray alloc] init];
+    self.cleanUpProcess = [[CleanUpProcess alloc] init];
+    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     // Override point for customization after application launch.
     self.viewController = [[MapViewController alloc] initWithNibName:@"MapViewController" bundle:nil];
+    
+    // Passing the array to keep track
+    self.viewController.addedFeaturesArray = self.addedFeaturesArray;
+    
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     return YES;
@@ -29,7 +40,17 @@
 {
     // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
     // Use this method to pause ongoing tasks, disable timers, and throttle down OpenGL ES frame rates. Games should use this method to pause the game.
+    
+    // delete all the graphics in the array using a feature service
+    
+    if ( self.addedFeaturesArray.count > 0 ) {
+        [self.cleanUpProcess cleanUp:self.addedFeaturesArray];    
+        
+        // Do not let it finish here until the delegate has terminated
+    }
 }
+
+
 
 - (void)applicationDidEnterBackground:(UIApplication *)application
 {

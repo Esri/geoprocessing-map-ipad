@@ -34,6 +34,8 @@
 {
     [super viewDidLoad];
     
+    self.editableFeatureLayer.editingDelegate = self;
+    
     // the cursor to the textbox 
     [self.textField becomeFirstResponder];
 }
@@ -63,17 +65,25 @@
     [self.editableFeatureLayer addFeatures:features];
     [self.editableFeatureLayer refresh];
     
-    // Add the feature to keep track and delete when the app finish
-    [self.addedFeaturesArray addObject:self.graphic];
+    [self.delegate finishedEditing:self.graphic];    
     
-    [self.delegate finishedEditing:self.graphic];
+}
+
+- (void)featureLayer:(AGSFeatureLayer *)featureLayer operation:(NSOperation*)op didFeatureEditsWithResults:(AGSFeatureLayerEditResults *)editResults
+{
     
-    // Is it ready to edit?
-    //[self.mainMapView showCalloutAtPoint:(AGSPoint*)copiedGraphic.geometry forGraphic:copiedGraphic animated:YES];
-    
-    /*
-     
-     newGraphic = [[AGSGraphic alloc] initWithGeometry:mappoint symbol:myMarkerSymbol attributes:nil infoTemplateDelegate:nil];*/
+    if([editResults.addResults count]>0){
+        //we were adding a new feature
+        AGSEditResult* result = (AGSEditResult*)[editResults.addResults objectAtIndex:0];
+        if(!result.success){
+            NSLog(@"Could not add feature. Please try again");
+        }
+        
+        else {
+            // Add the feature to keep track and delete when the app finish
+            [self.addedFeaturesArray addObject:[NSNumber numberWithInteger:result.objectId]];
+        }
+    }
 }
 
 @end

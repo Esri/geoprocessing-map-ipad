@@ -54,6 +54,7 @@
 		88EE1F3215AE0880003C286D /* loading6.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EE1F2A15AE0880003C286D /* loading6.png */; };
 		88EE1F3315AE0880003C286D /* loading7.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EE1F2B15AE0880003C286D /* loading7.png */; };
 		88EE1F3415AE0880003C286D /* loading8.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EE1F2C15AE0880003C286D /* loading8.png */; };
+		88EE1F3D15AE1BED003C286D /* CleanUpProcess.m in Sources */ = {isa = PBXBuildFile; fileRef = 88EE1F3C15AE1BEC003C286D /* CleanUpProcess.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -194,6 +195,9 @@
 		88EE1F2A15AE0880003C286D /* loading6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading6.png; sourceTree = "<group>"; };
 		88EE1F2B15AE0880003C286D /* loading7.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading7.png; sourceTree = "<group>"; };
 		88EE1F2C15AE0880003C286D /* loading8.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = loading8.png; sourceTree = "<group>"; };
+		88EE1F3515AE11EC003C286D /* applicationDefines.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = applicationDefines.h; sourceTree = "<group>"; };
+		88EE1F3B15AE1BEB003C286D /* CleanUpProcess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CleanUpProcess.h; sourceTree = "<group>"; };
+		88EE1F3C15AE1BEC003C286D /* CleanUpProcess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CleanUpProcess.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -271,6 +275,9 @@
 				88D0769915A78375007808FE /* EditGraphicViewController.h */,
 				88D0769A15A78375007808FE /* EditGraphicViewController.m */,
 				88D0769B15A78375007808FE /* EditGraphicViewController.xib */,
+				88EE1F3515AE11EC003C286D /* applicationDefines.h */,
+				88EE1F3B15AE1BEB003C286D /* CleanUpProcess.h */,
+				88EE1F3C15AE1BEC003C286D /* CleanUpProcess.m */,
 			);
 			path = UCDemoGP;
 			sourceTree = "<group>";
@@ -537,6 +544,7 @@
 				88EE1EF215ACB485003C286D /* PlotItem.m in Sources */,
 				88EE1EF515ACB5EE003C286D /* PlotGallery.m in Sources */,
 				88EE1F1915ADD024003C286D /* F3Swirly.m in Sources */,
+				88EE1F3D15AE1BED003C286D /* CleanUpProcess.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

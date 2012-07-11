@@ -7,6 +7,7 @@
 //
 
 #import "MapViewController.h"
+#import "applicationDefines.h"
 
 @interface MapViewController ()<UIGestureRecognizerDelegate> {
 }
@@ -14,18 +15,7 @@
 @end
 
 
-// Map Services used
-#define kBaseMapTiled @"http://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer"
-#define kBaseMapDynamicMapService @"http://ne2k864:6080/arcgis/rest/services/lead/MapServer"
-#define kSoilSampleFeatureService @"http://ne2k864:6080/arcgis/rest/services/SoilSamplePoints/FeatureServer/0"
-#define kGPUrlForMapService @"http://ne2k864:6080/arcgis/rest/services/InterpolateLead/GPServer/InterpolateLead"
-#define kGPUrlForMapServiceResults @"/results/Lead_Concentrations"
-#define kGPUrlForMapServiceJobs @"/jobs/"
 
-#define kWaterShedGP @"http://ne2k864:6080/arcgis/rest/services/Watershed/GPServer/Watershed"
-#define kSoilStatsGP @"http://ne2k864:6080/arcgis/rest/services/SoilStats/GPServer/SoilStats"
-
-#define kDynamicMapAlpha 0.7
 
 @implementation MapViewController
 
@@ -54,8 +44,6 @@
     
     // init object states
     self.imageView.hidden = YES;
-    
-    self.addedFeaturesArray = [[NSMutableArray alloc] init];
     
     self.mainMapView.layerDelegate = self;
     //xmin: -10979558.400620 ymin: 3521601.137391 xmax: -10815627.093085 ymax: 3632408.393633
@@ -234,9 +222,7 @@
 
 - (void) finishedEditing:(AGSGraphic*)returnGraphic
 {
-    //@todo Add it into sketch layer if you have to
-    
-    [self dismissModalViewControllerAnimated:YES];
+    [self.popup dismissPopoverAnimated:YES];
 }
 
 - (IBAction)callGP:(id)sender
@@ -412,7 +398,7 @@
 
 - (void) finished
 {
-    [self dismissModalViewControllerAnimated:YES];
+    [self.popup dismissPopoverAnimated:YES];
 }
 
 - (void) showSwirlyProcess

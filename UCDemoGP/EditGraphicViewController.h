@@ -15,7 +15,7 @@
 
 @end
 
-@interface EditGraphicViewController : UIViewController
+@interface EditGraphicViewController : UIViewController <AGSFeatureLayerEditingDelegate>
 
 @property (nonatomic,strong) AGSFeatureLayer *editableFeatureLayer;
 @property (nonatomic,strong) AGSGraphic *graphic;
