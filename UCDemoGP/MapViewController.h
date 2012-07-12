@@ -32,6 +32,7 @@
 @property (nonatomic) CGPoint lastScreen;
 @property (nonatomic, strong) NSMutableArray *addedFeaturesArray;
 @property (nonatomic, strong) UIImageView *activityImageView;
+@property (nonatomic) double dSetMapScale;
 
 
 - (void)toggleShowingBasemaps:(CGFloat)width;

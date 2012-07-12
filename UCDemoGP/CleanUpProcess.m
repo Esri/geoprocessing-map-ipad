@@ -27,6 +27,7 @@
         
         [self.editableFeatureLayer deleteFeaturesWithObjectIds:self.addedFeaturesArray];
         [self.editableFeatureLayer dataChanged];
+        [self.editableFeatureLayer refresh];
     }
 }
 

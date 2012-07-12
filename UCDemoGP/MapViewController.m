@@ -36,22 +36,23 @@
 @synthesize lastScreen = _lastScreen;
 @synthesize addedFeaturesArray = _addedFeaturesArray;
 @synthesize activityImageView = _activityImageView;
+@synthesize dSetMapScale = _dSetMapScale;
 
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
     
+    self.dSetMapScale = 0;
+    
     // init object states
     self.imageView.hidden = YES;
     
-    self.mainMapView.layerDelegate = self;
-    //xmin: -10979558.400620 ymin: 3521601.137391 xmax: -10815627.093085 ymax: 3632408.393633
-    
-    AGSEnvelope *env = [AGSEnvelope envelopeWithXmin:-10979558.4006204
-                                                    ymin:3521601.137391
-                                                    xmax:-10815627.093085
-                                                    ymax:3632408.393633
+    self.mainMapView.layerDelegate = self;    
+    AGSEnvelope *env = [AGSEnvelope envelopeWithXmin:kXmin
+                                                    ymin:kYmin
+                                                    xmax:kXmax
+                                                    ymax:kYmax
                                         spatialReference:[AGSSpatialReference webMercatorSpatialReference]];
     
     [self.mainMapView zoomToEnvelope:env animated:YES];
@@ -71,6 +72,10 @@
     AGSTiledMapServiceLayer *tiled2 = [AGSTiledMapServiceLayer tiledMapServiceLayerWithURL:url];
     UIView *transparentView = [self.mainMapView addMapLayer:tiled2 withName:@"basemap transparent"];
     transparentView.alpha = kDynamicMapAlpha;
+    
+    AGSDynamicMapServiceLayer *dynamicRivers = [AGSDynamicMapServiceLayer dynamicMapServiceLayerWithURL:[NSURL URLWithString:kRiversService]]; 
+    UIView *dynamicRiverView = [self.mainMapView addMapLayer:dynamicRivers withName:@"dynamic rivers"];
+    dynamicRiverView.alpha = kDynamicMapAlpha;
     
     // editable layer
     self.editableFeatureLayer = [AGSFeatureLayer featureServiceLayerWithURL:[NSURL URLWithString:kSoilSampleFeatureService] mode:AGSFeatureLayerModeOnDemand];
@@ -102,16 +107,20 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(respondToEnvChange:) 
                                                  name:@"MapDidEndZooming" object:nil];
     
+    self.dSetMapScale = self.mainMapView.mapScale;
+    
 }
 
 - (void)respondToEnvChange: (NSNotification*) notification {
-    AGSEnvelope *env = [self.mainMapView.visibleArea envelope];
-    if ( env != nil ) { 
-        NSLog(@"xmin: %f ymin: %f xmax: %f ymax: %f", env.xmin, env.ymin, env.xmax, env.ymax);
+    
+    NSLog(@"scale %f", self.mainMapView.mapScale);    
+    if ( self.dSetMapScale > 0 ) {
         
-        //self.topView = [self.mainMapView.mapLayerViews objectForKey:@"results"];
-        
-        
+        // Do not allow to zoom
+        if ( self.dSetMapScale != self.mainMapView.mapScale ) {
+            
+            [self.mainMapView zoomToScale:self.dSetMapScale withCenterPoint:[self.mainMapView toMapPoint:self.mainMapView.center] animated:NO];
+        }
     }
 }
 
@@ -161,6 +170,8 @@
     [self.mainMapView removeMapLayerWithName:@"results"];
     [self.mainMapView removeMapLayerWithName:@"Edit Layer"];
     [self.mainMapView removeMapLayerWithName:@"basemap transparent"];
+    [self.mainMapView removeMapLayerWithName:@"dynamic rivers"];
+    [self.mainMapView removeMapLayerWithName:@"My Graphics Layer"];
     
     self.topView = [self.mainMapView addMapLayer:self.resultDynamicLayer withName:@"results"];
     
@@ -171,6 +182,14 @@
     AGSTiledMapServiceLayer *tiled2 = [AGSTiledMapServiceLayer tiledMapServiceLayerWithURL:urlTiled];
     UIView *transparentView = [self.mainMapView addMapLayer:tiled2 withName:@"basemap transparent"];
     transparentView.alpha = kDynamicMapAlpha;
+    
+    AGSDynamicMapServiceLayer *dynamicRivers = [AGSDynamicMapServiceLayer dynamicMapServiceLayerWithURL:[NSURL URLWithString:kRiversService]]; 
+    UIView *dynamicRiverView = [self.mainMapView addMapLayer:dynamicRivers withName:@"dynamic rivers"];
+    dynamicRiverView.alpha = kDynamicMapAlpha;    
+    
+    if ( self.graphicsLayer != nil )
+        [self.mainMapView addMapLayer:self.graphicsLayer withName:@"My Graphics Layer"];
+    
 }
 
 

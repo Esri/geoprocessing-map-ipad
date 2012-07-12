@@ -20,32 +20,6 @@
          shouldBeEnabled = "Yes"
          ignoreCount = "0"
          continueAfterRunningActions = "No"
-         filePath = "UCDemoGP/CleanUpProcess.m"
-         timestampString = "363734581.773525"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "38"
-         endingLineNumber = "38"
-         landmarkName = "-featureLayer:operation:didFeatureEditsWithResults:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "UCDemoGP/CleanUpProcess.m"
-         timestampString = "363734581.773525"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "43"
-         endingLineNumber = "43"
-         landmarkName = "-featureLayer:operation:didFailFeatureEditsWithError:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
          filePath = "UCDemoGP/AppDelegate.m"
          timestampString = "363796393.017284"
          startingColumnNumber = "9223372036854775807"
@@ -66,19 +40,6 @@
          startingLineNumber = "54"
          endingLineNumber = "54"
          landmarkName = "-applicationWillResignActive:"
-         landmarkType = "5">
-      </FileBreakpoint>
-      <FileBreakpoint
-         shouldBeEnabled = "Yes"
-         ignoreCount = "0"
-         continueAfterRunningActions = "No"
-         filePath = "UCDemoGP/MapViewController.m"
-         timestampString = "363796954.355264"
-         startingColumnNumber = "9223372036854775807"
-         endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "92"
-         endingLineNumber = "92"
-         landmarkName = "-mapView:failedLoadingLayerForLayerView:baseLayer:withError:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

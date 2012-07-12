@@ -16,9 +16,15 @@
 #define kGPUrlForMapService @"http://yoshi.uc.esri.com:6080/arcgis/rest/services/InterpolateLead/GPServer/InterpolateLead"
 #define kGPUrlForMapServiceResults @"/results/Lead_Concentrations"
 #define kGPUrlForMapServiceJobs @"/jobs/"
+#define kRiversService @"http://yoshi.uc.esri.com:6080/arcgis/rest/services/Rivers/MapServer"
 
 #define kWaterShedGP @"http://yoshi.uc.esri.com:6080/arcgis/rest/services/Watershed/GPServer/Watershed"
 #define kSoilStatsGP @"http://yoshi.uc.esri.com:6080/arcgis/rest/services/SoilStats/GPServer/SoilStats"
 
 #define kDynamicMapAlpha 0.7
+
+#define kXmin -10979558.4006204
+#define kYmin 3521601.137391
+#define kXmax -10815627.093085
+#define kYmax 3632408.393633
 
