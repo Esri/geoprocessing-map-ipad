@@ -41,18 +41,16 @@
 - (void)generateBarPlot
 {
     //Create graph and set it as host view's graph
-    self.graph = [[CPTXYGraph alloc] initWithFrame:CGRectZero];
-	
-	self.graph.frame						  = self.view.bounds;
-    
+    self.graph = [[CPTXYGraph alloc] initWithFrame:CGRectZero];	
+	self.graph.frame						  = self.view.bounds;    
     self.graphHost.hostedGraph			= self.graph;
     
     //set graph padding and theme
     self.graph.plotAreaFrame.paddingTop = 20.0f;
     self.graph.plotAreaFrame.paddingRight = 20.0f;
     self.graph.plotAreaFrame.paddingBottom = 70.0f;
-    self.graph.plotAreaFrame.paddingLeft = 70.0f;
-    [self.graph applyTheme:[CPTTheme themeNamed:kCPTPlainWhiteTheme]];
+    self.graph.plotAreaFrame.paddingLeft = 40.0f;
+    //[self.graph applyTheme:[CPTTheme themeNamed:kCPTPlainWhiteTheme]];
     
     //set axes ranges
     CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)self.graph.defaultPlotSpace;
@@ -69,16 +67,17 @@
     textStyle.fontName = @"Helvetica";
     textStyle.fontSize = 14;
     textStyle.color = [CPTColor blackColor];
-    axisSet.xAxis.title = @"AVERAGES";
-    axisSet.yAxis.title = @"VALUES";
+    
+    axisSet.xAxis.title = @"";
+    axisSet.yAxis.title = @"";
     axisSet.xAxis.titleTextStyle = textStyle;
     axisSet.yAxis.titleTextStyle = textStyle;
     axisSet.xAxis.titleOffset = 30.0f;
     axisSet.yAxis.titleOffset = 40.0f;
-    axisSet.xAxis.labelTextStyle = textStyle;
+    /*axisSet.xAxis.labelTextStyle = textStyle;
     axisSet.xAxis.labelOffset = 3.0f;
     axisSet.yAxis.labelTextStyle = textStyle;
-    axisSet.yAxis.labelOffset = 3.0f;
+    axisSet.yAxis.labelOffset = 3.0f;*/
     //set axes' line styles and interval ticks
     CPTMutableLineStyle *lineStyle = [CPTMutableLineStyle lineStyle];
     lineStyle.lineColor = [CPTColor blackColor];
@@ -87,8 +86,8 @@
     axisSet.yAxis.axisLineStyle = lineStyle;
     axisSet.xAxis.majorTickLineStyle = lineStyle;
     axisSet.yAxis.majorTickLineStyle = lineStyle;
-    axisSet.xAxis.majorIntervalLength = CPTDecimalFromFloat(5.0f);
-    axisSet.yAxis.majorIntervalLength = CPTDecimalFromFloat(5.0f);
+    axisSet.xAxis.majorIntervalLength = CPTDecimalFromFloat(135.0f);
+    axisSet.yAxis.majorIntervalLength = CPTDecimalFromFloat(17.0f);
     axisSet.xAxis.majorTickLength = 7.0f;
     axisSet.yAxis.majorTickLength = 7.0f;
     axisSet.xAxis.minorTickLineStyle = lineStyle;
@@ -102,7 +101,7 @@
     CPTBarPlot *plot = [[CPTBarPlot alloc] init] ;
     plot.dataSource = self;
     plot.delegate = self;
-    plot.barWidth = [[NSDecimalNumber decimalNumberWithString:@"5.0"]
+    plot.barWidth = [[NSDecimalNumber decimalNumberWithString:@"8.5"]
                      decimalValue];
     plot.barOffset = [[NSDecimalNumber decimalNumberWithString:@"10.0"]
                       decimalValue];
@@ -127,11 +126,17 @@
     
     int bar_heights[] = {[self.valueForGraph intValue],10.34,23.97};
     UIColor *colors[] = {
-        [UIColor redColor],
         [UIColor blueColor],
-        [UIColor orangeColor]};
+        [UIColor colorWithRed:1/255.0
+                        green:1/255.0
+                         blue:50/255.0
+                        alpha:1.0],
+        [UIColor colorWithRed:1/255.0
+                        green:1/255.0
+                         blue:50/255.0
+                        alpha:1.0]};
     
-    NSString *categories[] = {@"Actual", @"Texas Average", @"US Average"};
+    NSString *categories[] = {@"Actual", @"Texas", @"US"};
     
     for (int i = 0; i < 3 ; i++){
         double position = i*10; //Bars will be 10 pts away from each other
@@ -190,6 +195,7 @@
             return [bar valueForKey:BAR_POSITION];
         else if(fieldEnum ==CPTBarPlotFieldBarTip)
             return [bar valueForKey:BAR_HEIGHT];
+       
     }
     return [NSNumber numberWithFloat:0];
 }
@@ -201,7 +207,7 @@
         CPTMutableTextStyle *textStyle = [CPTMutableTextStyle textStyle];
         textStyle.fontName = @"Helvetica";
         textStyle.fontSize = 14;
-        textStyle.color = [CPTColor whiteColor];
+        textStyle.color = [CPTColor blackColor];
         
         NSDictionary *bar = [self.chartValuesArray objectAtIndex:index];
         CPTTextLayer *label = [[CPTTextLayer alloc] initWithText:[NSString stringWithFormat:@"%@", [bar valueForKey:@"CATEGORY"]]];
@@ -212,6 +218,27 @@
     
     CPTTextLayer *defaultLabel = [[CPTTextLayer alloc] initWithText:[NSString stringWithString:@"Label"]];
     return defaultLabel;
+}
+
+-(CPTFill *)barFillForBarPlot:(CPTBarPlot *)barPlot
+                  recordIndex:(NSUInteger)index
+{
+    if ( [barPlot.identifier isEqual:@"chocoplot"] )
+    {
+        NSDictionary *bar = [self.chartValuesArray objectAtIndex:index];
+        CPTGradient *gradient = [CPTGradient gradientWithBeginningColor:[CPTColor whiteColor]
+                                                            endingColor:[bar valueForKey:@"COLOR"]
+                                                      beginningPosition:0.0 endingPosition:0.3 ];
+        [gradient setGradientType:CPTGradientTypeAxial];
+        [gradient setAngle:320.0]; 
+        
+        CPTFill *fill = [CPTFill fillWithGradient:gradient];
+        
+        return fill;
+        
+    }
+    return [CPTFill fillWithColor:[CPTColor colorWithComponentRed:1.0 green:1.0 blue:1.0 alpha:1.0]];
+    
 }
 
 

@@ -64,7 +64,7 @@
     self.dynamicLayer = 
     [AGSDynamicMapServiceLayer  
     dynamicMapServiceLayerWithURL:[NSURL URLWithString:kBaseMapDynamicMapService]]; 
-    self.dynamicLayer.visibleLayers = [[NSArray alloc] initWithObjects:@"1", nil];
+    //self.dynamicLayer.visibleLayers = [[NSArray alloc] initWithObjects:@"1", nil];
     self.topView = [self.mainMapView addMapLayer:self.dynamicLayer withName:@"dynamic"];
     
     //add the tile with transperancy on top
@@ -357,7 +357,7 @@
             }
         }
         
-        if ( [param.name isEqualToString:@"Lead_Stats"] == YES )
+        else if ( [param.name isEqualToString:@"Lead_Stats"] == YES )
         {
             AGSFeatureSet *featureSetResults = param.value;
             if ( featureSetResults.features.count > 0 )
@@ -393,11 +393,13 @@
                 
                 self.popup.popoverContentSize = CGSizeMake(320, 340);
                 
-                [self.popup presentPopoverFromRect:CGRectMake(self.lastScreen.x, self.lastScreen.y, 100, 100) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-                
-                
-                
+                [self.popup presentPopoverFromRect:CGRectMake(self.lastScreen.x, self.lastScreen.y, 100, 100) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];                
             }            
+        }
+        else {
+            // Stop the animation
+            NSLog(@"No values return in params %@", param);
+            [self hideSwirlyProcess];
         }
 	}
 }

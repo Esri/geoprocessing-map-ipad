@@ -24,7 +24,6 @@
     
     // To keep track of the features
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    [defaults setObject:self.addedFeaturesArray forKey:@"featuresToDelete"];
     
     if ( [defaults objectForKey:@"featuresToDelete"] != nil ) {
         self.addedFeaturesArray  = [defaults objectForKey:@"featuresToDelete"];
