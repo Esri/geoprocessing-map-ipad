@@ -42,7 +42,6 @@
 @property (nonatomic) double dSetMapScale;
 @property (nonatomic) BOOL bZoomingToPolygon;
 @property (nonatomic,strong) id <MapViewDelegate> delegate;
-@property (nonatomic,strong) IBOutlet UIImageView *gpImageView;
 
 
 

@@ -39,7 +39,7 @@
 @synthesize dSetMapScale = _dSetMapScale;
 @synthesize bZoomingToPolygon = _bZoomingToPolygon;
 @synthesize delegate = _delegate;
-@synthesize gpImageView = _gpImageView;
+
 
 
 - (void)viewDidLoad
@@ -93,12 +93,11 @@
     panGR.delegate = self;    
     [self.imageView addGestureRecognizer:panGR];
     
-    [self.gpImageView setUserInteractionEnabled:YES];
     UISwipeGestureRecognizer *swipeGR = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swiped:)];
     swipeGR.numberOfTouchesRequired = 2;
     swipeGR.direction =  UISwipeGestureRecognizerDirectionUp;
     swipeGR.delegate = self;
-    [self.gpImageView addGestureRecognizer:swipeGR];
+    [self.imageView addGestureRecognizer:swipeGR];
 }
 
 - (void)mapView:(AGSMapView *)mapView failedLoadingLayerForLayerView:(UIView<AGSLayerView> *)layerView baseLayer:(BOOL)baseLayer withError:(NSError *)error
