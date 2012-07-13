@@ -12,7 +12,7 @@
 
 #import "EditGraphicViewController.h"
 #import "GraphViewController.h"
-#import "F3Swirly.h"
+
 
 @protocol MapViewDelegate <NSObject>
 
@@ -23,6 +23,7 @@
 @interface MapViewController : UIViewController <AGSMapViewLayerDelegate,AGSMapViewTouchDelegate,EditGraphicDelegate,AGSGeoprocessorDelegate,GraphDelegate,UIAlertViewDelegate>
 
 @property (nonatomic,strong) IBOutlet AGSMapView *mainMapView;
+@property (nonatomic,strong) UIView *baseView;
 @property (nonatomic,strong) UIView *topView;
 @property (nonatomic,strong) AGSFeatureLayer *editableFeatureLayer;
 @property (nonatomic,strong) AGSDynamicMapServiceLayer *dynamicLayer;
@@ -42,6 +43,7 @@
 @property (nonatomic) double dSetMapScale;
 @property (nonatomic) BOOL bZoomingToPolygon;
 @property (nonatomic,strong) id <MapViewDelegate> delegate;
+@property (nonatomic) CGFloat originalWidth;
 
 
 

@@ -10,17 +10,18 @@
 #import "applicationDefines.h"
 
 @interface MapViewController ()<UIGestureRecognizerDelegate> {
+    UIViewContentMode _origMode;
+    CGRect _topViewFrame;
+    CGAffineTransform _tvTransform;
 }
 
 @end
-
-
-
 
 @implementation MapViewController
 
 @synthesize mainMapView = _mainMapView;
 @synthesize topView = _topView;
+@synthesize baseView = _baseView;
 @synthesize editableFeatureLayer = _editableFeatureLayer;
 @synthesize dynamicLayer = _dynamicLayer;
 @synthesize sketch = _sketch;
@@ -39,7 +40,7 @@
 @synthesize dSetMapScale = _dSetMapScale;
 @synthesize bZoomingToPolygon = _bZoomingToPolygon;
 @synthesize delegate = _delegate;
-
+@synthesize originalWidth = _originalWidth;
 
 
 - (void)viewDidLoad
@@ -66,9 +67,8 @@
     [self.mainMapView addMapLayer:tiled withName:@"basemap"];
     
     // Real base map
-    self.dynamicLayer = [AGSDynamicMapServiceLayer  dynamicMapServiceLayerWithURL:[NSURL URLWithString:kBaseMapDynamicMapService]]; 
-    
-    self.topView = [self.mainMapView addMapLayer:self.dynamicLayer withName:@"dynamic"];
+    self.dynamicLayer = [AGSDynamicMapServiceLayer  dynamicMapServiceLayerWithURL:[NSURL URLWithString:kBaseMapDynamicMapService]];     
+    self.baseView = [self.mainMapView addMapLayer:self.dynamicLayer withName:@"dynamic"];
     
     //add the tile with transperancy on top
     AGSTiledMapServiceLayer *tiled2 = [AGSTiledMapServiceLayer tiledMapServiceLayerWithURL:url];
@@ -122,14 +122,14 @@
 - (void)respondToEnvChange: (NSNotification*) notification {
     
     NSLog(@"scale %f", self.mainMapView.mapScale);    
-    if ( self.dSetMapScale > 0 /* && self.bZoomingToPolygon == NO */ ) {
+    if ( self.dSetMapScale > 0  /*&& self.bZoomingToPolygon == NO*/  ) {
         
         // Do not allow to zoom
         if ( self.dSetMapScale != self.mainMapView.mapScale ) {
             
             /*[self.mainMapView zoomToScale:self.dSetMapScale withCenterPoint:[self.mainMapView toMapPoint:self.mainMapView.center] animated:NO];*/
             
-            //[self resetMaps];
+           // [self resetMaps];
             
             // @todo check the dynamic map and the frame as after zooming in the animation does not work
         }
@@ -162,10 +162,19 @@
     UIPanGestureRecognizer *panGr = (UIPanGestureRecognizer*)sender;
     if (panGr.state == UIGestureRecognizerStateEnded) {
 
+        //[self.topView removeFromSuperview];
         // requirement, reset the map
-        [self resetMaps];
+        //[self resetMaps];
+        self.topView.frame = _topViewFrame;        
+        [self.topView setContentMode:_origMode];  
+        self.topView.transform = _tvTransform;
+        
+        [self toggleShowingBasemaps:self.originalWidth];
+        
+        // Slider image
         self.imageView.transform = self.originalTransform;
         
+        // Play a sound
         SystemSoundID mySSID;
         NSString *path = [[NSBundle mainBundle] pathForResource:@"boing_spring" ofType:@"wav"];
         AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath: path], &mySSID); 
@@ -174,6 +183,16 @@
         return;
     }
     else if ( panGr.state == UIGestureRecognizerStateBegan) {
+        self.originalWidth = -1;
+        _topViewFrame = self.topView.frame;
+        
+        _origMode = self.topView.contentMode;
+        
+        _tvTransform = self.topView.transform;
+        [self.topView setContentMode:UIViewContentModeLeft | UIViewContentModeScaleAspectFill | UIViewContentModeRedraw];
+        [self.topView setClipsToBounds:YES];
+        
+        // Slider image
         self.originalTransform = self.imageView.transform;
     }    
     
@@ -183,18 +202,22 @@
     // Add x the movement on the image
     self.imageView.transform = CGAffineTransformMakeTranslation(dx, 0);
     
+    CGRect targetFrame = self.mainMapView.frame;
+        
     CGFloat width = 0;
     if (dx < 0) {
-        CGFloat newWidth = CGRectGetWidth(self.mainMapView.frame) + dx;
+        CGFloat newWidth = CGRectGetWidth(targetFrame) + dx;
         width = newWidth < 0 ? 0 : newWidth;
         
     }
     else if (dx > 0) {
-        CGFloat newWidth = CGRectGetWidth(self.mainMapView.frame) - dx;
-        width = newWidth > CGRectGetWidth(self.mainMapView.frame) ? CGRectGetWidth(self.mainMapView.frame) : newWidth;
+        CGFloat newWidth = CGRectGetWidth(targetFrame) - dx;
+        width = newWidth > CGRectGetWidth(targetFrame) ? CGRectGetWidth(targetFrame) : newWidth;
     }
     
     //NSLog(@"width: %f dx: %f", width, dx);
+    if ( self.originalWidth == -1)
+        self.originalWidth = width;
     
     [self toggleShowingBasemaps:width];
     
@@ -203,10 +226,8 @@
 
 - (void)toggleShowingBasemaps:(CGFloat)width
 {   
+    NSLog(@"w: %f", width);
     CGRect mapRect = self.topView.frame;
-    
-    [self.topView setContentMode:UIViewContentModeLeft | UIViewContentModeScaleAspectFill];
-    [self.topView setClipsToBounds:YES];
     
     mapRect.size.width =  width;
     
@@ -216,13 +237,22 @@
 
 - (void) resetMaps
 {
+    self.topView = nil;
+    self.baseView = nil;
+    
+    [self.mainMapView removeMapLayerWithName:@"dynamic"];
     [self.mainMapView removeMapLayerWithName:@"results"];
     [self.mainMapView removeMapLayerWithName:@"Edit Layer"];
     [self.mainMapView removeMapLayerWithName:@"basemap transparent"];
     [self.mainMapView removeMapLayerWithName:@"dynamic rivers"];
-    [self.mainMapView removeMapLayerWithName:@"My Graphics Layer"];
+    [self.mainMapView removeMapLayerWithName:@"My Graphics Layer"];    
+    
+    self.baseView = [self.mainMapView addMapLayer:self.dynamicLayer withName:@"dynamic"];
     
     self.topView = [self.mainMapView addMapLayer:self.resultDynamicLayer withName:@"results"];
+    // For debugging
+    self.topView.layer.borderColor = [[UIColor blackColor] CGColor];
+    self.topView.layer.borderWidth = 5.0f;
     
     [self.mainMapView addMapLayer:self.editableFeatureLayer  withName:@"Edit Layer"];
     
@@ -267,8 +297,6 @@
         {
             AGSGraphic *waterShedPolygon = [myGraphicsLayerGraphics objectAtIndex:0];
             // Show the popup again
-            //@todo fix this issue
-            NSLog(@"waterShed %@", waterShedPolygon);
             [self showChartWithGraphic:waterShedPolygon];
             return;
         }
@@ -308,8 +336,7 @@
         
         [self.popup presentPopoverFromRect:CGRectMake(self.lastScreen.x, self.lastScreen.y, 100, 50) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
         
-    }
-    
+    }    
        
 }
 
@@ -449,6 +476,7 @@
             // Stop the animation
             NSLog(@"No values return in params %@", param);
             [self hideSwirlyProcess];
+            //Watershed_Point_Output
         }
 	}
 }
@@ -495,6 +523,8 @@
 
 - (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation*)op didFailExecuteWithError:(NSError*)error
 {
+    // @todo Here call a point that we know will work all the time
+    
     NSLog(@"Execute with Errors %@", error);
     [self hideSwirlyProcess];
     

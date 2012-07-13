@@ -46,7 +46,6 @@
 		88EE1F0F15ACD8A9003C286D /* sider.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EE1F0715ACD8A9003C286D /* sider.png */; };
 		88EE1F1015ACD8A9003C286D /* surfaceBtn1.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EE1F0815ACD8A9003C286D /* surfaceBtn1.png */; };
 		88EE1F1115ACD8A9003C286D /* surfaceBtn2.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EE1F0915ACD8A9003C286D /* surfaceBtn2.png */; };
-		88EE1F1915ADD024003C286D /* F3Swirly.m in Sources */ = {isa = PBXBuildFile; fileRef = 88EE1F1815ADD024003C286D /* F3Swirly.m */; };
 		88EE1F1E15ADD78F003C286D /* Icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EE1F1A15ADD78F003C286D /* Icon-72.png */; };
 		88EE1F1F15ADD78F003C286D /* Icon-Small.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EE1F1B15ADD78F003C286D /* Icon-Small.png */; };
 		88EE1F2015ADD78F003C286D /* Icon-Small@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 88EE1F1C15ADD78F003C286D /* Icon-Small@2x.png */; };
@@ -70,6 +69,7 @@
 		8814D77215AF5D6100CCAEE4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		8814D77415AF5E9B00CCAEE4 /* emptytrash.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = emptytrash.aif; sourceTree = "<group>"; };
 		8814D77615AF629E00CCAEE4 /* boing_spring.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = boing_spring.wav; sourceTree = "<group>"; };
+		8814D77D15B0AA4C00CCAEE4 /* UCDemoGP.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = UCDemoGP.entitlements; sourceTree = "<group>"; };
 		88D0766615A72CF5007808FE /* UCDemoGP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UCDemoGP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88D0766A15A72CF5007808FE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		88D0766C15A72CF5007808FE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -192,8 +192,6 @@
 		88EE1F0715ACD8A9003C286D /* sider.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sider.png; sourceTree = "<group>"; };
 		88EE1F0815ACD8A9003C286D /* surfaceBtn1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = surfaceBtn1.png; sourceTree = "<group>"; };
 		88EE1F0915ACD8A9003C286D /* surfaceBtn2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = surfaceBtn2.png; sourceTree = "<group>"; };
-		88EE1F1715ADD024003C286D /* F3Swirly.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = F3Swirly.h; sourceTree = "<group>"; };
-		88EE1F1815ADD024003C286D /* F3Swirly.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = F3Swirly.m; sourceTree = "<group>"; };
 		88EE1F1A15ADD78F003C286D /* Icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-72.png"; sourceTree = "<group>"; };
 		88EE1F1B15ADD78F003C286D /* Icon-Small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small.png"; sourceTree = "<group>"; };
 		88EE1F1C15ADD78F003C286D /* Icon-Small@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Icon-Small@2x.png"; sourceTree = "<group>"; };
@@ -276,7 +274,7 @@
 		88D0767015A72CF5007808FE /* UCDemoGP */ = {
 			isa = PBXGroup;
 			children = (
-				88EE1F1615ADD024003C286D /* Activity */,
+				8814D77D15B0AA4C00CCAEE4 /* UCDemoGP.entitlements */,
 				88EE1F0115ACD8A9003C286D /* Resources */,
 				88EE1EEC15ACB431003C286D /* BarChart */,
 				88EE1E7815AC9FD0003C286D /* CorePlot */,
@@ -444,15 +442,6 @@
 			path = Resources;
 			sourceTree = "<group>";
 		};
-		88EE1F1615ADD024003C286D /* Activity */ = {
-			isa = PBXGroup;
-			children = (
-				88EE1F1715ADD024003C286D /* F3Swirly.h */,
-				88EE1F1815ADD024003C286D /* F3Swirly.m */,
-			);
-			path = Activity;
-			sourceTree = "<group>";
-		};
 		88EE1F2415AE0880003C286D /* Animation */ = {
 			isa = PBXGroup;
 			children = (
@@ -567,7 +556,6 @@
 				88EE1EF115ACB485003C286D /* ColoredBarChart.m in Sources */,
 				88EE1EF215ACB485003C286D /* PlotItem.m in Sources */,
 				88EE1EF515ACB5EE003C286D /* PlotGallery.m in Sources */,
-				88EE1F1915ADD024003C286D /* F3Swirly.m in Sources */,
 				88EE1F3D15AE1BED003C286D /* CleanUpProcess.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

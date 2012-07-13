@@ -26,7 +26,9 @@
 @property (nonatomic, strong) IBOutlet CPTGraphHostingView *graphHost;
 @property (nonatomic,strong) NSMutableArray *chartValuesArray;
 @property (nonatomic,strong) NSMutableArray *chartLabelArray;
+@property (nonatomic,strong) NSTimer *chartTimer;
 
 - (void)generateBarPlot;
+- (void)setVariables;
 
 @end

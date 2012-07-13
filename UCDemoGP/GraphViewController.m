@@ -28,6 +28,7 @@
 @synthesize graphHost = _graphHost;
 @synthesize chartValuesArray = _chartValuesArray;
 @synthesize chartLabelArray = _chartLabelArray;
+@synthesize chartTimer = _chartTimer;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
@@ -96,10 +97,14 @@
     axisSet.xAxis.minorTickLength = -5.0f;
     axisSet.yAxis.minorTickLength = 5.0f;
     
+   
+    
     // Create bar plot and add it to the graph
     CPTBarPlot *plot = [[CPTBarPlot alloc] init] ;
     
     plot.dataSource = self;
+    //plot.labelOffset = -50; depending on the size is not possible to align
+    
     plot.delegate = self;
     plot.barWidth = [[NSDecimalNumber decimalNumberWithString:@"8.5"]
                      decimalValue];
@@ -116,10 +121,8 @@
     
 }
 
-- (void)viewDidLoad
+- (void)setVariables
 {
-    [super viewDidLoad];
-    
     //Texas Average: 10.34
     //US Average: 23.97
     self.chartValuesArray = [NSMutableArray array];
@@ -151,8 +154,24 @@
         [self.chartValuesArray addObject:bar];
         
     }
+}
 
+- (void)drawChart:(NSTimer *)timer
+{
+    [self setVariables];
+    
     [self generateBarPlot];
+    
+    [self.chartTimer invalidate];
+    self.chartTimer = nil;
+}
+
+- (void)viewDidLoad
+{
+    [super viewDidLoad];
+    
+    self.chartTimer = [NSTimer scheduledTimerWithTimeInterval:(0.3) target:self selector:
+                       @selector(drawChart:) userInfo:nil repeats:NO];  
 
 }
 
