@@ -8,12 +8,14 @@
 
 #import "CleanUpProcess.h"
 #import "applicationDefines.h"
+#import <AudioToolbox/AudioToolbox.h>
 
 @implementation CleanUpProcess
 
 @synthesize addedFeaturesArray = _addedFeaturesArray;
 @synthesize editableFeatureLayer = _editableFeatureLayer;
 @synthesize bFinished = _bFinished;
+@synthesize task = _task;
 
 
 - (void) cleanUp:(NSMutableArray*)featuresArray
@@ -26,9 +28,27 @@
         self.editableFeatureLayer.editingDelegate = self;
         
         [self.editableFeatureLayer deleteFeaturesWithObjectIds:self.addedFeaturesArray];
-        [self.editableFeatureLayer dataChanged];
-        [self.editableFeatureLayer refresh];
     }
+    
+    // Delete all the points bigger than 3000
+    self.task = [[AGSQueryTask alloc] initWithURL:[NSURL URLWithString:kSoilSampleFeatureService]];
+    self.task.delegate = self;
+    AGSQuery *query = [[AGSQuery alloc] init];
+    query.where = @"OBJECTID > 6422";
+    [self.task executeForIdsWithQuery:query];
+}
+
+- (void)queryTask:(AGSQueryTask *)queryTask operation:(NSOperation*)op didExecuteWithObjectIds:(NSArray *)objectIds {
+    
+    [self.editableFeatureLayer deleteFeaturesWithObjectIds:objectIds];
+    
+    
+    SystemSoundID mySSID;
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"emptytrash" ofType:@"aif"];
+    AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath: path], &mySSID); 
+    
+    AudioServicesPlaySystemSound(mySSID);
 }
 
 - (void)featureLayer:(AGSFeatureLayer *)featureLayer operation:(NSOperation*)op didFeatureEditsWithResults:(AGSFeatureLayerEditResults *)editResults
@@ -37,6 +57,8 @@
         [self.addedFeaturesArray removeAllObjects];
     
     self.bFinished = YES;
+    [self.editableFeatureLayer dataChanged];
+    [self.editableFeatureLayer refresh];
 }
 
 - (void)featureLayer:(AGSFeatureLayer *)featureLayer operation:(NSOperation*)op didFailFeatureEditsWithError:(NSError *)error

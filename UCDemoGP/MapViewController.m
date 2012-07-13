@@ -79,8 +79,7 @@
     
     // editable layer
     self.editableFeatureLayer = [AGSFeatureLayer featureServiceLayerWithURL:[NSURL URLWithString:kSoilSampleFeatureService] mode:AGSFeatureLayerModeOnDemand];
-    [self.mainMapView addMapLayer:self.editableFeatureLayer withName:@"Edit Layer"];
-    
+    [self.mainMapView addMapLayer:self.editableFeatureLayer withName:@"Edit Layer"];    
     
     self.mainMapView.touchDelegate = self;
     
@@ -88,6 +87,7 @@
     UIPanGestureRecognizer *panGR = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panned:)];
     panGR.minimumNumberOfTouches = 2;
     panGR.maximumNumberOfTouches = 3;
+    
     panGR.delegate = self;
     [self.view addGestureRecognizer:panGR];
 }
@@ -133,10 +133,15 @@
     UIPanGestureRecognizer *panGr = (UIPanGestureRecognizer*)sender;
     if (panGr.state == UIGestureRecognizerStateEnded) {
 
-        // @todo - save some state here in regards to dynamic layer's current width
         // requirement, reset the map
         [self resetMaps];
         self.imageView.transform = self.originalTransform;
+        
+        SystemSoundID mySSID;
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"boing_spring" ofType:@"wav"];
+        AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath: path], &mySSID); 
+        AudioServicesPlaySystemSound(mySSID);
+        
         return;
     }
     else if ( panGr.state == UIGestureRecognizerStateBegan) {
@@ -159,7 +164,9 @@
         CGFloat newWidth = CGRectGetWidth(self.mainMapView.frame) - dx;
         width = newWidth > CGRectGetWidth(self.mainMapView.frame) ? CGRectGetWidth(self.mainMapView.frame) : newWidth;
     }
-    NSLog(@"width: %f dx: %f", width, dx);
+    
+    //NSLog(@"width: %f dx: %f", width, dx);
+    
     [self toggleShowingBasemaps:width];
     
     
@@ -221,6 +228,21 @@
 #pragma Sketch
 - (void)mapView:(AGSMapView *)mapView didClickAtPoint:(CGPoint)screen mapPoint:(AGSPoint *)mappoint graphics:(NSDictionary *)graphics
 {
+    // Check the user didn't click on top of a watershed first
+    NSLog(@"graphics layers %@", graphics);
+    if ( [graphics objectForKey:@"My Graphics Layer"] != nil ) 
+    {
+        NSArray *myGraphicsLayerGraphics = [graphics objectForKey:@"My Graphics Layer"];
+        NSLog(@"graphics %@", myGraphicsLayerGraphics);
+        if ( myGraphicsLayerGraphics.count > 0 )
+        {
+            AGSGraphic *waterShedPolygon = [myGraphicsLayerGraphics objectAtIndex:0];
+            // Show the popup again
+            //@todo fix this issue
+            //[self showChartWithGraphic:waterShedPolygon];
+        }
+    }
+    
     AGSGraphic* newGraphic = nil;
     self.lastScreen = screen;
     
@@ -383,36 +405,9 @@
             {
                 AGSGraphic *polyGraphic = [featureSetResults.features objectAtIndex:0];
                 
-                NSString *mean = [polyGraphic.attributes objectForKey:@"MEAN"];
+                [self showChartWithGraphic:polyGraphic];  
                 
-                [self.mainMapView removeMapLayerWithName:@"My Graphics Layer"];
-                self.graphicsLayer = [AGSGraphicsLayer graphicsLayer];
-                [self.mainMapView addMapLayer:self.graphicsLayer withName:@"My Graphics Layer"];
-                
-                // display the polygon     
-                AGSSimpleFillSymbol *fillSymbol =
-                [AGSSimpleFillSymbol simpleFillSymbol];
-                fillSymbol.color = [[UIColor purpleColor] colorWithAlphaComponent:0.25];
-                fillSymbol.outline.color = [UIColor darkGrayColor];
-                // Add symbology
-                polyGraphic.symbol = fillSymbol;
-                
-                [self.graphicsLayer addGraphic:polyGraphic];
-                [self.graphicsLayer dataChanged];
-                
-                // plot it in a graphic                
-                GraphViewController *graph = [[GraphViewController alloc] initWithNibName:@"GraphViewController" bundle:nil];
-                graph.delegate = self;
-                graph.valueForGraph = mean;
-                               
                 [self hideSwirlyProcess];
-                                
-                self.popup = [[UIPopoverController alloc] 
-                                            initWithContentViewController:graph];     
-                
-                self.popup.popoverContentSize = CGSizeMake(320, 340);
-                
-                [self.popup presentPopoverFromRect:CGRectMake(self.lastScreen.x, self.lastScreen.y, 100, 100) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];                
             }            
         }
         else {
@@ -421,6 +416,46 @@
             [self hideSwirlyProcess];
         }
 	}
+}
+
+- (void) showChartWithGraphic:(AGSGraphic *)polyGraphic
+{
+    if ( self.popup != nil ) {
+        [self.popup dismissPopoverAnimated:YES];
+//        self.popup = [[UIPopoverController alloc] 
+//                      initWithContentViewController:[[UIViewController alloc] init] ];
+//        [self.popup dismissPopoverAnimated:YES];
+    }
+    
+    NSString *mean = [polyGraphic.attributes objectForKey:@"MEAN"];
+    
+    [self.mainMapView removeMapLayerWithName:@"My Graphics Layer"];
+    self.graphicsLayer = [AGSGraphicsLayer graphicsLayer];
+    [self.mainMapView addMapLayer:self.graphicsLayer withName:@"My Graphics Layer"];
+    
+    // display the polygon     
+    AGSSimpleFillSymbol *fillSymbol =
+    [AGSSimpleFillSymbol simpleFillSymbol];
+    fillSymbol.color = [[UIColor blueColor] colorWithAlphaComponent:0.45];
+    fillSymbol.outline.color = [UIColor blueColor];
+    fillSymbol.outline.width = 4;
+    // Add symbology
+    polyGraphic.symbol = fillSymbol;
+    
+    [self.graphicsLayer addGraphic:polyGraphic];
+    [self.graphicsLayer dataChanged];
+    
+    // plot it in a graphic                
+    GraphViewController *graph = [[GraphViewController alloc] initWithNibName:@"GraphViewController" bundle:nil];
+    graph.delegate = self;
+    graph.valueForGraph = mean;
+    
+    self.popup = [[UIPopoverController alloc] 
+                      initWithContentViewController:graph];  
+    
+    self.popup.popoverContentSize = CGSizeMake(320, 340);
+    
+    [self.popup presentPopoverFromRect:CGRectMake(self.lastScreen.x, self.lastScreen.y, 100, 100) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 }
 
 - (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation*)op didFailExecuteWithError:(NSError*)error

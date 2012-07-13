@@ -10,6 +10,9 @@
 		8814D76E15AE417100CCAEE4 /* dropDownBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8814D76B15AE417100CCAEE4 /* dropDownBtn.png */; };
 		8814D76F15AE417100CCAEE4 /* slider2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8814D76C15AE417100CCAEE4 /* slider2.png */; };
 		8814D77015AE417100CCAEE4 /* surfaceBtn3.png in Resources */ = {isa = PBXBuildFile; fileRef = 8814D76D15AE417100CCAEE4 /* surfaceBtn3.png */; };
+		8814D77315AF5D6100CCAEE4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8814D77215AF5D6100CCAEE4 /* AudioToolbox.framework */; };
+		8814D77515AF5E9B00CCAEE4 /* emptytrash.aif in Resources */ = {isa = PBXBuildFile; fileRef = 8814D77415AF5E9B00CCAEE4 /* emptytrash.aif */; };
+		8814D77715AF629E00CCAEE4 /* boing_spring.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8814D77615AF629E00CCAEE4 /* boing_spring.wav */; };
 		88D0766B15A72CF5007808FE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D0766A15A72CF5007808FE /* UIKit.framework */; };
 		88D0766D15A72CF5007808FE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D0766C15A72CF5007808FE /* Foundation.framework */; };
 		88D0766F15A72CF5007808FE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D0766E15A72CF5007808FE /* CoreGraphics.framework */; };
@@ -64,6 +67,9 @@
 		8814D76B15AE417100CCAEE4 /* dropDownBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dropDownBtn.png; sourceTree = "<group>"; };
 		8814D76C15AE417100CCAEE4 /* slider2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider2.png; sourceTree = "<group>"; };
 		8814D76D15AE417100CCAEE4 /* surfaceBtn3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = surfaceBtn3.png; sourceTree = "<group>"; };
+		8814D77215AF5D6100CCAEE4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		8814D77415AF5E9B00CCAEE4 /* emptytrash.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = emptytrash.aif; sourceTree = "<group>"; };
+		8814D77615AF629E00CCAEE4 /* boing_spring.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = boing_spring.wav; sourceTree = "<group>"; };
 		88D0766615A72CF5007808FE /* UCDemoGP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UCDemoGP.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88D0766A15A72CF5007808FE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		88D0766C15A72CF5007808FE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -211,6 +217,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8814D77315AF5D6100CCAEE4 /* AudioToolbox.framework in Frameworks */,
 				88D0769615A72DF6007808FE /* Security.framework in Frameworks */,
 				88D0769415A72DF0007808FE /* libz.dylib in Frameworks */,
 				88D0769215A72DE9007808FE /* MobileCoreServices.framework in Frameworks */,
@@ -232,6 +239,7 @@
 		88D0765B15A72CF5007808FE = {
 			isa = PBXGroup;
 			children = (
+				8814D77215AF5D6100CCAEE4 /* AudioToolbox.framework */,
 				88D0769715A72E71007808FE /* ArcGIS.bundle */,
 				88D0769515A72DF6007808FE /* Security.framework */,
 				88D0769315A72DF0007808FE /* libz.dylib */,
@@ -413,6 +421,8 @@
 		88EE1F0115ACD8A9003C286D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8814D77615AF629E00CCAEE4 /* boing_spring.wav */,
+				8814D77415AF5E9B00CCAEE4 /* emptytrash.aif */,
 				8814D76B15AE417100CCAEE4 /* dropDownBtn.png */,
 				8814D76C15AE417100CCAEE4 /* slider2.png */,
 				8814D76D15AE417100CCAEE4 /* surfaceBtn3.png */,
@@ -537,6 +547,8 @@
 				8814D76E15AE417100CCAEE4 /* dropDownBtn.png in Resources */,
 				8814D76F15AE417100CCAEE4 /* slider2.png in Resources */,
 				8814D77015AE417100CCAEE4 /* surfaceBtn3.png in Resources */,
+				8814D77515AF5E9B00CCAEE4 /* emptytrash.aif in Resources */,
+				8814D77715AF629E00CCAEE4 /* boing_spring.wav in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

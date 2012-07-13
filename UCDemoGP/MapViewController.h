@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <ArcGIS/ArcGIS.h>
+#import <AudioToolbox/AudioToolbox.h>
 
 #import "EditGraphicViewController.h"
 #import "GraphViewController.h"
@@ -39,5 +40,6 @@
 - (void) showSwirlyProcess;
 - (void) hideSwirlyProcess;
 - (void) resetMaps;
+- (void) showChartWithGraphic:(AGSGraphic *)polyGraphic;
 
 @end

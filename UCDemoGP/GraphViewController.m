@@ -49,8 +49,7 @@
     self.graph.plotAreaFrame.paddingTop = 20.0f;
     self.graph.plotAreaFrame.paddingRight = 20.0f;
     self.graph.plotAreaFrame.paddingBottom = 70.0f;
-    self.graph.plotAreaFrame.paddingLeft = 40.0f;
-    //[self.graph applyTheme:[CPTTheme themeNamed:kCPTPlainWhiteTheme]];
+    self.graph.plotAreaFrame.paddingLeft = 55.0f;
     
     //set axes ranges
     CPTXYPlotSpace *plotSpace = (CPTXYPlotSpace *)self.graph.defaultPlotSpace;
@@ -69,11 +68,11 @@
     textStyle.color = [CPTColor blackColor];
     
     axisSet.xAxis.title = @"";
-    axisSet.yAxis.title = @"";
+    axisSet.yAxis.title = @"PPM";
     axisSet.xAxis.titleTextStyle = textStyle;
     axisSet.yAxis.titleTextStyle = textStyle;
-    axisSet.xAxis.titleOffset = 30.0f;
-    axisSet.yAxis.titleOffset = 40.0f;
+    axisSet.xAxis.titleOffset = 1.0f;
+    axisSet.yAxis.titleOffset = 35.0f;
     /*axisSet.xAxis.labelTextStyle = textStyle;
     axisSet.xAxis.labelOffset = 3.0f;
     axisSet.yAxis.labelTextStyle = textStyle;
@@ -94,11 +93,12 @@
     axisSet.yAxis.minorTickLineStyle = lineStyle;
     axisSet.xAxis.minorTicksPerInterval = 1;
     axisSet.yAxis.minorTicksPerInterval = 1;
-    axisSet.xAxis.minorTickLength = 5.0f;
+    axisSet.xAxis.minorTickLength = -5.0f;
     axisSet.yAxis.minorTickLength = 5.0f;
     
     // Create bar plot and add it to the graph
     CPTBarPlot *plot = [[CPTBarPlot alloc] init] ;
+    
     plot.dataSource = self;
     plot.delegate = self;
     plot.barWidth = [[NSDecimalNumber decimalNumberWithString:@"8.5"]
