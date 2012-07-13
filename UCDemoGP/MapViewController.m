@@ -37,6 +37,9 @@
 @synthesize addedFeaturesArray = _addedFeaturesArray;
 @synthesize activityImageView = _activityImageView;
 @synthesize dSetMapScale = _dSetMapScale;
+@synthesize bZoomingToPolygon = _bZoomingToPolygon;
+@synthesize delegate = _delegate;
+@synthesize gpImageView = _gpImageView;
 
 
 - (void)viewDidLoad
@@ -44,6 +47,7 @@
     [super viewDidLoad];
     
     self.dSetMapScale = 0;
+    self.bZoomingToPolygon = NO;
     
     // init object states
     self.imageView.hidden = YES;
@@ -62,10 +66,8 @@
     [self.mainMapView addMapLayer:tiled withName:@"basemap"];
     
     // Real base map
-    self.dynamicLayer = 
-    [AGSDynamicMapServiceLayer  
-    dynamicMapServiceLayerWithURL:[NSURL URLWithString:kBaseMapDynamicMapService]]; 
-    //self.dynamicLayer.visibleLayers = [[NSArray alloc] initWithObjects:@"1", nil];
+    self.dynamicLayer = [AGSDynamicMapServiceLayer  dynamicMapServiceLayerWithURL:[NSURL URLWithString:kBaseMapDynamicMapService]]; 
+    
     self.topView = [self.mainMapView addMapLayer:self.dynamicLayer withName:@"dynamic"];
     
     //add the tile with transperancy on top
@@ -83,13 +85,20 @@
     
     self.mainMapView.touchDelegate = self;
     
-    // Setting up the gesture
+    // Setting up the gesture in the Image View
+    [self.imageView setUserInteractionEnabled:YES];    
     UIPanGestureRecognizer *panGR = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panned:)];
-    panGR.minimumNumberOfTouches = 2;
-    panGR.maximumNumberOfTouches = 3;
+    panGR.minimumNumberOfTouches = 1;
+    panGR.maximumNumberOfTouches = 1;
+    panGR.delegate = self;    
+    [self.imageView addGestureRecognizer:panGR];
     
-    panGR.delegate = self;
-    [self.view addGestureRecognizer:panGR];
+    [self.gpImageView setUserInteractionEnabled:YES];
+    UISwipeGestureRecognizer *swipeGR = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swiped:)];
+    swipeGR.numberOfTouchesRequired = 2;
+    swipeGR.direction =  UISwipeGestureRecognizerDirectionUp;
+    swipeGR.delegate = self;
+    [self.gpImageView addGestureRecognizer:swipeGR];
 }
 
 - (void)mapView:(AGSMapView *)mapView failedLoadingLayerForLayerView:(UIView<AGSLayerView> *)layerView baseLayer:(BOOL)baseLayer withError:(NSError *)error
@@ -114,13 +123,34 @@
 - (void)respondToEnvChange: (NSNotification*) notification {
     
     NSLog(@"scale %f", self.mainMapView.mapScale);    
-    if ( self.dSetMapScale > 0 ) {
+    if ( self.dSetMapScale > 0 /* && self.bZoomingToPolygon == NO */ ) {
         
         // Do not allow to zoom
         if ( self.dSetMapScale != self.mainMapView.mapScale ) {
             
-            [self.mainMapView zoomToScale:self.dSetMapScale withCenterPoint:[self.mainMapView toMapPoint:self.mainMapView.center] animated:NO];
+            /*[self.mainMapView zoomToScale:self.dSetMapScale withCenterPoint:[self.mainMapView toMapPoint:self.mainMapView.center] animated:NO];*/
+            
+            //[self resetMaps];
+            
+            // @todo check the dynamic map and the frame as after zooming in the animation does not work
         }
+    }
+}
+
+- (void)swiped:(id)sender {
+    NSLog(@"gesture found");
+    
+    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Restart" message:@"Do you want to restart?" delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"YES", nil];
+    alert.delegate = self;
+    [alert show];
+    
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    NSLog(@"Button index %d", buttonIndex);
+    if ( buttonIndex == 1 ) {
+        [self.delegate killed];
     }
 }
 
@@ -172,6 +202,19 @@
     
 }
 
+- (void)toggleShowingBasemaps:(CGFloat)width
+{   
+    CGRect mapRect = self.topView.frame;
+    
+    [self.topView setContentMode:UIViewContentModeLeft | UIViewContentModeScaleAspectFill];
+    [self.topView setClipsToBounds:YES];
+    
+    mapRect.size.width =  width;
+    
+    self.topView.frame = mapRect;    
+}
+
+
 - (void) resetMaps
 {
     [self.mainMapView removeMapLayerWithName:@"results"];
@@ -211,19 +254,6 @@
     return UIInterfaceOrientationIsLandscape(interfaceOrientation);  
 }
 
-- (void)toggleShowingBasemaps:(CGFloat)width
-{   
-    CGRect mapRect = self.topView.frame;
-    
-    [self.topView setContentMode:UIViewContentModeLeft | UIViewContentModeScaleAspectFill];
-    [self.topView setClipsToBounds:YES];
-    
-    mapRect.size.width =  width;
-    
-    self.topView.frame = mapRect;
-    
-    
-}
 
 #pragma Sketch
 - (void)mapView:(AGSMapView *)mapView didClickAtPoint:(CGPoint)screen mapPoint:(AGSPoint *)mappoint graphics:(NSDictionary *)graphics
@@ -239,7 +269,9 @@
             AGSGraphic *waterShedPolygon = [myGraphicsLayerGraphics objectAtIndex:0];
             // Show the popup again
             //@todo fix this issue
-            //[self showChartWithGraphic:waterShedPolygon];
+            NSLog(@"waterShed %@", waterShedPolygon);
+            [self showChartWithGraphic:waterShedPolygon];
+            return;
         }
     }
     
@@ -405,7 +437,11 @@
             {
                 AGSGraphic *polyGraphic = [featureSetResults.features objectAtIndex:0];
                 
+                // Show the chart
                 [self showChartWithGraphic:polyGraphic];  
+                
+                self.bZoomingToPolygon = YES;
+                [self.mainMapView zoomToGeometry:polyGraphic.geometry withPadding:0.5 animated:YES];
                 
                 [self hideSwirlyProcess];
             }            

@@ -14,7 +14,13 @@
 #import "GraphViewController.h"
 #import "F3Swirly.h"
 
-@interface MapViewController : UIViewController <AGSMapViewLayerDelegate,AGSMapViewTouchDelegate,EditGraphicDelegate,AGSGeoprocessorDelegate,GraphDelegate>
+@protocol MapViewDelegate <NSObject>
+
+- (void) killed;
+
+@end
+
+@interface MapViewController : UIViewController <AGSMapViewLayerDelegate,AGSMapViewTouchDelegate,EditGraphicDelegate,AGSGeoprocessorDelegate,GraphDelegate,UIAlertViewDelegate>
 
 @property (nonatomic,strong) IBOutlet AGSMapView *mainMapView;
 @property (nonatomic,strong) UIView *topView;
@@ -34,6 +40,10 @@
 @property (nonatomic, strong) NSMutableArray *addedFeaturesArray;
 @property (nonatomic, strong) UIImageView *activityImageView;
 @property (nonatomic) double dSetMapScale;
+@property (nonatomic) BOOL bZoomingToPolygon;
+@property (nonatomic,strong) id <MapViewDelegate> delegate;
+@property (nonatomic,strong) IBOutlet UIImageView *gpImageView;
+
 
 
 - (void)toggleShowingBasemaps:(CGFloat)width;

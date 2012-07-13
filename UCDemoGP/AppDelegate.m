@@ -34,15 +34,32 @@
     }
     
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+    [self startView];
+    [self.window makeKeyAndVisible];
+    
+    return YES;
+}
+
+- (void) startView
+{
     // Override point for customization after application launch.
     self.viewController = [[MapViewController alloc] initWithNibName:@"MapViewController" bundle:nil];
+    self.viewController.delegate = self;
     
     // Passing the array to keep track
     self.viewController.addedFeaturesArray = self.addedFeaturesArray;
     
     self.window.rootViewController = self.viewController;
-    [self.window makeKeyAndVisible];
-    return YES;
+    
+}
+
+- (void) killed
+{
+    [self.viewController dismissModalViewControllerAnimated:NO];
+    self.window.rootViewController = nil;
+    self.viewController = nil;
+    
+    [self startView];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application
