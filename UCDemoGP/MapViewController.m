@@ -637,6 +637,7 @@
 }
 - (void) hideSwirlyProcess
 {
+    [self changeImages:kState_None];
     [self.activityImageView stopAnimating];
     [self.activityImageView removeFromSuperview];
 }
