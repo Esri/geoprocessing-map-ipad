@@ -56,7 +56,7 @@
 					<object class="IBUITextField" id="623510095">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{83, 85}, {147, 31}}</string>
+						<string key="NSFrame">{{37, 85}, {169, 31}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="658310179"/>
@@ -95,10 +95,9 @@
 					<object class="IBUIButton" id="658310179">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{240, 82}, {72, 37}}</string>
+						<string key="NSFrame">{{216, 82}, {72, 37}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -117,6 +116,10 @@
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MC41AA</bytes>
 						</object>
+						<object class="NSCustomResource" key="IBUINormalImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">doneBtn.png</string>
+						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription">
 							<int key="type">2</int>
 							<double key="pointSize">15</double>
@@ -130,7 +133,7 @@
 					<object class="IBUILabel" id="41215998">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{88, 12}, {142, 21}}</string>
+						<string key="NSFrame">{{64, 12}, {142, 21}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="623510095"/>
@@ -162,7 +165,7 @@
 					<object class="IBUIImageView" id="758060931">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{83, 47}, {147, 27}}</string>
+						<string key="NSFrame">{{37, 47}, {169, 27}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -325,6 +328,7 @@
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
 			<string key="calloutBG.png">{415, 225}</string>
+			<string key="doneBtn.png">{84, 47}</string>
 			<string key="dropDownBtn.png">{377, 49}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">1181</string>

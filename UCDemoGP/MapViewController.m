@@ -41,6 +41,10 @@
 @synthesize bZoomingToPolygon = _bZoomingToPolygon;
 @synthesize delegate = _delegate;
 @synthesize originalWidth = _originalWidth;
+@synthesize buttonStates = _buttonStates;
+@synthesize buttonCollect = _buttonCollect;
+@synthesize buttonSurface = _buttonSurface;
+@synthesize buttonWaterShed = _buttonWaterShed;
 
 
 - (void)viewDidLoad
@@ -49,6 +53,8 @@
     
     self.dSetMapScale = 0;
     self.bZoomingToPolygon = NO;
+    // Set all buttons to no state
+    self.buttonStates = kState_None;
     
     // init object states
     self.imageView.hidden = YES;
@@ -122,12 +128,12 @@
 - (void)respondToEnvChange: (NSNotification*) notification {
     
     NSLog(@"scale %f", self.mainMapView.mapScale);    
-    if ( self.dSetMapScale > 0  /*&& self.bZoomingToPolygon == NO*/  ) {
+    if ( self.dSetMapScale > 0  && self.bZoomingToPolygon == NO  ) {
         
         // Do not allow to zoom
         if ( self.dSetMapScale != self.mainMapView.mapScale ) {
             
-            /*[self.mainMapView zoomToScale:self.dSetMapScale withCenterPoint:[self.mainMapView toMapPoint:self.mainMapView.center] animated:NO];*/
+            [self.mainMapView zoomToScale:self.dSetMapScale withCenterPoint:[self.mainMapView toMapPoint:self.mainMapView.center] animated:NO];
             
            // [self resetMaps];
             
@@ -286,66 +292,126 @@
 #pragma Sketch
 - (void)mapView:(AGSMapView *)mapView didClickAtPoint:(CGPoint)screen mapPoint:(AGSPoint *)mappoint graphics:(NSDictionary *)graphics
 {
-    // Check the user didn't click on top of a watershed first
-    NSLog(@"graphics layers %@", graphics);
-    if ( [graphics objectForKey:@"My Graphics Layer"] != nil ) 
-    {
-        NSArray *myGraphicsLayerGraphics = [graphics objectForKey:@"My Graphics Layer"];
-        NSLog(@"graphics %@", myGraphicsLayerGraphics);
-        if ( myGraphicsLayerGraphics.count > 0 )
+    if ( self.buttonStates == kState_None) 
+        return;
+    
+    else if (self.buttonStates == kState_WatershedEnabled ) {
+        // Check the user didn't click on top of a watershed first
+        NSLog(@"graphics layers %@", graphics);
+        if ( [graphics objectForKey:@"My Graphics Layer"] != nil ) 
         {
-            AGSGraphic *waterShedPolygon = [myGraphicsLayerGraphics objectAtIndex:0];
-            // Show the popup again
-            [self showChartWithGraphic:waterShedPolygon];
-            return;
+            NSArray *myGraphicsLayerGraphics = [graphics objectForKey:@"My Graphics Layer"];
+            NSLog(@"graphics %@", myGraphicsLayerGraphics);
+            if ( myGraphicsLayerGraphics.count > 0 )
+            {
+                AGSGraphic *waterShedPolygon = [myGraphicsLayerGraphics objectAtIndex:0];
+                // Show the popup again
+                [self showChartWithGraphic:waterShedPolygon];
+                return;
+            }
+            else
+                [self waterShedTap:screen mapPoint:mappoint graphics:graphics];
+        }
+        else {
+            // run the watershed
+            [self waterShedTap:screen mapPoint:mappoint graphics:graphics];
         }
     }
     
-    AGSGraphic* newGraphic = nil;
-    self.lastScreen = screen;
-    
-    // add feature and edit the properties
-    if ( self.editableFeatureLayer.types.count > 0 ) {
-        AGSFeatureType* featureType = [self.editableFeatureLayer.types objectAtIndex:0];  
-        newGraphic = [self.editableFeatureLayer featureWithType:featureType];
-    }
-    else {
+    else if ( self.buttonStates == kState_CollectEnabled ) {
+        AGSGraphic* newGraphic = nil;
+        self.lastScreen = screen;
         
-        //PB_ICP40
-        AGSGraphic *first = [self.editableFeatureLayer.graphics objectAtIndex:0];
-        // TODO, copy the feature
-        NSDictionary *jsonDic = [first encodeToJSON];
-        AGSGraphic *copiedGraphic = [[AGSGraphic alloc] initWithJSON:jsonDic];
-        copiedGraphic.geometry = mappoint;
-        
-        [copiedGraphic.attributes removeObjectForKey:@"OBJECTID"];
-        
-        EditGraphicViewController *edit = [[EditGraphicViewController alloc] initWithNibName:@"EditGraphicViewController" bundle:nil];
-        edit.delegate = self;
-        
-        edit.graphic = copiedGraphic;
-        edit.editableFeatureLayer = self.editableFeatureLayer;
-        edit.attributeToEdit = @"PB_ICP40";
-        edit.addedFeaturesArray = self.addedFeaturesArray;
-        
-        self.popup = [[UIPopoverController alloc] 
-                      initWithContentViewController:edit]; 
-        
-        self.popup.popoverContentSize = CGSizeMake(320, 140);
-        
-        [self.popup presentPopoverFromRect:CGRectMake(self.lastScreen.x, self.lastScreen.y, 100, 50) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
-        
+        // add feature and edit the properties
+        if ( self.editableFeatureLayer.types.count > 0 ) {
+            AGSFeatureType* featureType = [self.editableFeatureLayer.types objectAtIndex:0];  
+            newGraphic = [self.editableFeatureLayer featureWithType:featureType];
+        }
+        else {
+            
+            //PB_ICP40
+            AGSGraphic *first = [self.editableFeatureLayer.graphics objectAtIndex:0];
+            // TODO, copy the feature
+            NSDictionary *jsonDic = [first encodeToJSON];
+            AGSGraphic *copiedGraphic = [[AGSGraphic alloc] initWithJSON:jsonDic];
+            copiedGraphic.geometry = mappoint;
+            
+            [copiedGraphic.attributes removeObjectForKey:@"OBJECTID"];
+            
+            EditGraphicViewController *edit = [[EditGraphicViewController alloc] initWithNibName:@"EditGraphicViewController" bundle:nil];
+            edit.delegate = self;
+            
+            edit.graphic = copiedGraphic;
+            edit.editableFeatureLayer = self.editableFeatureLayer;
+            edit.attributeToEdit = @"PB_ICP40";
+            edit.addedFeaturesArray = self.addedFeaturesArray;
+            
+            self.popup = [[UIPopoverController alloc] 
+                          initWithContentViewController:edit]; 
+            
+            self.popup.popoverContentSize = CGSizeMake(300, 140);
+            
+            [self.popup presentPopoverFromRect:CGRectMake(self.lastScreen.x, self.lastScreen.y, 100, 50) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
+            
+        }    
     }    
        
 }
+
+#pragma Tap and Hold
+//- (void)mapView:(AGSMapView *)mapView didTapAndHoldAtPoint:(CGPoint)screen mapPoint:(AGSPoint *)mappoint graphics:(NSDictionary *)graphics
+
+- (void) waterShedTap:(CGPoint)screen mapPoint:(AGSPoint *)mappoint graphics:(NSDictionary *)graphics
+{
+    self.lastScreen = screen;
+    [self showSwirlyProcess];
+    
+    // @todo get the map point and call the other gp to do the watershed    
+    NSURL* url = [NSURL URLWithString: kWaterShedGP];
+    self.geoprocessWaterShed = [AGSGeoprocessor geoprocessorWithURL:url];
+    self.geoprocessWaterShed.delegate = self;
+    
+    AGSGraphic *graphic = [[AGSGraphic alloc] init];
+    graphic.geometry = mappoint;
+    
+    NSArray *features = [NSArray arrayWithObjects:graphic, nil ];
+    
+    AGSFeatureSet *featureSet = [[AGSFeatureSet alloc] init];
+    featureSet.features = features;
+    
+    AGSGPParameterValue *initPoint = [AGSGPParameterValue parameterWithName:@"Watersehd_Point" type:AGSGPParameterTypeFeatureRecordSetLayer value:featureSet]; 
+    
+    NSArray *params = [NSArray arrayWithObjects:initPoint,nil];
+    self.geoprocessWaterShed.outputSpatialReference = self.mainMapView.spatialReference;
+    
+    [self.geoprocessWaterShed executeWithParameters:params];
+}
+
 
 - (void) finishedEditing:(AGSGraphic*)returnGraphic
 {
     [self.popup dismissPopoverAnimated:YES];
 }
 
-- (IBAction)callGP:(id)sender
+
+//First button pressed
+-(IBAction)callCollect:(id)sender
 {
+    [self changeImages:kState_CollectEnabled];
+}
+
+//Second button pressed
+-(IBAction)callWatershedCollect:(id)sender
+{
+    [self changeImages:kState_WatershedEnabled];
+}
+
+//Third button pressed
+- (IBAction)callGPSurface:(id)sender
+{
+    [self changeImages:kState_SurfaceEnabled];
+    
+    
     // Start the UI for processing
     [self showSwirlyProcess];
     
@@ -370,6 +436,22 @@
     
     [self.geoprocess submitJobWithParameters:params];
     [self.geoprocess submitJobWithParameters:nil];
+}
+
+- (void) changeImages:(ButtonStates)state
+{
+    self.buttonCollect.selected = NO;
+    self.buttonSurface.selected = NO;
+    self.buttonWaterShed.selected = NO;
+    
+    if ( state == kState_CollectEnabled)
+        self.buttonCollect.selected = YES;
+    else if ( state == kState_SurfaceEnabled)
+        self.buttonSurface.selected = YES;
+    else if ( state == kState_WatershedEnabled)
+        self.buttonWaterShed.selected = YES;
+    
+    self.buttonStates = state;
 }
 
 - (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation*)op jobDidSucceed:(AGSGPJobInfo*)jobInfo {
@@ -402,32 +484,6 @@
 //    [alert show];
 }
 
-#pragma Tap and Hold
-- (void)mapView:(AGSMapView *)mapView didTapAndHoldAtPoint:(CGPoint)screen mapPoint:(AGSPoint *)mappoint graphics:(NSDictionary *)graphics
-{
-    self.lastScreen = screen;
-    [self showSwirlyProcess];
-    
-    // @todo get the map point and call the other gp to do the watershed    
-    NSURL* url = [NSURL URLWithString: kWaterShedGP];
-    self.geoprocessWaterShed = [AGSGeoprocessor geoprocessorWithURL:url];
-    self.geoprocessWaterShed.delegate = self;
-    
-    AGSGraphic *graphic = [[AGSGraphic alloc] init];
-    graphic.geometry = mappoint;
-    
-    NSArray *features = [NSArray arrayWithObjects:graphic, nil ];
-    
-    AGSFeatureSet *featureSet = [[AGSFeatureSet alloc] init];
-    featureSet.features = features;
-    
-    AGSGPParameterValue *initPoint = [AGSGPParameterValue parameterWithName:@"Watersehd_Point" type:AGSGPParameterTypeFeatureRecordSetLayer value:featureSet]; 
-    
-    NSArray *params = [NSArray arrayWithObjects:initPoint,nil];
-    self.geoprocessWaterShed.outputSpatialReference = self.mainMapView.spatialReference;
-    
-    [self.geoprocessWaterShed executeWithParameters:params];
-}
 
 - (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation*)op didExecuteWithResults:(NSArray *)results messages:(NSArray *)messages
 {

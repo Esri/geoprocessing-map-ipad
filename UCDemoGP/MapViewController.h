@@ -14,6 +14,14 @@
 #import "GraphViewController.h"
 
 
+typedef enum {
+    kState_None,
+    kState_CollectEnabled,
+    kState_SurfaceEnabled,
+    kState_WatershedEnabled,
+} ButtonStates;
+
+
 @protocol MapViewDelegate <NSObject>
 
 - (void) killed;
@@ -44,6 +52,10 @@
 @property (nonatomic) BOOL bZoomingToPolygon;
 @property (nonatomic,strong) id <MapViewDelegate> delegate;
 @property (nonatomic) CGFloat originalWidth;
+@property (nonatomic) ButtonStates buttonStates;
+@property (nonatomic,strong) IBOutlet UIButton *buttonCollect;
+@property (nonatomic,strong) IBOutlet UIButton *buttonSurface;
+@property (nonatomic,strong) IBOutlet UIButton *buttonWaterShed;
 
 
 
@@ -52,5 +64,7 @@
 - (void) hideSwirlyProcess;
 - (void) resetMaps;
 - (void) showChartWithGraphic:(AGSGraphic *)polyGraphic;
+- (void) waterShedTap:(CGPoint)screen mapPoint:(AGSPoint *)mappoint graphics:(NSDictionary *)graphics;
+- (void) changeImages:(ButtonStates)state;
 
 @end
