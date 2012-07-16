@@ -20,6 +20,8 @@
 @property (strong, nonatomic) MapViewController *viewController;
 @property (nonatomic, strong) NSMutableArray *addedFeaturesArray;
 @property (nonatomic, strong) CleanUpProcess *cleanUpProcess;
+@property (nonatomic) BOOL bMotionStarted;
+@property (nonatomic, strong) NSTimer *shakeTimer;
 
 - (void) startView;
 

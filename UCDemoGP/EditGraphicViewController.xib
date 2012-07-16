@@ -56,7 +56,7 @@
 					<object class="IBUITextField" id="623510095">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{37, 85}, {169, 31}}</string>
+						<string key="NSFrame">{{37, 84}, {144, 31}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="658310179"/>
@@ -95,7 +95,7 @@
 					<object class="IBUIButton" id="658310179">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{216, 82}, {72, 37}}</string>
+						<string key="NSFrame">{{189, 82}, {72, 34}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -104,7 +104,7 @@
 						<int key="IBUIContentHorizontalAlignment">0</int>
 						<int key="IBUIContentVerticalAlignment">0</int>
 						<string key="IBUINormalTitle">Done</string>
-						<object class="NSColor" key="IBUIHighlightedTitleColor">
+						<object class="NSColor" key="IBUIHighlightedTitleColor" id="1040665222">
 							<int key="NSColorSpace">3</int>
 							<bytes key="NSWhite">MQA</bytes>
 						</object>
@@ -145,10 +145,12 @@
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 						<string key="IBUIText">Add Sample</string>
 						<object class="NSColor" key="IBUITextColor">
-							<int key="NSColorSpace">1</int>
-							<bytes key="NSRGB">MC4wOTUxNDA2NjkzNiAwLjE4MDM0NzQ0NTEgMC4zOTYzMTQ1MzgAA</bytes>
+							<int key="NSColorSpace">3</int>
+							<bytes key="NSWhite">MC4zMzMzMzMzMzMzAA</bytes>
 						</object>
 						<nil key="IBUIHighlightedColor"/>
+						<reference key="IBUIShadowColor" ref="1040665222"/>
+						<string key="IBUIShadowOffset">{0, 1}</string>
 						<int key="IBUIBaselineAdjustment">0</int>
 						<float key="IBUIMinimumFontSize">10</float>
 						<int key="IBUITextAlignment">1</int>
@@ -165,7 +167,7 @@
 					<object class="IBUIImageView" id="758060931">
 						<reference key="NSNextResponder" ref="191373211"/>
 						<int key="NSvFlags">292</int>
-						<string key="NSFrame">{{37, 47}, {169, 27}}</string>
+						<string key="NSFrame">{{37, 47}, {224, 27}}</string>
 						<reference key="NSSuperview" ref="191373211"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -233,9 +235,9 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="623510095"/>
 							<reference ref="35886236"/>
-							<reference ref="658310179"/>
 							<reference ref="41215998"/>
 							<reference ref="758060931"/>
+							<reference ref="658310179"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>

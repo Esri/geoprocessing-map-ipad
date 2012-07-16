@@ -40,15 +40,26 @@
 
 - (void)queryTask:(AGSQueryTask *)queryTask operation:(NSOperation*)op didExecuteWithObjectIds:(NSArray *)objectIds {
     
-    [self.editableFeatureLayer deleteFeaturesWithObjectIds:objectIds];
-    
-    
-    SystemSoundID mySSID;
-    
-    NSString *path = [[NSBundle mainBundle] pathForResource:@"emptytrash" ofType:@"aif"];
-    AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath: path], &mySSID); 
-    
-    AudioServicesPlaySystemSound(mySSID);
+    if ( objectIds != nil ) {
+        @try {
+            [self.editableFeatureLayer deleteFeaturesWithObjectIds:objectIds];
+        }
+        @catch (NSException *exception) {
+            NSLog(@"Exception deleting %@", exception);
+        }
+        @finally {
+            
+        }
+        
+        
+        
+        SystemSoundID mySSID;
+        
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"emptytrash" ofType:@"aif"];
+        AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath: path], &mySSID); 
+        
+        AudioServicesPlaySystemSound(mySSID);
+    }
 }
 
 - (void)featureLayer:(AGSFeatureLayer *)featureLayer operation:(NSOperation*)op didFeatureEditsWithResults:(AGSFeatureLayerEditResults *)editResults

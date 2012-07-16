@@ -231,7 +231,7 @@
 
 - (void)toggleShowingBasemaps:(CGFloat)width
 {   
-    NSLog(@"w: %f", width);
+    //NSLog(@"w: %f", width);
     CGRect mapRect = self.topView.frame;
     
     mapRect.size.width =  width;

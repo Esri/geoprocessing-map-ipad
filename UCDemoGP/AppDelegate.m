@@ -17,10 +17,13 @@
 @synthesize viewController = _viewController;
 @synthesize addedFeaturesArray = _addedFeaturesArray;
 @synthesize cleanUpProcess = cleanUpProcess;
+@synthesize bMotionStarted = _bMotionStarted;
+@synthesize shakeTimer = _shakeTimer;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [self becomeFirstResponder];
+    self.bMotionStarted = NO;
     
     // To keep track of the features
     NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -81,8 +84,13 @@
 
 - (void)motionBegan:(UIEventSubtype)motion withEvent:(UIEvent *)event
 {
-    if(event.type == UIEventSubtypeMotionShake)
+    if(event.type == UIEventSubtypeMotionShake && self.bMotionStarted == NO)
     {   
+        // the shake timer prevents the even to happen twice in less than 10 seconds
+        self.bMotionStarted = YES;
+        self.shakeTimer = [NSTimer scheduledTimerWithTimeInterval:(10.0) target:self selector:
+                           @selector(restartShake:) userInfo:nil repeats:NO];  
+        
         self.cleanUpProcess = [[CleanUpProcess alloc] init];
         self.cleanUpProcess.editableFeatureLayer = self.viewController.editableFeatureLayer;
         
@@ -90,6 +98,13 @@
             [self.cleanUpProcess cleanUp:self.addedFeaturesArray]; 
         }
     }
+}
+
+- (void)restartShake:(NSTimer *)timer
+{
+    [timer invalidate];
+    timer = nil;
+    self.bMotionStarted = NO;
 }
 
 
