@@ -676,7 +676,6 @@
 		88D0768515A72CF6007808FE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = UCDemoGP/UCDemoGP.entitlements;
 				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/SDKs/ArcGIS/**";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UCDemoGP/UCDemoGP-Prefix.pch";
@@ -700,7 +699,6 @@
 		88D0768615A72CF6007808FE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = UCDemoGP/UCDemoGP.entitlements;
 				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/SDKs/ArcGIS/**";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UCDemoGP/UCDemoGP-Prefix.pch";
