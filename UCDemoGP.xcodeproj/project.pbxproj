@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8814949615B4D953008BE2BB /* addPointBtnDOWN.png in Resources */ = {isa = PBXBuildFile; fileRef = 8814948D15B4D953008BE2BB /* addPointBtnDOWN.png */; };
+		8814949715B4D953008BE2BB /* addPointBtnUP.png in Resources */ = {isa = PBXBuildFile; fileRef = 8814948E15B4D953008BE2BB /* addPointBtnUP.png */; };
+		8814949815B4D953008BE2BB /* doneBtn2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8814948F15B4D953008BE2BB /* doneBtn2.png */; };
+		8814949915B4D953008BE2BB /* surfaceBtn5DOWN.png in Resources */ = {isa = PBXBuildFile; fileRef = 8814949015B4D953008BE2BB /* surfaceBtn5DOWN.png */; };
+		8814949A15B4D953008BE2BB /* surfaceBtn5UP.png in Resources */ = {isa = PBXBuildFile; fileRef = 8814949115B4D953008BE2BB /* surfaceBtn5UP.png */; };
+		8814949B15B4D953008BE2BB /* watershedBtn1DOWN.png in Resources */ = {isa = PBXBuildFile; fileRef = 8814949215B4D953008BE2BB /* watershedBtn1DOWN.png */; };
+		8814949C15B4D953008BE2BB /* watershedBtn1UP.png in Resources */ = {isa = PBXBuildFile; fileRef = 8814949315B4D953008BE2BB /* watershedBtn1UP.png */; };
+		8814949D15B4D953008BE2BB /* watershedBtn2DOWN.png in Resources */ = {isa = PBXBuildFile; fileRef = 8814949415B4D953008BE2BB /* watershedBtn2DOWN.png */; };
+		8814949E15B4D953008BE2BB /* watershedBtn2UP.png in Resources */ = {isa = PBXBuildFile; fileRef = 8814949515B4D953008BE2BB /* watershedBtn2UP.png */; };
 		8814D76E15AE417100CCAEE4 /* dropDownBtn.png in Resources */ = {isa = PBXBuildFile; fileRef = 8814D76B15AE417100CCAEE4 /* dropDownBtn.png */; };
 		8814D76F15AE417100CCAEE4 /* slider2.png in Resources */ = {isa = PBXBuildFile; fileRef = 8814D76C15AE417100CCAEE4 /* slider2.png */; };
 		8814D77015AE417100CCAEE4 /* surfaceBtn3.png in Resources */ = {isa = PBXBuildFile; fileRef = 8814D76D15AE417100CCAEE4 /* surfaceBtn3.png */; };
@@ -63,6 +72,15 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8814948D15B4D953008BE2BB /* addPointBtnDOWN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addPointBtnDOWN.png; sourceTree = "<group>"; };
+		8814948E15B4D953008BE2BB /* addPointBtnUP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = addPointBtnUP.png; sourceTree = "<group>"; };
+		8814948F15B4D953008BE2BB /* doneBtn2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = doneBtn2.png; sourceTree = "<group>"; };
+		8814949015B4D953008BE2BB /* surfaceBtn5DOWN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = surfaceBtn5DOWN.png; sourceTree = "<group>"; };
+		8814949115B4D953008BE2BB /* surfaceBtn5UP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = surfaceBtn5UP.png; sourceTree = "<group>"; };
+		8814949215B4D953008BE2BB /* watershedBtn1DOWN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = watershedBtn1DOWN.png; sourceTree = "<group>"; };
+		8814949315B4D953008BE2BB /* watershedBtn1UP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = watershedBtn1UP.png; sourceTree = "<group>"; };
+		8814949415B4D953008BE2BB /* watershedBtn2DOWN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = watershedBtn2DOWN.png; sourceTree = "<group>"; };
+		8814949515B4D953008BE2BB /* watershedBtn2UP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = watershedBtn2UP.png; sourceTree = "<group>"; };
 		8814D76B15AE417100CCAEE4 /* dropDownBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dropDownBtn.png; sourceTree = "<group>"; };
 		8814D76C15AE417100CCAEE4 /* slider2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider2.png; sourceTree = "<group>"; };
 		8814D76D15AE417100CCAEE4 /* surfaceBtn3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = surfaceBtn3.png; sourceTree = "<group>"; };
@@ -234,6 +252,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8814948C15B4D953008BE2BB /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				8814948D15B4D953008BE2BB /* addPointBtnDOWN.png */,
+				8814948E15B4D953008BE2BB /* addPointBtnUP.png */,
+				8814948F15B4D953008BE2BB /* doneBtn2.png */,
+				8814949015B4D953008BE2BB /* surfaceBtn5DOWN.png */,
+				8814949115B4D953008BE2BB /* surfaceBtn5UP.png */,
+				8814949215B4D953008BE2BB /* watershedBtn1DOWN.png */,
+				8814949315B4D953008BE2BB /* watershedBtn1UP.png */,
+				8814949415B4D953008BE2BB /* watershedBtn2DOWN.png */,
+				8814949515B4D953008BE2BB /* watershedBtn2UP.png */,
+			);
+			path = Buttons;
+			sourceTree = "<group>";
+		};
 		88D0765B15A72CF5007808FE = {
 			isa = PBXGroup;
 			children = (
@@ -419,6 +453,7 @@
 		88EE1F0115ACD8A9003C286D /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				8814948C15B4D953008BE2BB /* Buttons */,
 				8814D77615AF629E00CCAEE4 /* boing_spring.wav */,
 				8814D77415AF5E9B00CCAEE4 /* emptytrash.aif */,
 				8814D76B15AE417100CCAEE4 /* dropDownBtn.png */,
@@ -538,6 +573,15 @@
 				8814D77015AE417100CCAEE4 /* surfaceBtn3.png in Resources */,
 				8814D77515AF5E9B00CCAEE4 /* emptytrash.aif in Resources */,
 				8814D77715AF629E00CCAEE4 /* boing_spring.wav in Resources */,
+				8814949615B4D953008BE2BB /* addPointBtnDOWN.png in Resources */,
+				8814949715B4D953008BE2BB /* addPointBtnUP.png in Resources */,
+				8814949815B4D953008BE2BB /* doneBtn2.png in Resources */,
+				8814949915B4D953008BE2BB /* surfaceBtn5DOWN.png in Resources */,
+				8814949A15B4D953008BE2BB /* surfaceBtn5UP.png in Resources */,
+				8814949B15B4D953008BE2BB /* watershedBtn1DOWN.png in Resources */,
+				8814949C15B4D953008BE2BB /* watershedBtn1UP.png in Resources */,
+				8814949D15B4D953008BE2BB /* watershedBtn2DOWN.png in Resources */,
+				8814949E15B4D953008BE2BB /* watershedBtn2UP.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
