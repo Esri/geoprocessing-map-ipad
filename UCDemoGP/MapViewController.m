@@ -163,13 +163,13 @@
     if (panGr.state == UIGestureRecognizerStateEnded) {
 
         //[self.topView removeFromSuperview];
-        // requirement, reset the map
         //[self resetMaps];
+        
         self.topView.frame = _topViewFrame;        
         [self.topView setContentMode:_origMode];  
         self.topView.transform = _tvTransform;
         
-        [self toggleShowingBasemaps:self.originalWidth];
+        //[self toggleShowingBasemaps:self.originalWidth];
         
         // Slider image
         self.imageView.transform = self.originalTransform;
@@ -185,10 +185,9 @@
     else if ( panGr.state == UIGestureRecognizerStateBegan) {
         self.originalWidth = -1;
         _topViewFrame = self.topView.frame;
-        
         _origMode = self.topView.contentMode;
+        _tvTransform = self.topView.transform;        
         
-        _tvTransform = self.topView.transform;
         [self.topView setContentMode:UIViewContentModeLeft | UIViewContentModeScaleAspectFill | UIViewContentModeRedraw];
         [self.topView setClipsToBounds:YES];
         
@@ -250,9 +249,9 @@
     self.baseView = [self.mainMapView addMapLayer:self.dynamicLayer withName:@"dynamic"];
     
     self.topView = [self.mainMapView addMapLayer:self.resultDynamicLayer withName:@"results"];
-    // For debugging
-    self.topView.layer.borderColor = [[UIColor blackColor] CGColor];
-    self.topView.layer.borderWidth = 5.0f;
+    // For debugging adds a border
+    //self.topView.layer.borderColor = [[UIColor blackColor] CGColor];
+    //self.topView.layer.borderWidth = 5.0f;
     
     [self.mainMapView addMapLayer:self.editableFeatureLayer  withName:@"Edit Layer"];
     
