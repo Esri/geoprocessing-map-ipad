@@ -81,6 +81,7 @@
 		8814949315B4D953008BE2BB /* watershedBtn1UP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = watershedBtn1UP.png; sourceTree = "<group>"; };
 		8814949415B4D953008BE2BB /* watershedBtn2DOWN.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = watershedBtn2DOWN.png; sourceTree = "<group>"; };
 		8814949515B4D953008BE2BB /* watershedBtn2UP.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = watershedBtn2UP.png; sourceTree = "<group>"; };
+		8814949F15B4E0F3008BE2BB /* FieldApp.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = FieldApp.entitlements; sourceTree = "<group>"; };
 		8814D76B15AE417100CCAEE4 /* dropDownBtn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dropDownBtn.png; sourceTree = "<group>"; };
 		8814D76C15AE417100CCAEE4 /* slider2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = slider2.png; sourceTree = "<group>"; };
 		8814D76D15AE417100CCAEE4 /* surfaceBtn3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = surfaceBtn3.png; sourceTree = "<group>"; };
@@ -88,14 +89,14 @@
 		8814D77415AF5E9B00CCAEE4 /* emptytrash.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = emptytrash.aif; sourceTree = "<group>"; };
 		8814D77615AF629E00CCAEE4 /* boing_spring.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = boing_spring.wav; sourceTree = "<group>"; };
 		8814D77D15B0AA4C00CCAEE4 /* UCDemoGP.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = UCDemoGP.entitlements; sourceTree = "<group>"; };
-		88D0766615A72CF5007808FE /* UCDemoGP.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = UCDemoGP.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		88D0766615A72CF5007808FE /* FieldApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FieldApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88D0766A15A72CF5007808FE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		88D0766C15A72CF5007808FE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		88D0766E15A72CF5007808FE /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
-		88D0767215A72CF5007808FE /* UCDemoGP-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "UCDemoGP-Info.plist"; sourceTree = "<group>"; };
+		88D0767215A72CF5007808FE /* FieldApp-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "FieldApp-Info.plist"; sourceTree = "<group>"; };
 		88D0767415A72CF5007808FE /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		88D0767615A72CF5007808FE /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		88D0767815A72CF6007808FE /* UCDemoGP-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UCDemoGP-Prefix.pch"; sourceTree = "<group>"; };
+		88D0767815A72CF6007808FE /* FieldApp-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "FieldApp-Prefix.pch"; sourceTree = "<group>"; };
 		88D0767915A72CF6007808FE /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		88D0767A15A72CF6007808FE /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
 		88D0767C15A72CF6007808FE /* MapViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = MapViewController.h; sourceTree = "<group>"; };
@@ -271,6 +272,7 @@
 		88D0765B15A72CF5007808FE = {
 			isa = PBXGroup;
 			children = (
+				8814949F15B4E0F3008BE2BB /* FieldApp.entitlements */,
 				8814D77215AF5D6100CCAEE4 /* AudioToolbox.framework */,
 				88D0769715A72E71007808FE /* ArcGIS.bundle */,
 				88D0769515A72DF6007808FE /* Security.framework */,
@@ -290,7 +292,7 @@
 		88D0766715A72CF5007808FE /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				88D0766615A72CF5007808FE /* UCDemoGP.app */,
+				88D0766615A72CF5007808FE /* FieldApp.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -331,10 +333,10 @@
 		88D0767115A72CF5007808FE /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				88D0767215A72CF5007808FE /* UCDemoGP-Info.plist */,
+				88D0767215A72CF5007808FE /* FieldApp-Info.plist */,
 				88D0767315A72CF5007808FE /* InfoPlist.strings */,
 				88D0767615A72CF5007808FE /* main.m */,
-				88D0767815A72CF6007808FE /* UCDemoGP-Prefix.pch */,
+				88D0767815A72CF6007808FE /* FieldApp-Prefix.pch */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -495,9 +497,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		88D0766515A72CF5007808FE /* UCDemoGP */ = {
+		88D0766515A72CF5007808FE /* FieldApp */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 88D0768415A72CF6007808FE /* Build configuration list for PBXNativeTarget "UCDemoGP" */;
+			buildConfigurationList = 88D0768415A72CF6007808FE /* Build configuration list for PBXNativeTarget "FieldApp" */;
 			buildPhases = (
 				88D0766215A72CF5007808FE /* Sources */,
 				88D0766315A72CF5007808FE /* Frameworks */,
@@ -507,9 +509,9 @@
 			);
 			dependencies = (
 			);
-			name = UCDemoGP;
+			name = FieldApp;
 			productName = UCDemoGP;
-			productReference = 88D0766615A72CF5007808FE /* UCDemoGP.app */;
+			productReference = 88D0766615A72CF5007808FE /* FieldApp.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -520,7 +522,7 @@
 			attributes = {
 				LastUpgradeCheck = 0430;
 			};
-			buildConfigurationList = 88D0766015A72CF5007808FE /* Build configuration list for PBXProject "UCDemoGP" */;
+			buildConfigurationList = 88D0766015A72CF5007808FE /* Build configuration list for PBXProject "FieldApp" */;
 			compatibilityVersion = "Xcode 3.2";
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
@@ -532,7 +534,7 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				88D0766515A72CF5007808FE /* UCDemoGP */,
+				88D0766515A72CF5007808FE /* FieldApp */,
 			);
 		};
 /* End PBXProject section */
@@ -676,10 +678,11 @@
 		88D0768515A72CF6007808FE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = FieldApp.entitlements;
 				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/SDKs/ArcGIS/**";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "UCDemoGP/UCDemoGP-Prefix.pch";
-				INFOPLIST_FILE = "UCDemoGP/UCDemoGP-Info.plist";
+				GCC_PREFIX_HEADER = "UCDemoGP/FieldApp-Prefix.pch";
+				INFOPLIST_FILE = "UCDemoGP/FieldApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -691,7 +694,7 @@
 					"-framework",
 					ArcGIS,
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = FieldApp;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -699,10 +702,11 @@
 		88D0768615A72CF6007808FE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = FieldApp.entitlements;
 				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/SDKs/ArcGIS/**";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
-				GCC_PREFIX_HEADER = "UCDemoGP/UCDemoGP-Prefix.pch";
-				INFOPLIST_FILE = "UCDemoGP/UCDemoGP-Info.plist";
+				GCC_PREFIX_HEADER = "UCDemoGP/FieldApp-Prefix.pch";
+				INFOPLIST_FILE = "UCDemoGP/FieldApp-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
@@ -714,7 +718,7 @@
 					"-framework",
 					ArcGIS,
 				);
-				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_NAME = FieldApp;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
@@ -722,7 +726,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		88D0766015A72CF5007808FE /* Build configuration list for PBXProject "UCDemoGP" */ = {
+		88D0766015A72CF5007808FE /* Build configuration list for PBXProject "FieldApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				88D0768215A72CF6007808FE /* Debug */,
@@ -731,7 +735,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		88D0768415A72CF6007808FE /* Build configuration list for PBXNativeTarget "UCDemoGP" */ = {
+		88D0768415A72CF6007808FE /* Build configuration list for PBXNativeTarget "FieldApp" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				88D0768515A72CF6007808FE /* Debug */,
