@@ -14,7 +14,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "88D0766515A72CF5007808FE"
-               BuildableName = "UCDemoGP.app"
+               BuildableName = "FieldApp.app"
                BlueprintName = "FieldApp"
                ReferencedContainer = "container:FieldApp.xcodeproj">
             </BuildableReference>
@@ -32,7 +32,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "88D0766515A72CF5007808FE"
-            BuildableName = "UCDemoGP.app"
+            BuildableName = "FieldApp.app"
             BlueprintName = "FieldApp"
             ReferencedContainer = "container:FieldApp.xcodeproj">
          </BuildableReference>
@@ -51,7 +51,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "88D0766515A72CF5007808FE"
-            BuildableName = "UCDemoGP.app"
+            BuildableName = "FieldApp.app"
             BlueprintName = "FieldApp"
             ReferencedContainer = "container:FieldApp.xcodeproj">
          </BuildableReference>
@@ -69,7 +69,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "88D0766515A72CF5007808FE"
-            BuildableName = "UCDemoGP.app"
+            BuildableName = "FieldApp.app"
             BlueprintName = "FieldApp"
             ReferencedContainer = "container:FieldApp.xcodeproj">
          </BuildableReference>

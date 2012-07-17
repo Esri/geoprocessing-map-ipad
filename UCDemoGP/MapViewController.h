@@ -32,7 +32,7 @@ typedef enum {
 
 @property (nonatomic,strong) IBOutlet AGSMapView *mainMapView;
 @property (nonatomic,strong) UIView *baseView;
-@property (nonatomic,strong) UIView *topView;
+@property (nonatomic,strong) AGSDynamicLayerView *topView;
 @property (nonatomic,strong) AGSFeatureLayer *editableFeatureLayer;
 @property (nonatomic,strong) AGSDynamicMapServiceLayer *dynamicLayer;
 @property (nonatomic,strong) AGSSketchGraphicsLayer * sketch;
@@ -42,7 +42,7 @@ typedef enum {
 @property (nonatomic,strong) AGSDynamicMapServiceLayer *resultDynamicLayer;
 @property (nonatomic,strong) AGSPolygon *lastWaterShedPolygon;
 @property (nonatomic,strong) AGSGraphicsLayer *graphicsLayer;
-@property (nonatomic,strong) IBOutlet UIImageView *imageView;
+@property (nonatomic,strong) IBOutlet UIImageView *sliderIV;
 @property (nonatomic) CGAffineTransform originalTransform; 
 @property (nonatomic,strong) UIPopoverController *popup;
 @property (nonatomic) CGPoint lastScreen;
@@ -56,10 +56,9 @@ typedef enum {
 @property (nonatomic,strong) IBOutlet UIButton *buttonCollect;
 @property (nonatomic,strong) IBOutlet UIButton *buttonSurface;
 @property (nonatomic,strong) IBOutlet UIButton *buttonWaterShed;
+@property (nonatomic,strong) UIImageView *imageView;
 
 
-
-- (void)toggleShowingBasemaps:(CGFloat)width;
 - (void) showSwirlyProcess;
 - (void) hideSwirlyProcess;
 - (void) resetMaps;

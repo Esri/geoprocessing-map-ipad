@@ -31,7 +31,7 @@
 @synthesize lastWaterShedPolygon = _lastWaterShedPolygon;
 @synthesize graphicsLayer = _graphicsLayer;
 @synthesize geoprocessDetails = _geoprocessDetails;
-@synthesize imageView = _imageView;
+@synthesize sliderIV = _sliderIV;
 @synthesize originalTransform = _originalTransform;
 @synthesize popup = _popup;
 @synthesize lastScreen = _lastScreen;
@@ -45,6 +45,7 @@
 @synthesize buttonCollect = _buttonCollect;
 @synthesize buttonSurface = _buttonSurface;
 @synthesize buttonWaterShed = _buttonWaterShed;
+@synthesize imageView = _imageView;
 
 
 - (void)viewDidLoad
@@ -57,7 +58,7 @@
     self.buttonStates = kState_None;
     
     // init object states
-    self.imageView.hidden = YES;
+    self.sliderIV.hidden = YES;
     
     self.mainMapView.layerDelegate = self;    
     AGSEnvelope *env = [AGSEnvelope envelopeWithXmin:kXmin
@@ -92,18 +93,18 @@
     self.mainMapView.touchDelegate = self;
     
     // Setting up the gesture in the Image View
-    [self.imageView setUserInteractionEnabled:YES];    
+    [self.sliderIV setUserInteractionEnabled:YES];    
     UIPanGestureRecognizer *panGR = [[UIPanGestureRecognizer alloc] initWithTarget:self action:@selector(panned:)];
     panGR.minimumNumberOfTouches = 1;
     panGR.maximumNumberOfTouches = 1;
     panGR.delegate = self;    
-    [self.imageView addGestureRecognizer:panGR];
+    [self.sliderIV addGestureRecognizer:panGR];
     
     UISwipeGestureRecognizer *swipeGR = [[UISwipeGestureRecognizer alloc] initWithTarget:self action:@selector(swiped:)];
     swipeGR.numberOfTouchesRequired = 2;
     swipeGR.direction =  UISwipeGestureRecognizerDirectionUp;
     swipeGR.delegate = self;
-    [self.imageView addGestureRecognizer:swipeGR];
+    [self.sliderIV addGestureRecognizer:swipeGR];
 }
 
 - (void)mapView:(AGSMapView *)mapView failedLoadingLayerForLayerView:(UIView<AGSLayerView> *)layerView baseLayer:(BOOL)baseLayer withError:(NSError *)error
@@ -128,16 +129,14 @@
 - (void)respondToEnvChange: (NSNotification*) notification {
     
     NSLog(@"scale %f", self.mainMapView.mapScale);    
-    if ( self.dSetMapScale > 0  && self.bZoomingToPolygon == NO  ) {
+    if ( self.dSetMapScale > 0  /*&& self.bZoomingToPolygon == NO*/  ) {
         
         // Do not allow to zoom
         if ( self.dSetMapScale != self.mainMapView.mapScale ) {
-            
-            [self.mainMapView zoomToScale:self.dSetMapScale withCenterPoint:[self.mainMapView toMapPoint:self.mainMapView.center] animated:NO];
-            
-           // [self resetMaps];
-            
-            // @todo check the dynamic map and the frame as after zooming in the animation does not work
+
+            [self resetMaps];
+            //[self.mainMapView zoomToScale:self.dSetMapScale withCenterPoint:[self.mainMapView toMapPoint:self.mainMapView.center] animated:NO];
+           
         }
     }
 }
@@ -168,77 +167,58 @@
     UIPanGestureRecognizer *panGr = (UIPanGestureRecognizer*)sender;
     if (panGr.state == UIGestureRecognizerStateEnded) {
 
-        //[self.topView removeFromSuperview];
-        //[self resetMaps];
+        // unhide layer
+        self.topView.hidden = NO;
+       
+        // clean up image
+        [self.imageView removeFromSuperview];
+        self.imageView = nil;
         
-        self.topView.frame = _topViewFrame;        
-        [self.topView setContentMode:_origMode];  
-        self.topView.transform = _tvTransform;
-        
-        //[self toggleShowingBasemaps:self.originalWidth];
-        
-        // Slider image
-        self.imageView.transform = self.originalTransform;
-        
-        // Play a sound
-        SystemSoundID mySSID;
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"boing_spring" ofType:@"wav"];
-        AudioServicesCreateSystemSoundID((__bridge CFURLRef)[NSURL fileURLWithPath: path], &mySSID); 
-        AudioServicesPlaySystemSound(mySSID);
-        
+        // animate slider back
+        [UIView animateWithDuration:0.25f animations:^{
+            self.sliderIV.transform = CGAffineTransformIdentity;
+        }];
         return;
     }
     else if ( panGr.state == UIGestureRecognizerStateBegan) {
-        self.originalWidth = -1;
-        _topViewFrame = self.topView.frame;
-        _origMode = self.topView.contentMode;
-        _tvTransform = self.topView.transform;        
         
-        [self.topView setContentMode:UIViewContentModeLeft | UIViewContentModeScaleAspectFill | UIViewContentModeRedraw];
-        [self.topView setClipsToBounds:YES];
+        //
+        // create image view from dynamicLayerView's image contents
+        self.imageView = [[UIImageView alloc] initWithImage:self.topView.image];
         
-        // Slider image
-        self.originalTransform = self.imageView.transform;
+        // set content mode
+        self.imageView.contentMode = UIViewContentModeLeft | UIViewContentModeScaleAspectFill | UIViewContentModeRedraw;
+        self.imageView.clipsToBounds = YES;
+        [self.baseView addSubview:self.imageView];
+        
+        // hide our actual layer
+        self.topView.hidden = YES;
+        
+        return;
     }    
     
-    CGPoint newPoint = [panGr translationInView:self.view];
-    
-    CGFloat dx = newPoint.x ;
-    // Add x the movement on the image
-    self.imageView.transform = CGAffineTransformMakeTranslation(dx, 0);
-    
-    CGRect targetFrame = self.mainMapView.frame;
-        
-    CGFloat width = 0;
+    CGPoint pt = [panGr translationInView:self.baseView];
+    CGFloat dx = pt.x;
+    CGFloat viewWidth = CGRectGetWidth(self.baseView.frame);
     if (dx < 0) {
-        CGFloat newWidth = CGRectGetWidth(targetFrame) + dx;
-        width = newWidth < 0 ? 0 : newWidth;
-        
+        CGFloat newWidth = viewWidth + dx;
+        viewWidth = newWidth < 0 ? 0 : newWidth;
     }
     else if (dx > 0) {
-        CGFloat newWidth = CGRectGetWidth(targetFrame) - dx;
-        width = newWidth > CGRectGetWidth(targetFrame) ? CGRectGetWidth(targetFrame) : newWidth;
-    }
+        CGFloat newWidth = viewWidth - dx;
+        viewWidth = newWidth > viewWidth ? viewWidth : newWidth;
+    }    
     
-    //NSLog(@"width: %f dx: %f", width, dx);
-    if ( self.originalWidth == -1)
-        self.originalWidth = width;
+    self.sliderIV.transform = CGAffineTransformMakeTranslation(dx, 0);
     
-    [self toggleShowingBasemaps:width];
+    //
+    // calculate size of frame based on slider location
+    CGRect topRect = self.baseView.bounds;    
+    topRect.size.width =  viewWidth;
+    self.imageView.frame = topRect;  
     
     
 }
-
-- (void)toggleShowingBasemaps:(CGFloat)width
-{   
-    //NSLog(@"w: %f", width);
-    CGRect mapRect = self.topView.frame;
-    
-    mapRect.size.width =  width;
-    
-    self.topView.frame = mapRect;    
-}
-
 
 - (void) resetMaps
 {
@@ -254,7 +234,8 @@
     
     self.baseView = [self.mainMapView addMapLayer:self.dynamicLayer withName:@"dynamic"];
     
-    self.topView = [self.mainMapView addMapLayer:self.resultDynamicLayer withName:@"results"];
+    self.topView = (AGSDynamicLayerView*)[self.mainMapView addMapLayer:self.resultDynamicLayer withName:@"results"];
+    //
     // For debugging adds a border
     //self.topView.layer.borderColor = [[UIColor blackColor] CGColor];
     //self.topView.layer.borderWidth = 5.0f;
@@ -373,6 +354,7 @@
     
     AGSGraphic *graphic = [[AGSGraphic alloc] init];
     graphic.geometry = mappoint;
+    NSLog(@"Watershed mappoint %@", mappoint);
     
     NSArray *features = [NSArray arrayWithObjects:graphic, nil ];
     
@@ -490,6 +472,7 @@
     NSLog(@"How many results are coming back? %d", results.count);
     
     for (AGSGPParameterValue* param in results) { 
+        NSLog(@"DEBUG: param name %@ and value %@", param.name, param.value);
         // Use the Polygon for the next GP to get the graphic
         if ( [param.name isEqualToString:@"Watershed_Output"] == YES )
         {
@@ -536,6 +519,25 @@
 	}
 }
 
+- (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation*)op didFailExecuteWithError:(NSError*)error
+{
+    // @todo Here call a point that we know will work all the time
+    
+    NSLog(@"Execute with Errors %@", error);
+    [self hideSwirlyProcess];
+    
+    // This is only when it fails, there are other times the polygon isn't coming back
+    
+    // Force to call it again
+    //Watershed mappoint AGSPoint: x = -10936227.813805, y = 3569014.143989, spatial reference: [AGSSpatialReference: wkid = 102100, wkt = null]
+    AGSPoint *mappoint = [[AGSPoint alloc] initWithX:-10936227.813805 y:3569014.14398 spatialReference:self.mainMapView.spatialReference];
+    
+    CGPoint newPoint;
+    
+    [self waterShedTap:newPoint mapPoint:mappoint graphics:nil];
+    
+    }
+
 - (void) showChartWithGraphic:(AGSGraphic *)polyGraphic
 {
     if ( self.popup != nil ) {
@@ -576,16 +578,7 @@
     [self.popup presentPopoverFromRect:CGRectMake(self.lastScreen.x, self.lastScreen.y, 100, 100) inView:self.view permittedArrowDirections:UIPopoverArrowDirectionAny animated:YES];
 }
 
-- (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation*)op didFailExecuteWithError:(NSError*)error
-{
-    // @todo Here call a point that we know will work all the time
-    
-    NSLog(@"Execute with Errors %@", error);
-    [self hideSwirlyProcess];
-    
-//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"GP Failed" message:@"No data to process here" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-//    [alert show];
-}
+
 
 - (void) finished
 {
