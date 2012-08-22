@@ -446,8 +446,8 @@
     NSString *urlForResults = [[NSString alloc] initWithFormat:@"%@%@", kGPUrlForMapService,kGPUrlForMapServiceJobs];
     
     NSMutableString *createURL = [[NSMutableString alloc] init];
-    [createURL appendFormat:urlForResults];
-    [createURL appendFormat:jobId];
+    [createURL appendString:urlForResults];
+    [createURL appendString:jobId];
     [createURL appendFormat:kGPUrlForMapServiceResults];
     NSURL *url = [[NSURL alloc] initWithString:createURL];
    
