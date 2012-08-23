@@ -1,10 +1,21 @@
 //
 //  applicationDefines.h
-//  UCDemoGP
-//
-//  Created by Al Pascual on 7/11/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
+
+/*
+ 
+ UC Geoprocessing Demo -- Esri 2012 User Conference
+ Copyright © 2012 Esri
+ 
+ All rights reserved under the copyright laws of the United States
+ and applicable international laws, treaties, and conventions.
+ 
+ You may freely redistribute and use this sample code, with or
+ without modification, provided you include the original copyright
+ notice and use restrictions.
+ 
+ See the use restrictions at http://help.arcgis.com/en/sdk/10.0/usageRestrictions.htm
+ 
+ */
 
 //#define kHost @"ne2k864"
 //#define kHost @"yoshi.uc.esri.com"

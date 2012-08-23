@@ -1,10 +1,20 @@
 //
 //  ViewController.m
-//  UCDemoGP
-//
-//  Created by Al Pascual on 7/6/12.
-//  Copyright (c) 2012 __MyCompanyName__. All rights reserved.
-//
+/*
+ 
+ UC Geoprocessing Demo -- Esri 2012 User Conference
+ Copyright © 2012 Esri
+ 
+ All rights reserved under the copyright laws of the United States
+ and applicable international laws, treaties, and conventions.
+ 
+ You may freely redistribute and use this sample code, with or
+ without modification, provided you include the original copyright
+ notice and use restrictions.
+ 
+ See the use restrictions at http://help.arcgis.com/en/sdk/10.0/usageRestrictions.htm
+ 
+ */
 
 #import "MapViewController.h"
 #import "applicationDefines.h"
@@ -129,14 +139,12 @@
 - (void)respondToEnvChange: (NSNotification*) notification {
     
     NSLog(@"scale %f", self.mainMapView.mapScale);    
-    if ( self.dSetMapScale > 0  /*&& self.bZoomingToPolygon == NO*/  ) {
+    if ( self.dSetMapScale > 0  ) {
         
         // Do not allow to zoom
         if ( self.dSetMapScale != self.mainMapView.mapScale ) {
 
-            [self resetMaps];
-            //[self.mainMapView zoomToScale:self.dSetMapScale withCenterPoint:[self.mainMapView toMapPoint:self.mainMapView.center] animated:NO];
-           
+            [self resetMaps];           
         }
     }
 }
@@ -235,8 +243,9 @@
     self.baseView = [self.mainMapView addMapLayer:self.dynamicLayer withName:@"dynamic"];
     
     self.topView = (AGSDynamicLayerView*)[self.mainMapView addMapLayer:self.resultDynamicLayer withName:@"results"];
+    
     //
-    // For debugging adds a border
+    // For debugging adds a border to see where the map bounds are
     //self.topView.layer.borderColor = [[UIColor blackColor] CGColor];
     //self.topView.layer.borderWidth = 5.0f;
     
@@ -340,14 +349,13 @@
 }
 
 #pragma Tap and Hold
-//- (void)mapView:(AGSMapView *)mapView didTapAndHoldAtPoint:(CGPoint)screen mapPoint:(AGSPoint *)mappoint graphics:(NSDictionary *)graphics
 
 - (void) waterShedTap:(CGPoint)screen mapPoint:(AGSPoint *)mappoint graphics:(NSDictionary *)graphics
 {
     self.lastScreen = screen;
     [self showSwirlyProcess];
     
-    // @todo get the map point and call the other gp to do the watershed    
+    // get the map point and call the other gp to do the watershed    
     NSURL* url = [NSURL URLWithString: kWaterShedGP];
     self.geoprocessWaterShed = [AGSGeoprocessor geoprocessorWithURL:url];
     self.geoprocessWaterShed.delegate = self;
@@ -400,7 +408,6 @@
     NSURL* url = [NSURL URLWithString: kGPUrlForMapService];
     self.geoprocess = [AGSGeoprocessor geoprocessorWithURL:url];
     self.geoprocess.delegate = self;
-    // Input parameter
     
     AGSPolygon *polygon = self.mainMapView.visibleArea ;
     
@@ -462,8 +469,10 @@
 - (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation*)op jobDidFail:(AGSGPJobInfo*)jobInfo { 
     [self hideSwirlyProcess];
     NSLog(@"Error: %@",jobInfo.messages);
-//    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"GP Failed" message:@"The GP returned failed" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
-//    [alert show];
+
+    // Announce to the user the GP failed. Requires the user to dismiss the alert
+    //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"GP Failed" message:@"The GP returned failed" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
+    //    [alert show];
 }
 
 
@@ -513,8 +522,7 @@
         else {
             // Stop the animation
             NSLog(@"No values return in params %@", param);
-            [self hideSwirlyProcess];
-            //Watershed_Point_Output
+            [self hideSwirlyProcess];            
         }
 	}
 }
@@ -528,23 +536,19 @@
     
     // This is only when it fails, there are other times the polygon isn't coming back
     
-    // Force to call it again
-    //Watershed mappoint AGSPoint: x = -10936227.813805, y = 3569014.143989, spatial reference: [AGSSpatialReference: wkid = 102100, wkt = null]
+    // Force to call it again    
     AGSPoint *mappoint = [[AGSPoint alloc] initWithX:-10936227.813805 y:3569014.14398 spatialReference:self.mainMapView.spatialReference];
     
     CGPoint newPoint;
     
     [self waterShedTap:newPoint mapPoint:mappoint graphics:nil];
     
-    }
+}
 
 - (void) showChartWithGraphic:(AGSGraphic *)polyGraphic
 {
     if ( self.popup != nil ) {
         [self.popup dismissPopoverAnimated:YES];
-//        self.popup = [[UIPopoverController alloc] 
-//                      initWithContentViewController:[[UIViewController alloc] init] ];
-//        [self.popup dismissPopoverAnimated:YES];
     }
     
     NSString *mean = [polyGraphic.attributes objectForKey:@"MEAN"];
