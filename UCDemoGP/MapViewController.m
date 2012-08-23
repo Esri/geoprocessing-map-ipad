@@ -64,6 +64,7 @@
     
     self.dSetMapScale = 0;
     self.bZoomingToPolygon = NO;
+    
     // Set all buttons to no state
     self.buttonStates = kState_None;
     
@@ -399,8 +400,7 @@
 //Third button pressed
 - (IBAction)callGPSurface:(id)sender
 {
-    [self changeImages:kState_SurfaceEnabled];
-    
+    [self changeImages:kState_SurfaceEnabled];    
     
     // Start the UI for processing
     [self showSwirlyProcess];
@@ -424,7 +424,10 @@
     NSArray *params = [NSArray arrayWithObjects:extent,nil];
     
     [self.geoprocess submitJobWithParameters:params];
-    [self.geoprocess submitJobWithParameters:nil];
+    
+    //
+    // this will return the whole extent, is slower.
+    //[self.geoprocess submitJobWithParameters:nil];
 }
 
 - (void) changeImages:(ButtonStates)state
@@ -470,6 +473,7 @@
     [self hideSwirlyProcess];
     NSLog(@"Error: %@",jobInfo.messages);
 
+    //
     // Announce to the user the GP failed. Requires the user to dismiss the alert
     //    UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"GP Failed" message:@"The GP returned failed" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil];
     //    [alert show];
@@ -536,13 +540,14 @@
     
     // This is only when it fails, there are other times the polygon isn't coming back
     
-    // Force to call it again    
-    AGSPoint *mappoint = [[AGSPoint alloc] initWithX:-10936227.813805 y:3569014.14398 spatialReference:self.mainMapView.spatialReference];
-    
-    CGPoint newPoint;
-    
-    [self waterShedTap:newPoint mapPoint:mappoint graphics:nil];
-    
+    // Force to call it again
+    // Only for debugging
+//    AGSPoint *mappoint = [[AGSPoint alloc] initWithX:-10936227.813805 y:3569014.14398 spatialReference:self.mainMapView.spatialReference];
+//    
+//    CGPoint newPoint;
+//    
+//    [self waterShedTap:newPoint mapPoint:mappoint graphics:nil];
+//    
 }
 
 - (void) showChartWithGraphic:(AGSGraphic *)polyGraphic
