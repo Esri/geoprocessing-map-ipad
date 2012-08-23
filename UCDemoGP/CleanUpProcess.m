@@ -62,8 +62,6 @@
             
         }
         
-        
-        
         SystemSoundID mySSID;
         
         NSString *path = [[NSBundle mainBundle] pathForResource:@"emptytrash" ofType:@"aif"];

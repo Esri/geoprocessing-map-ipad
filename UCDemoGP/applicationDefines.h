@@ -17,8 +17,6 @@
  
  */
 
-//#define kHost @"ne2k864"
-//#define kHost @"yoshi.uc.esri.com"
 
 // Map Services used
 #define kBaseMapTiled @"http://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer"
