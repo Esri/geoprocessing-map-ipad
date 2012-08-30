@@ -146,7 +146,15 @@
         // Do not allow to zoom
         if ( self.dSetMapScale != self.mainMapView.mapScale ) {
 
-            [self resetMaps];           
+            AGSEnvelope *env = [AGSEnvelope envelopeWithXmin:kXmin
+                                                        ymin:kYmin
+                                                        xmax:kXmax
+                                                        ymax:kYmax
+                                            spatialReference:[AGSSpatialReference webMercatorSpatialReference]];
+            
+            [self.mainMapView zoomToEnvelope:env animated:YES];
+            
+            //[self resetMaps];
         }
     }
 }
@@ -411,25 +419,24 @@
     self.geoprocess = [AGSGeoprocessor geoprocessorWithURL:url];
     self.geoprocess.delegate = self;
     
-    AGSPolygon *polygon = self.mainMapView.visibleArea ;
-    
-    AGSGraphic *graphic = [[AGSGraphic alloc] init];
-    graphic.geometry = polygon;
-    
-    NSArray *features = [NSArray arrayWithObjects:graphic, nil ];
-    
-    AGSFeatureSet *featureSet = [[AGSFeatureSet alloc] init];
-    featureSet.features = features;
-         
-    AGSGPParameterValue *extent = [AGSGPParameterValue parameterWithName:@"aoi" type:AGSGPParameterTypeFeatureRecordSetLayer value:featureSet]; 
-    
-    NSArray *params = [NSArray arrayWithObjects:extent,nil];
-    
-    [self.geoprocess submitJobWithParameters:params];
+//    AGSPolygon *polygon = self.mainMapView.visibleArea ;
+//    
+//    AGSGraphic *graphic = [[AGSGraphic alloc] init];
+//    graphic.geometry = polygon;
+//    
+//    NSArray *features = [NSArray arrayWithObjects:graphic, nil ];
+//    
+//    AGSFeatureSet *featureSet = [[AGSFeatureSet alloc] init];
+//    featureSet.features = features;
+//         
+//    AGSGPParameterValue *extent = [AGSGPParameterValue parameterWithName:@"aoi" type:AGSGPParameterTypeFeatureRecordSetLayer value:featureSet]; 
+//    
+//    NSArray *params = [NSArray arrayWithObjects:extent,nil];
+    //[self.geoprocess submitJobWithParameters:params];
     
     //
     // this will return the whole extent, is slower.
-    //[self.geoprocess submitJobWithParameters:nil];
+    [self.geoprocess submitJobWithParameters:nil];
 }
 
 - (void) changeImages:(ButtonStates)state
