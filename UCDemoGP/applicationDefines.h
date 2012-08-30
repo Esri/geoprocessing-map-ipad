@@ -20,20 +20,20 @@
 
 // Map Services used
 #define kBaseMapTiled @"http://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer"
-#define kBaseMapDynamicMapService @"http://yoshi.uc.esri.com:6080/arcgis/rest/services/lead/MapServer"
-#define kSoilSampleFeatureService @"http://yoshi.uc.esri.com:6080/arcgis/rest/services/Soilpoints/FeatureServer/0"
-#define kGPUrlForMapService @"http://yoshi.uc.esri.com:6080/arcgis/rest/services/InterpolateLead/GPServer/InterpolateLead"
+#define kBaseMapDynamicMapService @"http://esrilabs3.esri.com/arcgis/rest/services/SpatialAnalysis/lead/MapServer"
+#define kSoilSampleFeatureService @"http://esrilabs3.esri.com/arcgis/rest/services/SpatialAnalysis/Soilpoints/FeatureServer/0"
+#define kGPUrlForMapService @"http://esrilabs3.esri.com/arcgis/rest/services/SpatialAnalysis/InterpolateLead/GPServer/InterpolateLead"
 #define kGPUrlForMapServiceResults @"/results/Lead_Concentrations"
 #define kGPUrlForMapServiceJobs @"/jobs/"
-#define kRiversService @"http://yoshi.uc.esri.com:6080/arcgis/rest/services/Rivers/MapServer"
+#define kRiversService @"http://esrilabs3.esri.com/arcgis/rest/services/SpatialAnalysis/Rivers/MapServer"
 
-#define kWaterShedGP @"http://yoshi.uc.esri.com:6080/arcgis/rest/services/Watershed/GPServer/Watershed"
-#define kSoilStatsGP @"http://yoshi.uc.esri.com:6080/arcgis/rest/services/SoilStats/GPServer/SoilStats"
+#define kWaterShedGP @"http://esrilabs3.esri.com/arcgis/rest/services/SpatialAnalysis/Watershed/GPServer/Watershed"
+#define kSoilStatsGP @"http://esrilabs3.esri.com/arcgis/rest/services/SpatialAnalysis/SoilStats/GPServer/SoilStats"
 
 #define kDynamicMapAlpha 0.7
 
-#define kXmin -10979558.4006204
-#define kYmin 3521601.137391
-#define kXmax -10815627.093085
-#define kYmax 3632408.393633
+#define kXmin -10744392.2272696
+#define kYmin 3513521.303541
+#define kXmax -10580470.919649
+#define kYmax 3631972.982113
 

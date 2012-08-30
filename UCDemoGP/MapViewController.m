@@ -139,6 +139,7 @@
 
 - (void)respondToEnvChange: (NSNotification*) notification {
     
+    NSLog(@"Envelope: %@", self.mainMapView.visibleArea.envelope);
     NSLog(@"scale %f", self.mainMapView.mapScale);    
     if ( self.dSetMapScale > 0  ) {
         
@@ -243,7 +244,8 @@
     
     self.baseView = [self.mainMapView addMapLayer:self.dynamicLayer withName:@"dynamic"];
     
-    self.topView = (AGSDynamicLayerView*)[self.mainMapView addMapLayer:self.resultDynamicLayer withName:@"results"];
+    if ( self.resultDynamicLayer != nil)
+        self.topView = (AGSDynamicLayerView*)[self.mainMapView addMapLayer:self.resultDynamicLayer withName:@"results"];
     
     //
     // For debugging adds a border to see where the map bounds are
@@ -322,7 +324,7 @@
             
             //PB_ICP40
             AGSGraphic *first = [self.editableFeatureLayer.graphics objectAtIndex:0];
-            // TODO, copy the feature
+            // copy the feature
             NSDictionary *jsonDic = [first encodeToJSON];
             AGSGraphic *copiedGraphic = [[AGSGraphic alloc] initWithJSON:jsonDic];
             copiedGraphic.geometry = mappoint;
