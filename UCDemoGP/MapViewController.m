@@ -184,7 +184,6 @@
     
     UIPanGestureRecognizer *panGr = (UIPanGestureRecognizer*)sender;
     if (panGr.state == UIGestureRecognizerStateEnded) {
-
         // unhide layer
         self.topView.hidden = NO;
        
@@ -198,9 +197,7 @@
         }];
         return;
     }
-    else if ( panGr.state == UIGestureRecognizerStateBegan) {
-        
-        //
+    else if ( panGr.state == UIGestureRecognizerStateBegan) {        
         // create image view from dynamicLayerView's image contents
         self.imageView = [[UIImageView alloc] initWithImage:self.topView.image];
         
@@ -229,13 +226,10 @@
     
     self.sliderIV.transform = CGAffineTransformMakeTranslation(dx, 0);
     
-    //
     // calculate size of frame based on slider location
     CGRect topRect = self.baseView.bounds;    
     topRect.size.width =  viewWidth;
-    self.imageView.frame = topRect;  
-    
-    
+    self.imageView.frame = topRect;      
 }
 
 - (void) resetMaps
@@ -317,19 +311,16 @@
             // run the watershed
             [self waterShedTap:screen mapPoint:mappoint graphics:graphics];
         }
-    }
-    
+    }    
     else if ( self.buttonStates == kState_CollectEnabled ) {
         AGSGraphic* newGraphic = nil;
-        self.lastScreen = screen;
-        
+        self.lastScreen = screen;        
         // add feature and edit the properties
         if ( self.editableFeatureLayer.types.count > 0 ) {
             AGSFeatureType* featureType = [self.editableFeatureLayer.types objectAtIndex:0];  
             newGraphic = [self.editableFeatureLayer featureWithType:featureType];
         }
-        else {
-            
+        else {            
             //PB_ICP40
             AGSGraphic *first = [self.editableFeatureLayer.graphics objectAtIndex:0];
             // copy the feature
@@ -419,6 +410,7 @@
     self.geoprocess = [AGSGeoprocessor geoprocessorWithURL:url];
     self.geoprocess.delegate = self;
     
+//  Just passing the extent can fail.
 //    AGSPolygon *polygon = self.mainMapView.visibleArea ;
 //    
 //    AGSGraphic *graphic = [[AGSGraphic alloc] init];
