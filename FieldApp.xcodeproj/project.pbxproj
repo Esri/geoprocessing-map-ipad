@@ -88,7 +88,6 @@
 		8814D77215AF5D6100CCAEE4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		8814D77415AF5E9B00CCAEE4 /* emptytrash.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = emptytrash.aif; sourceTree = "<group>"; };
 		8814D77615AF629E00CCAEE4 /* boing_spring.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = boing_spring.wav; sourceTree = "<group>"; };
-		8814D77D15B0AA4C00CCAEE4 /* UCDemoGP.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = UCDemoGP.entitlements; sourceTree = "<group>"; };
 		88D0766615A72CF5007808FE /* FieldApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FieldApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88D0766A15A72CF5007808FE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		88D0766C15A72CF5007808FE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -310,7 +309,6 @@
 		88D0767015A72CF5007808FE /* UCDemoGP */ = {
 			isa = PBXGroup;
 			children = (
-				8814D77D15B0AA4C00CCAEE4 /* UCDemoGP.entitlements */,
 				88EE1F0115ACD8A9003C286D /* Resources */,
 				88EE1EEC15ACB431003C286D /* BarChart */,
 				88EE1E7815AC9FD0003C286D /* CorePlot */,
@@ -678,6 +676,8 @@
 		88D0768515A72CF6007808FE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Al Pascual (26XBXB8PRN)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Al Pascual (26XBXB8PRN)";
 				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/SDKs/ArcGIS/**";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UCDemoGP/FieldApp-Prefix.pch";
@@ -694,6 +694,9 @@
 					ArcGIS,
 				);
 				PRODUCT_NAME = FieldApp;
+				PROVISIONING_PROFILE = "57D42C35-69C4-44CF-A2A8-342051CF1B9C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "57D42C35-69C4-44CF-A2A8-342051CF1B9C";
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
@@ -701,6 +704,8 @@
 		88D0768615A72CF6007808FE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer: Al Pascual (26XBXB8PRN)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Al Pascual (26XBXB8PRN)";
 				FRAMEWORK_SEARCH_PATHS = "$(HOME)/Library/SDKs/ArcGIS/**";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "UCDemoGP/FieldApp-Prefix.pch";
@@ -717,6 +722,9 @@
 					ArcGIS,
 				);
 				PRODUCT_NAME = FieldApp;
+				PROVISIONING_PROFILE = "57D42C35-69C4-44CF-A2A8-342051CF1B9C";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "57D42C35-69C4-44CF-A2A8-342051CF1B9C";
+				VALID_ARCHS = armv7;
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
