@@ -19,14 +19,15 @@
 
 
 // Map Services used
+/*
 #define kBaseMapTiled @"http://server.arcgisonline.com/ArcGIS/rest/services/Reference/World_Reference_Overlay/MapServer"
 #define kBaseMapDynamicMapService @"http://esrilabs3.esri.com/arcgis/rest/services/SpatialAnalysis/lead/MapServer"
-//http://esrilabs3.esri.com/arcgis/rest/services/SpatialAnalysis/InterpolateLead/MapServer
 #define kSoilSampleFeatureService @"http://esrilabs3.esri.com/arcgis/rest/services/SpatialAnalysis/Soilpoints/FeatureServer/0"
+#define kRiversService @"http://esrilabs3.esri.com/arcgis/rest/services/SpatialAnalysis/Rivers/MapServer"
+
 #define kGPUrlForMapService @"http://esrilabs3.esri.com/arcgis/rest/services/SpatialAnalysis/InterpolateLead/GPServer/InterpolateLead"
 #define kGPUrlForMapServiceResults @"/results/Lead_Concentrations"
 #define kGPUrlForMapServiceJobs @"/jobs/"
-#define kRiversService @"http://esrilabs3.esri.com/arcgis/rest/services/SpatialAnalysis/Rivers/MapServer"
 
 #define kWaterShedGP @"http://esrilabs3.esri.com/arcgis/rest/services/SpatialAnalysis/Watershed/GPServer/Watershed"
 #define kSoilStatsGP @"http://esrilabs3.esri.com/arcgis/rest/services/SpatialAnalysis/SoilStats/GPServer/SoilStats"
@@ -37,4 +38,5 @@
 #define kYmin 3513521.303541
 #define kXmax -10580470.919649
 #define kYmax 3631972.982113
+ */
 

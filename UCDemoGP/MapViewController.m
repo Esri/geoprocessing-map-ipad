@@ -71,34 +71,38 @@
     // init object states
     self.sliderIV.hidden = YES;
     
+    [self registerDefaultsFromSettingsBundle];
+    
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    
     self.mainMapView.layerDelegate = self;    
-    AGSEnvelope *env = [AGSEnvelope envelopeWithXmin:kXmin
-                                                    ymin:kYmin
-                                                    xmax:kXmax
-                                                    ymax:kYmax
+    AGSEnvelope *env = [AGSEnvelope envelopeWithXmin:[[defaults objectForKey:@"xmin_preference"] doubleValue]
+                                                    ymin:[[defaults objectForKey:@"ymin_preference"] doubleValue]
+                                                    xmax:[[defaults objectForKey:@"xmax_preference"] doubleValue]
+                                                    ymax:[[defaults objectForKey:@"ymax_preference"] doubleValue]
                                         spatialReference:[AGSSpatialReference webMercatorSpatialReference]];
     
     [self.mainMapView zoomToEnvelope:env animated:YES];
     
-    NSURL *url = [NSURL URLWithString:kBaseMapTiled];
+    NSURL *url = [NSURL URLWithString:[defaults objectForKey:@"basemap_preference"]];
     AGSTiledMapServiceLayer *tiled = [AGSTiledMapServiceLayer tiledMapServiceLayerWithURL:url];
     [self.mainMapView addMapLayer:tiled withName:@"basemap"];
     
     // Real base map
-    self.dynamicLayer = [AGSDynamicMapServiceLayer  dynamicMapServiceLayerWithURL:[NSURL URLWithString:kBaseMapDynamicMapService]];     
+    self.dynamicLayer = [AGSDynamicMapServiceLayer  dynamicMapServiceLayerWithURL:[NSURL URLWithString:[defaults objectForKey:@"dynamic_preference"]]];     
     self.baseView = [self.mainMapView addMapLayer:self.dynamicLayer withName:@"dynamic"];
     
     //add the tile with transperancy on top
     AGSTiledMapServiceLayer *tiled2 = [AGSTiledMapServiceLayer tiledMapServiceLayerWithURL:url];
     UIView *transparentView = [self.mainMapView addMapLayer:tiled2 withName:@"basemap transparent"];
-    transparentView.alpha = kDynamicMapAlpha;
+    transparentView.alpha = [[defaults objectForKey:@"slider_preference"] doubleValue];
     
-    AGSDynamicMapServiceLayer *dynamicRivers = [AGSDynamicMapServiceLayer dynamicMapServiceLayerWithURL:[NSURL URLWithString:kRiversService]]; 
+    AGSDynamicMapServiceLayer *dynamicRivers = [AGSDynamicMapServiceLayer dynamicMapServiceLayerWithURL:[NSURL URLWithString:[defaults objectForKey:@"rivermapservice_preference"]]]; 
     UIView *dynamicRiverView = [self.mainMapView addMapLayer:dynamicRivers withName:@"dynamic rivers"];
-    dynamicRiverView.alpha = kDynamicMapAlpha;
+    dynamicRiverView.alpha = [[defaults objectForKey:@"slider_preference"] doubleValue];
     
     // editable layer
-    self.editableFeatureLayer = [AGSFeatureLayer featureServiceLayerWithURL:[NSURL URLWithString:kSoilSampleFeatureService] mode:AGSFeatureLayerModeOnDemand];
+    self.editableFeatureLayer = [AGSFeatureLayer featureServiceLayerWithURL:[NSURL URLWithString:[defaults objectForKey:@"featureservice_preference"]] mode:AGSFeatureLayerModeOnDemand];
     [self.mainMapView addMapLayer:self.editableFeatureLayer withName:@"Edit Layer"];    
     
     self.mainMapView.touchDelegate = self;
@@ -116,6 +120,30 @@
     swipeGR.direction =  UISwipeGestureRecognizerDirectionUp;
     swipeGR.delegate = self;
     [self.sliderIV addGestureRecognizer:swipeGR];
+}
+
+/// Register the settings bundle
+- (void)registerDefaultsFromSettingsBundle {
+    NSString *settingsBundle = [[NSBundle mainBundle] pathForResource:@"Settings" ofType:@"bundle"];
+    if(!settingsBundle) {
+        NSLog(@"Could not find Settings.bundle");
+        return;
+    }
+    
+    NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:[settingsBundle stringByAppendingPathComponent:@"Root.plist"]];
+    NSArray *preferences = [settings objectForKey:@"PreferenceSpecifiers"];
+    
+    NSMutableDictionary *defaultsToRegister = [[NSMutableDictionary alloc] initWithCapacity:[preferences count]];
+    for(NSDictionary *prefSpecification in preferences) {
+        NSString *key = [prefSpecification objectForKey:@"Key"];
+        if(key) {
+            NSLog(@"Bundle Key %@", key);
+            [defaultsToRegister setObject:[prefSpecification objectForKey:@"DefaultValue"] forKey:key];
+        }
+    }
+    
+    [[NSUserDefaults standardUserDefaults] registerDefaults:defaultsToRegister];
+    
 }
 
 - (void)mapView:(AGSMapView *)mapView failedLoadingLayerForLayerView:(UIView<AGSLayerView> *)layerView baseLayer:(BOOL)baseLayer withError:(NSError *)error
@@ -146,10 +174,11 @@
         // Do not allow to zoom
         if ( self.dSetMapScale != self.mainMapView.mapScale ) {
 
-            AGSEnvelope *env = [AGSEnvelope envelopeWithXmin:kXmin
-                                                        ymin:kYmin
-                                                        xmax:kXmax
-                                                        ymax:kYmax
+            NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+            AGSEnvelope *env = [AGSEnvelope envelopeWithXmin:[[defaults objectForKey:@"xmin_preference"] doubleValue]
+                                                        ymin:[[defaults objectForKey:@"ymin_preference"] doubleValue]
+                                                        xmax:[[defaults objectForKey:@"xmax_preference"] doubleValue]
+                                                        ymax:[[defaults objectForKey:@"ymax_preference"] doubleValue]
                                             spatialReference:[AGSSpatialReference webMercatorSpatialReference]];
             
             [self.mainMapView zoomToEnvelope:env animated:YES];
@@ -256,15 +285,17 @@
     
     [self.mainMapView addMapLayer:self.editableFeatureLayer  withName:@"Edit Layer"];
     
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    
     //add the tile with transperancy on top
-    NSURL *urlTiled = [NSURL URLWithString:kBaseMapTiled];
+    NSURL *urlTiled = [NSURL URLWithString:[defaults objectForKey:@"basemap_preference"]];
     AGSTiledMapServiceLayer *tiled2 = [AGSTiledMapServiceLayer tiledMapServiceLayerWithURL:urlTiled];
     UIView *transparentView = [self.mainMapView addMapLayer:tiled2 withName:@"basemap transparent"];
-    transparentView.alpha = kDynamicMapAlpha;
+    transparentView.alpha = [[defaults objectForKey:@"slider_preference"] doubleValue];
     
-    AGSDynamicMapServiceLayer *dynamicRivers = [AGSDynamicMapServiceLayer dynamicMapServiceLayerWithURL:[NSURL URLWithString:kRiversService]]; 
+    AGSDynamicMapServiceLayer *dynamicRivers = [AGSDynamicMapServiceLayer dynamicMapServiceLayerWithURL:[NSURL URLWithString:[defaults objectForKey:@"rivermapservice_preference"]]]; 
     UIView *dynamicRiverView = [self.mainMapView addMapLayer:dynamicRivers withName:@"dynamic rivers"];
-    dynamicRiverView.alpha = kDynamicMapAlpha;    
+    dynamicRiverView.alpha = [[defaults objectForKey:@"slider_preference"] doubleValue];    
     
     if ( self.graphicsLayer != nil )
         [self.mainMapView addMapLayer:self.graphicsLayer withName:@"My Graphics Layer"];
@@ -357,8 +388,9 @@
     self.lastScreen = screen;
     [self showSwirlyProcess];
     
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     // get the map point and call the other gp to do the watershed    
-    NSURL* url = [NSURL URLWithString: kWaterShedGP];
+    NSURL* url = [NSURL URLWithString: [defaults objectForKey:@"watershed_preference"]];
     self.geoprocessWaterShed = [AGSGeoprocessor geoprocessorWithURL:url];
     self.geoprocessWaterShed.delegate = self;
     
@@ -406,7 +438,9 @@
     // Start the UI for processing
     [self showSwirlyProcess];
     
-    NSURL* url = [NSURL URLWithString: kGPUrlForMapService];
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSURL* url = [NSURL URLWithString: [defaults objectForKey:@"gp_preference"]];
     self.geoprocess = [AGSGeoprocessor geoprocessorWithURL:url];
     self.geoprocess.delegate = self;
     
@@ -454,12 +488,14 @@
 - (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation*)op didQueryWithResult:(AGSGPParameterValue*)result forJob:(NSString*)jobId {
     NSLog(@"Parameter: %@, Value: %@",result.name, result.value);
     
-    NSString *urlForResults = [[NSString alloc] initWithFormat:@"%@%@", kGPUrlForMapService,kGPUrlForMapServiceJobs];
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
+    
+    NSString *urlForResults = [[NSString alloc] initWithFormat:@"%@%@", [defaults objectForKey:@"gp_preference"],[defaults objectForKey:@"gpjobs_preference"]];
     
     NSMutableString *createURL = [[NSMutableString alloc] init];
     [createURL appendString:urlForResults];
     [createURL appendString:jobId];
-    [createURL appendFormat:kGPUrlForMapServiceResults];
+    [createURL appendString:[defaults objectForKey:@"serviceresults_preference"]];
     NSURL *url = [[NSURL alloc] initWithString:createURL];
    
     self.resultDynamicLayer = [AGSDynamicMapServiceLayer dynamicMapServiceLayerWithURL:url]; 
@@ -484,6 +520,7 @@
 - (void)geoprocessor:(AGSGeoprocessor *)geoprocessor operation:(NSOperation*)op didExecuteWithResults:(NSArray *)results messages:(NSArray *)messages
 {
     NSLog(@"How many results are coming back? %d", results.count);
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     
     for (AGSGPParameterValue* param in results) { 
         NSLog(@"DEBUG: param name %@ and value %@", param.name, param.value);
@@ -494,7 +531,7 @@
             if ( featureSetResults.features.count > 0 ) {
                 self.lastWaterShedPolygon = [featureSetResults.features objectAtIndex:0];
                 
-                NSURL* url = [NSURL URLWithString: kSoilStatsGP];           
+                NSURL* url = [NSURL URLWithString:[defaults objectForKey:@"soilstats_preference"]];           
                 self.geoprocessDetails = [AGSGeoprocessor geoprocessorWithURL:url];
                 self.geoprocessDetails.delegate = self;
                                

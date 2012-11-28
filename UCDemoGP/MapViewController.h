@@ -74,5 +74,6 @@ typedef enum {
 - (void) showChartWithGraphic:(AGSGraphic *)polyGraphic;
 - (void) waterShedTap:(CGPoint)screen mapPoint:(AGSPoint *)mappoint graphics:(NSDictionary *)graphics;
 - (void) changeImages:(ButtonStates)state;
+- (void)registerDefaultsFromSettingsBundle;
 
 @end

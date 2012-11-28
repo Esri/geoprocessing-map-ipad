@@ -41,8 +41,9 @@
         [self.editableFeatureLayer deleteFeaturesWithObjectIds:self.addedFeaturesArray];
     }
     
+    NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     // Delete all the points bigger than 3000
-    self.task = [[AGSQueryTask alloc] initWithURL:[NSURL URLWithString:kSoilSampleFeatureService]];
+    self.task = [[AGSQueryTask alloc] initWithURL:[NSURL URLWithString:[defaults objectForKey:@"featureservice_preference"]]];
     self.task.delegate = self;
     AGSQuery *query = [[AGSQuery alloc] init];
     query.where = @"OBJECTID > 6422";

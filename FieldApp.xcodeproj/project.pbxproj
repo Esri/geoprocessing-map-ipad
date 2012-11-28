@@ -22,6 +22,8 @@
 		8814D77315AF5D6100CCAEE4 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8814D77215AF5D6100CCAEE4 /* AudioToolbox.framework */; };
 		8814D77515AF5E9B00CCAEE4 /* emptytrash.aif in Resources */ = {isa = PBXBuildFile; fileRef = 8814D77415AF5E9B00CCAEE4 /* emptytrash.aif */; };
 		8814D77715AF629E00CCAEE4 /* boing_spring.wav in Resources */ = {isa = PBXBuildFile; fileRef = 8814D77615AF629E00CCAEE4 /* boing_spring.wav */; };
+		886A89141665317600F14434 /* ArcGIS.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 886A89131665317600F14434 /* ArcGIS.bundle */; };
+		886A8916166532FE00F14434 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 886A8915166532FE00F14434 /* Settings.bundle */; };
 		88D0766B15A72CF5007808FE /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D0766A15A72CF5007808FE /* UIKit.framework */; };
 		88D0766D15A72CF5007808FE /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D0766C15A72CF5007808FE /* Foundation.framework */; };
 		88D0766F15A72CF5007808FE /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D0766E15A72CF5007808FE /* CoreGraphics.framework */; };
@@ -38,7 +40,6 @@
 		88D0769215A72DE9007808FE /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D0769115A72DE9007808FE /* MobileCoreServices.framework */; };
 		88D0769415A72DF0007808FE /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D0769315A72DF0007808FE /* libz.dylib */; };
 		88D0769615A72DF6007808FE /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 88D0769515A72DF6007808FE /* Security.framework */; };
-		88D0769815A72E71007808FE /* ArcGIS.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 88D0769715A72E71007808FE /* ArcGIS.bundle */; };
 		88D0769C15A78375007808FE /* EditGraphicViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88D0769A15A78375007808FE /* EditGraphicViewController.m */; };
 		88D0769D15A78375007808FE /* EditGraphicViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 88D0769B15A78375007808FE /* EditGraphicViewController.xib */; };
 		88EE1D7715AB7BA4003C286D /* GraphViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 88EE1D7515AB7BA4003C286D /* GraphViewController.m */; };
@@ -88,6 +89,8 @@
 		8814D77215AF5D6100CCAEE4 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		8814D77415AF5E9B00CCAEE4 /* emptytrash.aif */ = {isa = PBXFileReference; lastKnownFileType = file; path = emptytrash.aif; sourceTree = "<group>"; };
 		8814D77615AF629E00CCAEE4 /* boing_spring.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = boing_spring.wav; sourceTree = "<group>"; };
+		886A89131665317600F14434 /* ArcGIS.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ArcGIS.bundle; path = ../../../Library/SDKs/ArcGIS/ArcGIS.framework/Versions/Current/Resources/ArcGIS.bundle; sourceTree = "<group>"; };
+		886A8915166532FE00F14434 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 		88D0766615A72CF5007808FE /* FieldApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FieldApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		88D0766A15A72CF5007808FE /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		88D0766C15A72CF5007808FE /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -109,7 +112,6 @@
 		88D0769115A72DE9007808FE /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		88D0769315A72DF0007808FE /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		88D0769515A72DF6007808FE /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
-		88D0769715A72E71007808FE /* ArcGIS.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = ArcGIS.bundle; path = ../../Library/SDKs/ArcGIS/ArcGIS.framework/Versions/Current/Resources/ArcGIS.bundle; sourceTree = "<group>"; };
 		88D0769915A78375007808FE /* EditGraphicViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EditGraphicViewController.h; sourceTree = "<group>"; };
 		88D0769A15A78375007808FE /* EditGraphicViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EditGraphicViewController.m; sourceTree = "<group>"; };
 		88D0769B15A78375007808FE /* EditGraphicViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EditGraphicViewController.xib; sourceTree = "<group>"; };
@@ -271,9 +273,10 @@
 		88D0765B15A72CF5007808FE = {
 			isa = PBXGroup;
 			children = (
+				886A8915166532FE00F14434 /* Settings.bundle */,
+				886A89131665317600F14434 /* ArcGIS.bundle */,
 				8814949F15B4E0F3008BE2BB /* FieldApp.entitlements */,
 				8814D77215AF5D6100CCAEE4 /* AudioToolbox.framework */,
-				88D0769715A72E71007808FE /* ArcGIS.bundle */,
 				88D0769515A72DF6007808FE /* Security.framework */,
 				88D0769315A72DF0007808FE /* libz.dylib */,
 				88D0769115A72DE9007808FE /* MobileCoreServices.framework */,
@@ -544,7 +547,6 @@
 			files = (
 				88D0767515A72CF5007808FE /* InfoPlist.strings in Resources */,
 				88D0768115A72CF6007808FE /* MapViewController.xib in Resources */,
-				88D0769815A72E71007808FE /* ArcGIS.bundle in Resources */,
 				88D0769D15A78375007808FE /* EditGraphicViewController.xib in Resources */,
 				88EE1D7815AB7BA4003C286D /* GraphViewController.xib in Resources */,
 				88EE1F0A15ACD8A9003C286D /* calloutBG.png in Resources */,
@@ -582,6 +584,8 @@
 				8814949C15B4D953008BE2BB /* watershedBtn1UP.png in Resources */,
 				8814949D15B4D953008BE2BB /* watershedBtn2DOWN.png in Resources */,
 				8814949E15B4D953008BE2BB /* watershedBtn2UP.png in Resources */,
+				886A89141665317600F14434 /* ArcGIS.bundle in Resources */,
+				886A8916166532FE00F14434 /* Settings.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
