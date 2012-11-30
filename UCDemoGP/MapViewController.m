@@ -391,7 +391,15 @@
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     // get the map point and call the other gp to do the watershed    
     NSURL* url = [NSURL URLWithString: [defaults objectForKey:@"watershed_preference"]];
-    self.geoprocessWaterShed = [AGSGeoprocessor geoprocessorWithURL:url];
+    
+    if ( [defaults objectForKey:@"gp_preference_username"] == nil)
+        self.geoprocessWaterShed = [AGSGeoprocessor geoprocessorWithURL:url];
+    else
+    {
+        AGSCredential *credentials = [[AGSCredential alloc] initWithUser:[defaults objectForKey:@"gp_preference_username"] password:[defaults objectForKey:@"gp_preference_password"]];
+        self.geoprocessWaterShed = [AGSGeoprocessor geoprocessorWithURL:url credential:credentials];
+    }
+    
     self.geoprocessWaterShed.delegate = self;
     
     AGSGraphic *graphic = [[AGSGraphic alloc] init];
@@ -441,7 +449,16 @@
     NSUserDefaults * defaults = [NSUserDefaults standardUserDefaults];
     
     NSURL* url = [NSURL URLWithString: [defaults objectForKey:@"gp_preference"]];
-    self.geoprocess = [AGSGeoprocessor geoprocessorWithURL:url];
+    
+    // GP Surface is not secured
+    //if ( [defaults objectForKey:@"gp_preference_username"] == nil)
+        self.geoprocess = [AGSGeoprocessor geoprocessorWithURL:url];
+    /*else
+    {
+        AGSCredential *credentials = [[AGSCredential alloc] initWithUser:[defaults objectForKey:@"gp_preference_username"] password:[defaults objectForKey:@"gp_preference_password"]];
+        self.geoprocess = [AGSGeoprocessor geoprocessorWithURL:url credential:credentials];
+    }*/
+                    
     self.geoprocess.delegate = self;
     
 //  Just passing the extent can fail.

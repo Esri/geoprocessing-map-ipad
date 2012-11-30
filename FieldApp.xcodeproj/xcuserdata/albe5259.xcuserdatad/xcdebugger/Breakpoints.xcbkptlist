@@ -21,12 +21,12 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UCDemoGP/MapViewController.m"
-         timestampString = "375755116.616632"
+         timestampString = "376005438.225352"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "79"
-         endingLineNumber = "79"
-         landmarkName = "-viewDidLoad"
+         startingLineNumber = "449"
+         endingLineNumber = "449"
+         landmarkName = "-callGPSurface:"
          landmarkType = "5">
       </FileBreakpoint>
       <FileBreakpoint
@@ -34,12 +34,51 @@
          ignoreCount = "0"
          continueAfterRunningActions = "No"
          filePath = "UCDemoGP/MapViewController.m"
-         timestampString = "375755294.76788"
+         timestampString = "376009276.860391"
          startingColumnNumber = "9223372036854775807"
          endingColumnNumber = "9223372036854775807"
-         startingLineNumber = "145"
-         endingLineNumber = "145"
-         landmarkName = "-registerDefaultsFromSettingsBundle"
+         startingLineNumber = "502"
+         endingLineNumber = "502"
+         landmarkName = "-geoprocessor:operation:jobDidSucceed:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "UCDemoGP/MapViewController.m"
+         timestampString = "376009281.315402"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "506"
+         endingLineNumber = "506"
+         landmarkName = "-geoprocessor:operation:didQueryWithResult:forJob:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "UCDemoGP/MapViewController.m"
+         timestampString = "376009346.410426"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "528"
+         endingLineNumber = "528"
+         landmarkName = "-geoprocessor:operation:jobDidFail:"
+         landmarkType = "5">
+      </FileBreakpoint>
+      <FileBreakpoint
+         shouldBeEnabled = "Yes"
+         ignoreCount = "0"
+         continueAfterRunningActions = "No"
+         filePath = "UCDemoGP/MapViewController.m"
+         timestampString = "376009349.963258"
+         startingColumnNumber = "9223372036854775807"
+         endingColumnNumber = "9223372036854775807"
+         startingLineNumber = "539"
+         endingLineNumber = "539"
+         landmarkName = "-geoprocessor:operation:didExecuteWithResults:messages:"
          landmarkType = "5">
       </FileBreakpoint>
    </FileBreakpoints>

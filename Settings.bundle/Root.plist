@@ -230,6 +230,42 @@
 			<key>KeyboardType</key>
 			<string>NumbersAndPunctuation</string>
 		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+			<key>Title</key>
+			<string>GP Credentials</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>GP Username</string>
+			<key>Key</key>
+			<string>gp_preference_username</string>
+			<key>DefaultValue</key>
+			<string></string>
+			<key>AutocorrectionType</key>
+			<string>Default</string>
+			<key>KeyboardType</key>
+			<string>Alphabet</string>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>GP Password</string>
+			<key>Key</key>
+			<string>gp_preference_password</string>
+			<key>DefaultValue</key>
+			<string></string>
+			<key>IsSecure</key>
+			<true/>
+			<key>KeyboardType</key>
+			<string>Alphabet</string>
+			<key>AutocorrectionType</key>
+			<string>None</string>
+		</dict>
 	</array>
 	<key>StringsTable</key>
 	<string>Root</string>

@@ -69,7 +69,7 @@
     textStyle.color = [CPTColor blackColor];
     
     axisSet.xAxis.title = @"";
-    axisSet.yAxis.title = @"PPM";
+    axisSet.yAxis.title = @"";
     axisSet.xAxis.titleTextStyle = textStyle;
     axisSet.yAxis.titleTextStyle = textStyle;
     axisSet.xAxis.titleOffset = 1.0f;
@@ -139,7 +139,7 @@
                          blue:50/255.0
                         alpha:1.0]};
     
-    NSString *categories[] = {@"Actual", @"Texas", @"US"};
+    NSString *categories[] = {@"Actual", @"Egypt", @""};
     
     for (int i = 0; i < 3 ; i++){
         double position = i*10; //Bars will be 10 pts away from each other
