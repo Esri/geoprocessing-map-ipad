@@ -87,7 +87,7 @@
     axisSet.xAxis.majorTickLineStyle = lineStyle;
     axisSet.yAxis.majorTickLineStyle = lineStyle;
     axisSet.xAxis.majorIntervalLength = CPTDecimalFromFloat(135.0f);
-    axisSet.yAxis.majorIntervalLength = CPTDecimalFromFloat(17.0f);
+    axisSet.yAxis.majorIntervalLength = CPTDecimalFromFloat(170.0f);
     axisSet.xAxis.majorTickLength = 7.0f;
     axisSet.yAxis.majorTickLength = 7.0f;
     axisSet.xAxis.minorTickLineStyle = lineStyle;
@@ -139,9 +139,9 @@
                          blue:50/255.0
                         alpha:1.0]};
     
-    NSString *categories[] = {@"Actual", @"Egypt", @""};
+    NSString *categories[] = {@"Actual", @"Egypt"};
     
-    for (int i = 0; i < 3 ; i++){
+    for (int i = 0; i < 2 ; i++){
         double position = i*10; //Bars will be 10 pts away from each other
         double height = bar_heights[i];
         
