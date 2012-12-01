@@ -411,7 +411,7 @@
     AGSFeatureSet *featureSet = [[AGSFeatureSet alloc] init];
     featureSet.features = features;
     
-    AGSGPParameterValue *initPoint = [AGSGPParameterValue parameterWithName:@"Watersehd_Point" type:AGSGPParameterTypeFeatureRecordSetLayer value:featureSet]; 
+    AGSGPParameterValue *initPoint = [AGSGPParameterValue parameterWithName:@"Watershed_Point" type:AGSGPParameterTypeFeatureRecordSetLayer value:featureSet]; 
     
     NSArray *params = [NSArray arrayWithObjects:initPoint,nil];
     self.geoprocessWaterShed.outputSpatialReference = self.mainMapView.spatialReference;
