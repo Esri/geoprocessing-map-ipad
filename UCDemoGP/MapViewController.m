@@ -452,7 +452,7 @@
     
     // GP Surface is not secured
     //if ( [defaults objectForKey:@"gp_preference_username"] == nil)
-        self.geoprocess = [AGSGeoprocessor geoprocessorWithURL:url];
+    self.geoprocess = [AGSGeoprocessor geoprocessorWithURL:url];
     /*else
     {
         AGSCredential *credentials = [[AGSCredential alloc] initWithUser:[defaults objectForKey:@"gp_preference_username"] password:[defaults objectForKey:@"gp_preference_password"]];
