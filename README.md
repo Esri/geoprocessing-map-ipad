@@ -55,5 +55,11 @@ limitations under the License.
 
 A copy of the license is available in the repository's [license.txt]( https://raw.github.com/Esri/switch-basemaps-js/master/license.txt) file.
 
+<<<<<<< HEAD
 [](Esri Tags: ArcGIS Mobile Runtime iOS Geocoding Geoprocessing iPad Application)
 [](Esri Language: Objective-C)
+=======
+[](Esri Tags: iOS Geoprocessing Map)
+[](Esri Language: Objective-C)
+
+>>>>>>> Updated the README file
